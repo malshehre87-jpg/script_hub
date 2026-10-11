@@ -2,7 +2,7 @@
 # Policy: DIRECT
 # Node: Any
 # Description: Rust-merged canonical ruleset
-# Rules: 123741
+# Rules: 123750
 DOMAIN,004430.xyz
 DOMAIN,021912.xyz
 DOMAIN,1-fss24-s0.streamhoster.com
@@ -15443,6 +15443,7 @@ DOMAIN-SUFFIX,aibase.com
 DOMAIN-SUFFIX,aibeike.com
 DOMAIN-SUFFIX,aibiaomei.com
 DOMAIN-SUFFIX,aibiaow.com
+DOMAIN-SUFFIX,aibilun.com
 DOMAIN-SUFFIX,aibing.cc
 DOMAIN-SUFFIX,aibll.com
 DOMAIN-SUFFIX,aibo123.com
@@ -16523,6 +16524,7 @@ DOMAIN-SUFFIX,aliyunwaf3.com
 DOMAIN-SUFFIX,aliyunwaf4.com
 DOMAIN-SUFFIX,aliyunwaf5.com
 DOMAIN-SUFFIX,aliyunx.com
+DOMAIN-SUFFIX,alizch.com
 DOMAIN-SUFFIX,alizhaopin.com
 DOMAIN-SUFFIX,alizhizhu.com
 DOMAIN-SUFFIX,alizila.com
@@ -25520,6 +25522,7 @@ DOMAIN-SUFFIX,cfcpn.com
 DOMAIN-SUFFIX,cfd-china.com
 DOMAIN-SUFFIX,cfd163.com
 DOMAIN-SUFFIX,cfdns43.com
+DOMAIN-SUFFIX,cfdns46.com
 DOMAIN-SUFFIX,cfdns5.com
 DOMAIN-SUFFIX,cfdns81.com
 DOMAIN-SUFFIX,cfdp.org
@@ -30094,6 +30097,7 @@ DOMAIN-SUFFIX,codeages.work
 DOMAIN-SUFFIX,codeaha.com
 DOMAIN-SUFFIX,codebaoku.com
 DOMAIN-SUFFIX,codebe.org
+DOMAIN-SUFFIX,codebuddy.ai
 DOMAIN-SUFFIX,codebuddy.info
 DOMAIN-SUFFIX,codebuddy.net
 DOMAIN-SUFFIX,codebuddy.pro
@@ -35514,6 +35518,7 @@ DOMAIN-SUFFIX,dnsjia.com
 DOMAIN-SUFFIX,dnsjiasu001.com
 DOMAIN-SUFFIX,dnsjp.cc
 DOMAIN-SUFFIX,dnsjxla.com
+DOMAIN-SUFFIX,dnski.com
 DOMAIN-SUFFIX,dnslin.com
 DOMAIN-SUFFIX,dnsmsn.com
 DOMAIN-SUFFIX,dnsng.net
@@ -68722,6 +68727,7 @@ DOMAIN-SUFFIX,lewenqu.com
 DOMAIN-SUFFIX,lewenss.com
 DOMAIN-SUFFIX,lewenxsw.com
 DOMAIN-SUFFIX,lewifi.com
+DOMAIN-SUFFIX,lewl88.com
 DOMAIN-SUFFIX,lexar.com
 DOMAIN-SUFFIX,lexed.org
 DOMAIN-SUFFIX,lexiaigame.com
@@ -80949,6 +80955,7 @@ DOMAIN-SUFFIX,pcdog.com
 DOMAIN-SUFFIX,pcdrv.com
 DOMAIN-SUFFIX,pcdtg.com
 DOMAIN-SUFFIX,pceggs.com
+DOMAIN-SUFFIX,pcelves.com
 DOMAIN-SUFFIX,pceva.net
 DOMAIN-SUFFIX,pcfphs.com
 DOMAIN-SUFFIX,pcfreetime.com
@@ -84439,6 +84446,7 @@ DOMAIN-SUFFIX,qldz.store
 DOMAIN-SUFFIX,qldzj.com
 DOMAIN-SUFFIX,qledu.net
 DOMAIN-SUFFIX,qlelectrons.com
+DOMAIN-SUFFIX,qlgfdns.com
 DOMAIN-SUFFIX,qlhimalayantm.com
 DOMAIN-SUFFIX,qlidc.com
 DOMAIN-SUFFIX,qlife-lab.com
@@ -107134,6 +107142,7 @@ DOMAIN-SUFFIX,wordscheck.com
 DOMAIN-SUFFIX,wordstorming.com
 DOMAIN-SUFFIX,wordsunny.com
 DOMAIN-SUFFIX,workbenchapi.com
+DOMAIN-SUFFIX,workbuddy.ai
 DOMAIN-SUFFIX,workbuddy.host
 DOMAIN-SUFFIX,workbuddy.link
 DOMAIN-SUFFIX,workec.com
