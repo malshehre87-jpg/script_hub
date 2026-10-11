@@ -2,7 +2,7 @@
 # Policy: DIRECT
 # Node: Any
 # Description: Rust-merged canonical ruleset
-# Rules: 123739
+# Rules: 123741
 DOMAIN,004430.xyz
 DOMAIN,021912.xyz
 DOMAIN,1-fss24-s0.streamhoster.com
@@ -43573,6 +43573,7 @@ DOMAIN-SUFFIX,gdsme.org
 DOMAIN-SUFFIX,gdsoftpark.com
 DOMAIN-SUFFIX,gdsports.net
 DOMAIN-SUFFIX,gdsqyg.com
+DOMAIN-SUFFIX,gdsrcw.com
 DOMAIN-SUFFIX,gdssie.com
 DOMAIN-SUFFIX,gdsspt.net
 DOMAIN-SUFFIX,gdsstl.com
@@ -78610,7 +78611,6 @@ DOMAIN-SUFFIX,nongkaigufen.com
 DOMAIN-SUFFIX,nongkeyu.com
 DOMAIN-SUFFIX,nongli.com
 DOMAIN-SUFFIX,nongli.net
-DOMAIN-SUFFIX,nonglirili.net
 DOMAIN-SUFFIX,nongmintv.com
 DOMAIN-SUFFIX,nongpin88.com
 DOMAIN-SUFFIX,nongplay.com
@@ -79459,6 +79459,7 @@ DOMAIN-SUFFIX,oia05041klq.com
 DOMAIN-SUFFIX,oia05050klq.com
 DOMAIN-SUFFIX,oia05051klq.com
 DOMAIN-SUFFIX,oiaqye7985.com
+DOMAIN-SUFFIX,oicp.io
 DOMAIN-SUFFIX,oicp.vip
 DOMAIN-SUFFIX,oicq88.com
 DOMAIN-SUFFIX,oicto.com
@@ -87023,7 +87024,6 @@ DOMAIN-SUFFIX,rosesandgold.fun
 DOMAIN-SUFFIX,roseshop.asia
 DOMAIN-SUFFIX,rosewin.com
 DOMAIN-SUFFIX,rosin-china.com
-DOMAIN-SUFFIX,rosirs-edu.com
 DOMAIN-SUFFIX,rosmontis.com
 DOMAIN-SUFFIX,rosnas.com
 DOMAIN-SUFFIX,rosoo.net
@@ -93143,6 +93143,7 @@ DOMAIN-SUFFIX,smc18.com
 DOMAIN-SUFFIX,smc3s.com
 DOMAIN-SUFFIX,smcalia.com
 DOMAIN-SUFFIX,smcalib.com
+DOMAIN-SUFFIX,smcbnokkiduran.com
 DOMAIN-SUFFIX,smcbnokkihabak.com
 DOMAIN-SUFFIX,smcbnokkirederc.com
 DOMAIN-SUFFIX,smcec.com
@@ -118089,6 +118090,7 @@ DOMAIN-SUFFIX,yybox.cc
 DOMAIN-SUFFIX,yycec.com
 DOMAIN-SUFFIX,yyclouds.com
 DOMAIN-SUFFIX,yyclub.org
+DOMAIN-SUFFIX,yyclub.work
 DOMAIN-SUFFIX,yycoin.com
 DOMAIN-SUFFIX,yycoo.com
 DOMAIN-SUFFIX,yycqc.com
