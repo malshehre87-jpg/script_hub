@@ -2,7 +2,7 @@
 # Purpose: Privacy / tracking-protection / 防追踪列表
 # Category-Key: Privacy
 # Shard: 1/1
-# Total Rules: 4902
+# Total Rules: 4900
 DOMAIN,cn.app.chat.xiaomi.net
 DOMAIN,etl-xlmc-ssl.sandai.net
 DOMAIN,ios-pclog.i4.cn
@@ -2315,7 +2315,6 @@ DOMAIN-SUFFIX,a8cv.gimuiko.com
 DOMAIN-SUFFIX,a8cv.goodlucknail.com
 DOMAIN-SUFFIX,a8cv.goqoo.me
 DOMAIN-SUFFIX,a8cv.hello-people.jp
-DOMAIN-SUFFIX,a8cv.hoppin-garage.com
 DOMAIN-SUFFIX,a8cv.ioo-sofa.net
 DOMAIN-SUFFIX,a8cv.irodas.com
 DOMAIN-SUFFIX,a8cv.iy-net.jp
@@ -3840,7 +3839,6 @@ DOMAIN-SUFFIX,smetrics.seic.com
 DOMAIN-SUFFIX,smetrics.sen.com.au
 DOMAIN-SUFFIX,smetrics.sfchronicle.com
 DOMAIN-SUFFIX,smetrics.shellenergy.co.uk
-DOMAIN-SUFFIX,smetrics.shinseibank.com
 DOMAIN-SUFFIX,smetrics.shop.mrbostondrinks.com
 DOMAIN-SUFFIX,smetrics.shopmyexchange.com
 DOMAIN-SUFFIX,smetrics.showtimeanytime.com

@@ -2,7 +2,7 @@
 # Policy: DIRECT
 # Node: Any
 # Description: Rust-merged canonical ruleset
-# Rules: 123750
+# Rules: 123755
 DOMAIN,004430.xyz
 DOMAIN,021912.xyz
 DOMAIN,1-fss24-s0.streamhoster.com
@@ -18955,6 +18955,7 @@ DOMAIN-SUFFIX,baifang.in
 DOMAIN-SUFFIX,baifangdianqi.com
 DOMAIN-SUFFIX,baifangzh.com
 DOMAIN-SUFFIX,baifeiyue.com
+DOMAIN-SUFFIX,baifubao.com
 DOMAIN-SUFFIX,baigebao.com
 DOMAIN-SUFFIX,baigebg.com
 DOMAIN-SUFFIX,baigehuidi.com
@@ -35283,6 +35284,7 @@ DOMAIN-SUFFIX,dlied2.qq.com
 DOMAIN-SUFFIX,dlied3.qq.com
 DOMAIN-SUFFIX,dlied4.qq.com
 DOMAIN-SUFFIX,dlied5.qq.com
+DOMAIN-SUFFIX,dlied6.qq.com
 DOMAIN-SUFFIX,dljczb.com
 DOMAIN-SUFFIX,dljdy.com
 DOMAIN-SUFFIX,dljianbing.com
@@ -36919,6 +36921,7 @@ DOMAIN-SUFFIX,dxmjinr.com
 DOMAIN-SUFFIX,dxmjuhe.com
 DOMAIN-SUFFIX,dxmlcf.com
 DOMAIN-SUFFIX,dxmlcfintech.com
+DOMAIN-SUFFIX,dxmpay.com
 DOMAIN-SUFFIX,dxmwx.com
 DOMAIN-SUFFIX,dxmyqh.com
 DOMAIN-SUFFIX,dxncyy.com
@@ -38326,6 +38329,7 @@ DOMAIN-SUFFIX,elegant-prosper.com
 DOMAIN-SUFFIX,elelx.com
 DOMAIN-SUFFIX,eleme.hk
 DOMAIN-SUFFIX,eleme.io
+DOMAIN-SUFFIX,elemecdn.com
 DOMAIN-SUFFIX,element3ds.com
 DOMAIN-SUFFIX,elementaw.com
 DOMAIN-SUFFIX,elementfresh.com
@@ -42805,6 +42809,7 @@ DOMAIN-SUFFIX,gamekee.com
 DOMAIN-SUFFIX,gamekezhan.com
 DOMAIN-SUFFIX,gamekuaishou.com
 DOMAIN-SUFFIX,gamelet.games
+DOMAIN-SUFFIX,gameley.com
 DOMAIN-SUFFIX,gameloop.com
 DOMAIN-SUFFIX,gamemale.com
 DOMAIN-SUFFIX,gamemcu.com

@@ -2,24 +2,7 @@
 # Purpose: HaGeZi DNS-Blocklists ultimate
 # Category-Key: ThreatIntel_Ultimate
 # Shard: 2/2
-# Total Rules: 33577
-DOMAIN-SUFFIX,sonar.fbth8-1.fna.fbcdn.net
-DOMAIN-SUFFIX,sonar.fbth9-1.fna.fbcdn.net
-DOMAIN-SUFFIX,sonar.fbtj2-1.fna.fbcdn.net
-DOMAIN-SUFFIX,sonar.fbts1-1.fna.fbcdn.net
-DOMAIN-SUFFIX,sonar.fbts10-1.fna.fbcdn.net
-DOMAIN-SUFFIX,sonar.fbts11-1.fna.fbcdn.net
-DOMAIN-SUFFIX,sonar.fbts12-1.fna.fbcdn.net
-DOMAIN-SUFFIX,sonar.fbts4-1.fna.fbcdn.net
-DOMAIN-SUFFIX,sonar.fbts5-1.fna.fbcdn.net
-DOMAIN-SUFFIX,sonar.fbts6-1.fna.fbcdn.net
-DOMAIN-SUFFIX,sonar.fbts7-1.fna.fbcdn.net
-DOMAIN-SUFFIX,sonar.fbts8-1.fna.fbcdn.net
-DOMAIN-SUFFIX,sonar.fbts9-1.fna.fbcdn.net
-DOMAIN-SUFFIX,sonar.fbts9-2.fna.fbcdn.net
-DOMAIN-SUFFIX,sonar.fbud10-1.fna.fbcdn.net
-DOMAIN-SUFFIX,sonar.fbud11-1.fna.fbcdn.net
-DOMAIN-SUFFIX,sonar.fbud3-2.fna.fbcdn.net
+# Total Rules: 33556
 DOMAIN-SUFFIX,sonar.fbud4-1.fna.fbcdn.net
 DOMAIN-SUFFIX,sonar.fbud5-1.fna.fbcdn.net
 DOMAIN-SUFFIX,sonar.fbud6-3.fna.fbcdn.net
@@ -8270,7 +8253,6 @@ DOMAIN-SUFFIX,sst.hartstichting.nl
 DOMAIN-SUFFIX,sst.hatchbag.co.uk
 DOMAIN-SUFFIX,sst.haustueren.de
 DOMAIN-SUFFIX,sst.havlikovaapoteka.cz
-DOMAIN-SUFFIX,sst.hdcreator.com
 DOMAIN-SUFFIX,sst.head-acoustics.com
 DOMAIN-SUFFIX,sst.heals.com
 DOMAIN-SUFFIX,sst.hearusa.com
@@ -8557,7 +8539,6 @@ DOMAIN-SUFFIX,sst.lab21.nl
 DOMAIN-SUFFIX,sst.lampengigant.de
 DOMAIN-SUFFIX,sst.lampgiant.es
 DOMAIN-SUFFIX,sst.lampgiant.fr
-DOMAIN-SUFFIX,sst.landhaus-zur-ohe.de
 DOMAIN-SUFFIX,sst.laplagedudramont.com
 DOMAIN-SUFFIX,sst.larihaataja.com
 DOMAIN-SUFFIX,sst.lastdodo.com
@@ -9320,7 +9301,6 @@ DOMAIN-SUFFIX,sst.tchibo.hu
 DOMAIN-SUFFIX,sst.tchibo.pl
 DOMAIN-SUFFIX,sst.teamalert.nl
 DOMAIN-SUFFIX,sst.teaworld.de
-DOMAIN-SUFFIX,sst.tecnafoodstore.it
 DOMAIN-SUFFIX,sst.tecnomat.fr
 DOMAIN-SUFFIX,sst.tegelsinhuis.nl
 DOMAIN-SUFFIX,sst.tegelzetshop.nl
@@ -9356,7 +9336,6 @@ DOMAIN-SUFFIX,sst.ticketcorner.ch
 DOMAIN-SUFFIX,sst.ticketone.it
 DOMAIN-SUFFIX,sst.ticketonline.de
 DOMAIN-SUFFIX,sst.tickets.la28.org
-DOMAIN-SUFFIX,sst.tiileri.fi
 DOMAIN-SUFFIX,sst.timemoto.com
 DOMAIN-SUFFIX,sst.timly.com
 DOMAIN-SUFFIX,sst.tinte24.de
