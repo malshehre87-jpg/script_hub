@@ -2,7 +2,7 @@
 # Purpose: Privacy / tracking-protection / 防追踪列表
 # Category-Key: Privacy
 # Shard: 1/1
-# Total Rules: 4903
+# Total Rules: 4902
 DOMAIN,cn.app.chat.xiaomi.net
 DOMAIN,etl-xlmc-ssl.sandai.net
 DOMAIN,ios-pclog.i4.cn
@@ -4508,7 +4508,6 @@ DOMAIN-SUFFIX,www.co85264.com
 DOMAIN-SUFFIX,www.coat0tire.com
 DOMAIN-SUFFIX,www.coax7nice.com
 DOMAIN-SUFFIX,www.connct-9.com
-DOMAIN-SUFFIX,www.consulting.ramboll.com
 DOMAIN-SUFFIX,www.copy9loom.com
 DOMAIN-SUFFIX,www.core-cen-54.com
 DOMAIN-SUFFIX,www.coup7cold.com
