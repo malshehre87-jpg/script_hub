@@ -2,7 +2,7 @@
 # Purpose: Privacy / tracking-protection / 防追踪列表
 # Category-Key: Privacy
 # Shard: 1/1
-# Total Rules: 4901
+# Total Rules: 4905
 DOMAIN,cn.app.chat.xiaomi.net
 DOMAIN,etl-xlmc-ssl.sandai.net
 DOMAIN,ios-pclog.i4.cn
@@ -2279,6 +2279,7 @@ DOMAIN-SUFFIX,a8clk.nobirun.jp
 DOMAIN-SUFFIX,a8clk.order.banana-wifi.com
 DOMAIN-SUFFIX,a8clk.shop.shareme.jp
 DOMAIN-SUFFIX,a8clk.sikatoru.com
+DOMAIN-SUFFIX,a8clk.skima.jp
 DOMAIN-SUFFIX,a8clk.sma-ene.jp
 DOMAIN-SUFFIX,a8clk.sohbi-company.com
 DOMAIN-SUFFIX,a8clk.solideajapan.com
@@ -2690,8 +2691,10 @@ DOMAIN-SUFFIX,dev-iradimed.actonservice.com
 DOMAIN-SUFFIX,dev-spamgourmet.actonservice.com
 DOMAIN-SUFFIX,dev-tacticalma.actonservice.com
 DOMAIN-SUFFIX,dextersolutions.actonservice.com
+DOMAIN-SUFFIX,dii1.zooplus.ch
 DOMAIN-SUFFIX,dii2.shpd.ext.zooplus.io
 DOMAIN-SUFFIX,dii2.shpp.ext.zooplus.io
+DOMAIN-SUFFIX,dii4.zooplus.ch
 DOMAIN-SUFFIX,dimensionfunding.actonservice.com
 DOMAIN-SUFFIX,dincloud.actonservice.com
 DOMAIN-SUFFIX,dincloudllc.actonservice.com
@@ -3075,6 +3078,7 @@ DOMAIN-SUFFIX,markentive.actonservice.com
 DOMAIN-SUFFIX,marketing.mgage.com
 DOMAIN-SUFFIX,marketing.mixpo.com
 DOMAIN-SUFFIX,marketing.net.asambeauty.com
+DOMAIN-SUFFIX,marketing.net.daraz.lk
 DOMAIN-SUFFIX,marketing.net.daraz.pk
 DOMAIN-SUFFIX,marketing.net.elogia.net
 DOMAIN-SUFFIX,marketing.net.fidor.de

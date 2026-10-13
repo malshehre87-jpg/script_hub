@@ -2,7 +2,7 @@
 # Policy: DIRECT
 # Node: Any
 # Description: Rust-merged canonical ruleset
-# Rules: 123751
+# Rules: 123765
 DOMAIN,004430.xyz
 DOMAIN,021912.xyz
 DOMAIN,1-fss24-s0.streamhoster.com
@@ -8907,6 +8907,7 @@ DOMAIN-SUFFIX,4399doc.com
 DOMAIN-SUFFIX,4399er.com
 DOMAIN-SUFFIX,4399hdhh.com
 DOMAIN-SUFFIX,4399hhh.com
+DOMAIN-SUFFIX,4399houtai.com
 DOMAIN-SUFFIX,4399i.net
 DOMAIN-SUFFIX,4399inc.com
 DOMAIN-SUFFIX,4399j.com
@@ -9966,6 +9967,7 @@ DOMAIN-SUFFIX,51zhituwang.com
 DOMAIN-SUFFIX,51zhizhao.com
 DOMAIN-SUFFIX,51zhucai.com
 DOMAIN-SUFFIX,51zixiu.com
+DOMAIN-SUFFIX,51zjb.com
 DOMAIN-SUFFIX,51zjedu.com
 DOMAIN-SUFFIX,51zjxm.com
 DOMAIN-SUFFIX,51zmt.net
@@ -36188,6 +36190,7 @@ DOMAIN-SUFFIX,dozview.com
 DOMAIN-SUFFIX,dp.tech
 DOMAIN-SUFFIX,dp168.com
 DOMAIN-SUFFIX,dp2u.com
+DOMAIN-SUFFIX,dpafmp641.vip
 DOMAIN-SUFFIX,dpanel.cc
 DOMAIN-SUFFIX,dpangzi.com
 DOMAIN-SUFFIX,dpc-cn.net
@@ -41850,6 +41853,7 @@ DOMAIN-SUFFIX,frp-six.com
 DOMAIN-SUFFIX,frp-ski.com
 DOMAIN-SUFFIX,frp-sun.com
 DOMAIN-SUFFIX,frp-tag.com
+DOMAIN-SUFFIX,frp-web.com
 DOMAIN-SUFFIX,frpapp.com
 DOMAIN-SUFFIX,frrcw.com
 DOMAIN-SUFFIX,frt.ltd
@@ -42819,7 +42823,9 @@ DOMAIN-SUFFIX,gameol.com
 DOMAIN-SUFFIX,gamepf.com
 DOMAIN-SUFFIX,gamepingce.com
 DOMAIN-SUFFIX,gamepp.com
+DOMAIN-SUFFIX,gamer520.fan
 DOMAIN-SUFFIX,gamer520.net
+DOMAIN-SUFFIX,gamer520.wiki
 DOMAIN-SUFFIX,gamerboom.com
 DOMAIN-SUFFIX,gameres.com
 DOMAIN-SUFFIX,gamerhome.com
@@ -53659,6 +53665,7 @@ DOMAIN-SUFFIX,hongfasi.net
 DOMAIN-SUFFIX,hongfengye.com
 DOMAIN-SUFFIX,hongfuloi.com
 DOMAIN-SUFFIX,hongganshebei.net
+DOMAIN-SUFFIX,hongguoduanju.com
 DOMAIN-SUFFIX,hongguogame.com
 DOMAIN-SUFFIX,hongguoyouxi.com
 DOMAIN-SUFFIX,honghaibengye.com
@@ -56042,6 +56049,7 @@ DOMAIN-SUFFIX,hxkchips.com
 DOMAIN-SUFFIX,hxkfh.com
 DOMAIN-SUFFIX,hxkj.cc
 DOMAIN-SUFFIX,hxkj.vip
+DOMAIN-SUFFIX,hxkjtop.com
 DOMAIN-SUFFIX,hxkq.net
 DOMAIN-SUFFIX,hxkq.org
 DOMAIN-SUFFIX,hxkqyxzz.net
@@ -56814,6 +56822,7 @@ DOMAIN-SUFFIX,hzzxyjhyy.com
 DOMAIN-SUFFIX,hzzxyy.com
 DOMAIN-SUFFIX,i-27.name
 DOMAIN-SUFFIX,i-520.net
+DOMAIN-SUFFIX,i-amtr.com
 DOMAIN-SUFFIX,i-bei.com
 DOMAIN-SUFFIX,i-bigdatas.net
 DOMAIN-SUFFIX,i-conference.org
@@ -62721,6 +62730,7 @@ DOMAIN-SUFFIX,jmnk300.com
 DOMAIN-SUFFIX,jmonline.org
 DOMAIN-SUFFIX,jmp-cn.com
 DOMAIN-SUFFIX,jmp.gd
+DOMAIN-SUFFIX,jmqux.com
 DOMAIN-SUFFIX,jmqy.com
 DOMAIN-SUFFIX,jmrb.com
 DOMAIN-SUFFIX,jmrcw.com
@@ -66179,6 +66189,7 @@ DOMAIN-SUFFIX,klhpw.com
 DOMAIN-SUFFIX,klhuyan.com
 DOMAIN-SUFFIX,klianfa.com
 DOMAIN-SUFFIX,klicen.com
+DOMAIN-SUFFIX,klinecharts.com
 DOMAIN-SUFFIX,kling-ai.com
 DOMAIN-SUFFIX,klingai.com
 DOMAIN-SUFFIX,klinlee.com
@@ -71164,6 +71175,7 @@ DOMAIN-SUFFIX,lungai.com
 DOMAIN-SUFFIX,lunhuaxiei.com
 DOMAIN-SUFFIX,lunkuokeji.com
 DOMAIN-SUFFIX,lunlunapp.com
+DOMAIN-SUFFIX,lunprin.com
 DOMAIN-SUFFIX,lunt.cx
 DOMAIN-SUFFIX,lunwenf.com
 DOMAIN-SUFFIX,lunwengo.net
@@ -86786,6 +86798,7 @@ DOMAIN-SUFFIX,rkzxhyy.com
 DOMAIN-SUFFIX,rlair.net
 DOMAIN-SUFFIX,rlkj.com
 DOMAIN-SUFFIX,rlkj.net
+DOMAIN-SUFFIX,rlkrmx.com
 DOMAIN-SUFFIX,rlmeijia.com
 DOMAIN-SUFFIX,rlnk.net
 DOMAIN-SUFFIX,rlreader.com
@@ -103053,6 +103066,7 @@ DOMAIN-SUFFIX,vfuke.net
 DOMAIN-SUFFIX,vfund.org
 DOMAIN-SUFFIX,vfvdf.com
 DOMAIN-SUFFIX,vfx123.com
+DOMAIN-SUFFIX,vfxfu.com
 DOMAIN-SUFFIX,vg.com
 DOMAIN-SUFFIX,vg173.com
 DOMAIN-SUFFIX,vg89qeas3xagd.com

@@ -2,9 +2,7 @@
 # Purpose: HaGeZi DNS-Blocklists ultimate
 # Category-Key: ThreatIntel_Ultimate
 # Shard: 2/2
-# Total Rules: 34689
-DOMAIN-SUFFIX,somber-head.com
-DOMAIN-SUFFIX,somber-hole.com
+# Total Rules: 34687
 DOMAIN-SUFFIX,sombrero.yahoo.net
 DOMAIN-SUFFIX,somc-lifelog-logger.appspot.com
 DOMAIN-SUFFIX,some.demuz.ru
