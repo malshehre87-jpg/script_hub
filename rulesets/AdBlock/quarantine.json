@@ -87571,12 +87571,6 @@
   },
   {
     "source": "reject.txt",
-    "candidate": ".29pt.7ipjpgy1nz4bzqx4y9q4r45cz4jy.cyou",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "reject.txt",
     "candidate": ".2n5kjrq32x68w.kklnlohzmvhu2k.cyou",
     "reason": "broad-media-domain",
     "risk": "broad-media"
@@ -88472,12 +88466,6 @@
   {
     "source": "reject.txt",
     "candidate": ".adv-analytics-collector.videograph.ai",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "reject.txt",
-    "candidate": ".adv.ocrwebmedia.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -89917,12 +89905,6 @@
   },
   {
     "source": "reject.txt",
-    "candidate": ".ccc.portymultimedialne.pl",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "reject.txt",
     "candidate": ".cdj-dap.s3-ap-northeast-1.amazonaws.com",
     "reason": "protected-domain-intersection",
     "risk": "protected-service"
@@ -90379,12 +90361,6 @@
   },
   {
     "source": "reject.txt",
-    "candidate": ".connect.carave.video",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "reject.txt",
     "candidate": ".connect.thumbnailsmagneticas.com.br",
     "reason": "broad-media-domain",
     "risk": "broad-media"
@@ -90406,12 +90382,6 @@
     "candidate": ".console.adbility-media.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
-  },
-  {
-    "source": "reject.txt",
-    "candidate": ".console.geminipub.com",
-    "reason": "protected-domain-intersection",
-    "risk": "protected-service"
   },
   {
     "source": "reject.txt",
@@ -90440,12 +90410,6 @@
   {
     "source": "reject.txt",
     "candidate": ".conversantmedia.com",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "reject.txt",
-    "candidate": ".conversation-images.al-enterprise.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -92911,12 +92875,6 @@
   },
   {
     "source": "reject.txt",
-    "candidate": ".hmzupe.image-republic.com",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "reject.txt",
     "candidate": ".honestinfuriatemedia.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
@@ -93890,12 +93848,6 @@
   {
     "source": "reject.txt",
     "candidate": ".images.e.chiefs.com",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "reject.txt",
-    "candidate": ".images.e.compactaprint.com.br",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -95257,7 +95209,25 @@
   },
   {
     "source": "reject.txt",
+    "candidate": ".images.mailaway.abritel.fr",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "reject.txt",
+    "candidate": ".images.mailaway.fewo-direkt.de",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "reject.txt",
     "candidate": ".images.mailaway.homeaway.com",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "reject.txt",
+    "candidate": ".images.mailaway.vrbo.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -96973,12 +96943,6 @@
   },
   {
     "source": "reject.txt",
-    "candidate": ".load.at.golfgiftdays.com",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "reject.txt",
     "candidate": ".load.data.mulbahmedia.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
@@ -96992,6 +96956,12 @@
   {
     "source": "reject.txt",
     "candidate": ".load.dendrosenecio.dpmedias.com",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "reject.txt",
+    "candidate": ".load.gtm.camedia.de",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -97034,12 +97004,6 @@
   {
     "source": "reject.txt",
     "candidate": ".load.measure.elroimedia.ro",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "reject.txt",
-    "candidate": ".load.mrabx.camedia.de",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -97453,12 +97417,6 @@
   },
   {
     "source": "reject.txt",
-    "candidate": ".m8.iu65v9f18fgifekcv1p3gg.cyou",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "reject.txt",
     "candidate": ".madadsmedia.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
@@ -97790,12 +97748,6 @@
   {
     "source": "reject.txt",
     "candidate": ".media.bonnint.net",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "reject.txt",
-    "candidate": ".media.capitaltradinggroup.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -101743,12 +101695,6 @@
   },
   {
     "source": "reject.txt",
-    "candidate": ".sst.donutpressmedia.co",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "reject.txt",
     "candidate": ".sst.egiftspace.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
@@ -101870,12 +101816,6 @@
   {
     "source": "reject.txt",
     "candidate": ".stape.fazedoradevideos.com.br",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "reject.txt",
-    "candidate": ".stape.goosemediagroup.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -102049,12 +101989,6 @@
   },
   {
     "source": "reject.txt",
-    "candidate": ".static.frequency33media.com",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "reject.txt",
     "candidate": ".static.hollandhortimedia.nl",
     "reason": "broad-media-domain",
     "risk": "broad-media"
@@ -102068,12 +102002,6 @@
   {
     "source": "reject.txt",
     "candidate": ".static.re-media.info",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "reject.txt",
-    "candidate": ".static.regalrisemedia.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -102998,12 +102926,6 @@
   {
     "source": "reject.txt",
     "candidate": ".track.aptitudemedia.co",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "reject.txt",
-    "candidate": ".track.avatarhype.ai",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -104746,12 +104668,6 @@
     "candidate": ".x.weather.com",
     "reason": "protected-domain-intersection",
     "risk": "protected-service"
-  },
-  {
-    "source": "reject.txt",
-    "candidate": ".x8pngknmmcn.klzf3q7xrolpel2.cyou",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
   },
   {
     "source": "reject.txt",
@@ -186217,6 +186133,12 @@
   },
   {
     "source": "tracking-protection-filter.txt",
+    "candidate": ".adv.ocrwebmedia.com",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "tracking-protection-filter.txt",
     "candidate": ".aet.spotify.com",
     "reason": "protected-domain-intersection",
     "risk": "protected-service"
@@ -186757,6 +186679,12 @@
   },
   {
     "source": "tracking-protection-filter.txt",
+    "candidate": ".ccc.portymultimedialne.pl",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "tracking-protection-filter.txt",
     "candidate": ".cdn.mediatradecraft.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
@@ -186913,6 +186841,12 @@
   },
   {
     "source": "tracking-protection-filter.txt",
+    "candidate": ".connect.carave.video",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "tracking-protection-filter.txt",
     "candidate": ".connect.thumbnailsmagneticas.com.br",
     "reason": "broad-media-domain",
     "risk": "broad-media"
@@ -186920,6 +186854,12 @@
   {
     "source": "tracking-protection-filter.txt",
     "candidate": ".connect.virginmediabusiness.co.uk",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "tracking-protection-filter.txt",
+    "candidate": ".conversation-images.al-enterprise.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -188077,6 +188017,12 @@
   },
   {
     "source": "tracking-protection-filter.txt",
+    "candidate": ".hmzupe.image-republic.com",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "tracking-protection-filter.txt",
     "candidate": ".horse.ohseemedia.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
@@ -188732,6 +188678,12 @@
   {
     "source": "tracking-protection-filter.txt",
     "candidate": ".images.e.chiefs.com",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "tracking-protection-filter.txt",
+    "candidate": ".images.e.compactaprint.com.br",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -190039,25 +189991,7 @@
   },
   {
     "source": "tracking-protection-filter.txt",
-    "candidate": ".images.mailaway.abritel.fr",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "tracking-protection-filter.txt",
-    "candidate": ".images.mailaway.fewo-direkt.de",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "tracking-protection-filter.txt",
     "candidate": ".images.mailaway.homeaway.com",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "tracking-protection-filter.txt",
-    "candidate": ".images.mailaway.vrbo.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -191287,6 +191221,12 @@
   },
   {
     "source": "tracking-protection-filter.txt",
+    "candidate": ".load.at.golfgiftdays.com",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "tracking-protection-filter.txt",
     "candidate": ".load.data.mulbahmedia.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
@@ -191300,12 +191240,6 @@
   {
     "source": "tracking-protection-filter.txt",
     "candidate": ".load.dendrosenecio.dpmedias.com",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "tracking-protection-filter.txt",
-    "candidate": ".load.gtm.camedia.de",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -191348,6 +191282,12 @@
   {
     "source": "tracking-protection-filter.txt",
     "candidate": ".load.measure.elroimedia.ro",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "tracking-protection-filter.txt",
+    "candidate": ".load.mrabx.camedia.de",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -191780,6 +191720,12 @@
   {
     "source": "tracking-protection-filter.txt",
     "candidate": ".media.bestproxyandvpn.com",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "tracking-protection-filter.txt",
+    "candidate": ".media.capitaltradinggroup.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -193525,6 +193471,12 @@
   },
   {
     "source": "tracking-protection-filter.txt",
+    "candidate": ".sst.donutpressmedia.co",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "tracking-protection-filter.txt",
     "candidate": ".sst.egiftspace.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
@@ -193640,6 +193592,12 @@
   {
     "source": "tracking-protection-filter.txt",
     "candidate": ".stape.fazedoradevideos.com.br",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "tracking-protection-filter.txt",
+    "candidate": ".stape.goosemediagroup.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -194216,6 +194174,12 @@
   {
     "source": "tracking-protection-filter.txt",
     "candidate": ".track-events.membrana.media",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "tracking-protection-filter.txt",
+    "candidate": ".track.avatarhype.ai",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
