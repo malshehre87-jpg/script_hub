@@ -2,7 +2,7 @@
 # Policy: DIRECT
 # Node: Any
 # Description: Rust-merged canonical ruleset
-# Rules: 123755
+# Rules: 123751
 DOMAIN,004430.xyz
 DOMAIN,021912.xyz
 DOMAIN,1-fss24-s0.streamhoster.com
@@ -35284,7 +35284,6 @@ DOMAIN-SUFFIX,dlied2.qq.com
 DOMAIN-SUFFIX,dlied3.qq.com
 DOMAIN-SUFFIX,dlied4.qq.com
 DOMAIN-SUFFIX,dlied5.qq.com
-DOMAIN-SUFFIX,dlied6.qq.com
 DOMAIN-SUFFIX,dljczb.com
 DOMAIN-SUFFIX,dljdy.com
 DOMAIN-SUFFIX,dljianbing.com
@@ -43583,7 +43582,6 @@ DOMAIN-SUFFIX,gdsme.org
 DOMAIN-SUFFIX,gdsoftpark.com
 DOMAIN-SUFFIX,gdsports.net
 DOMAIN-SUFFIX,gdsqyg.com
-DOMAIN-SUFFIX,gdsrcw.com
 DOMAIN-SUFFIX,gdssie.com
 DOMAIN-SUFFIX,gdsspt.net
 DOMAIN-SUFFIX,gdsstl.com
@@ -79470,7 +79468,6 @@ DOMAIN-SUFFIX,oia05041klq.com
 DOMAIN-SUFFIX,oia05050klq.com
 DOMAIN-SUFFIX,oia05051klq.com
 DOMAIN-SUFFIX,oiaqye7985.com
-DOMAIN-SUFFIX,oicp.io
 DOMAIN-SUFFIX,oicp.vip
 DOMAIN-SUFFIX,oicq88.com
 DOMAIN-SUFFIX,oicto.com
@@ -118104,7 +118101,6 @@ DOMAIN-SUFFIX,yybox.cc
 DOMAIN-SUFFIX,yycec.com
 DOMAIN-SUFFIX,yyclouds.com
 DOMAIN-SUFFIX,yyclub.org
-DOMAIN-SUFFIX,yyclub.work
 DOMAIN-SUFFIX,yycoin.com
 DOMAIN-SUFFIX,yycoo.com
 DOMAIN-SUFFIX,yycqc.com
