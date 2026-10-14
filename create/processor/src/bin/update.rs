@@ -109,6 +109,7 @@ fn run(root: &Path, execute: bool, singbox: Option<&Path>, quick: bool) -> Resul
         cleanup.get("deleted").copied().unwrap_or_default()
     );
     rust_processor::general_update::enforce_category_boundaries(root)?;
+    rust_processor::general_update::split_gaming_rules(root)?;
 
     let modules = root.join("modules");
     let rulesets = root.join("rulesets");
@@ -187,15 +188,17 @@ fn main() -> ExitCode {
     let mut singbox = None;
     let mut execute = false;
     let mut quick = false;
+    let mut gaming_only = false;
     while let Some(arg) = args.next() {
         match arg.as_str() {
             "--root" => root = Some(arg_value(&mut args, "--root")),
             "--singbox" => singbox = Some(arg_value(&mut args, "--singbox")),
             "--execute" | "--unattended" => execute = true,
             "--quick" => quick = true,
+            "--gaming-only" => gaming_only = true,
             "--help" | "-h" => {
                 println!(
-                    "Usage: update --root <repository> [--execute|--unattended] [--singbox <path>]"
+                    "Usage: update --root <repository> [--execute|--unattended] [--singbox <path>] [--gaming-only]"
                 );
                 return ExitCode::SUCCESS;
             }
@@ -226,7 +229,25 @@ fn main() -> ExitCode {
         None => None,
     };
 
-    match run(&root, execute, singbox.as_deref(), quick) {
+    let result = if gaming_only && !execute {
+        println!("[INFO] dry run: game classification skipped");
+        Ok(())
+    } else if gaming_only {
+        rust_processor::general_update::split_gaming_rules(&root).and_then(|()| {
+            if let Some(singbox) = &singbox
+                && !rust_processor::srs_generator::run_srs_generator(
+                    &root.to_string_lossy(),
+                    &singbox.to_string_lossy(),
+                )
+            {
+                return Err("SRS generation failed".to_string());
+            }
+            Ok(())
+        })
+    } else {
+        run(&root, execute, singbox.as_deref(), quick)
+    };
+    match result {
         Ok(()) => {
             println!("[SUCCESS] Rust ruleset update completed");
             ExitCode::SUCCESS

@@ -15,6 +15,9 @@ const NSFW_PROTECTED_CATEGORY_FILES: &[&str] = &[
     "Cloudflare.list",
     "Direct.list",
     "Gaming.list",
+    "Gaming_Download.list",
+    "Gaming_Play.list",
+    "Gaming_Web.list",
     "GitHub.list",
     "Google.list",
     "Microsoft.list",
@@ -247,13 +250,19 @@ fn write_rules(
     policy: &str,
     rules: &BTreeSet<String>,
 ) -> Result<(), String> {
-    let mut content = crate::generate_header(
-        name,
-        policy,
-        "Any",
-        "Rust-merged canonical ruleset",
-        rules.len(),
-    );
+    let description = match name {
+        "Gaming_Download" => {
+            "Game packages and patches; place before Gaming_Web and generic routing"
+        }
+        "Gaming_Play" => {
+            "Game networking and matchmaking; place before Gaming_Web and generic routing"
+        }
+        "Gaming_Web" => {
+            "Stores, accounts, communities and shared-platform fallback; not a gameplay-only list"
+        }
+        _ => "Rust-merged canonical ruleset",
+    };
+    let mut content = crate::generate_header(name, policy, "Any", description, rules.len());
     for rule in rules {
         content.push_str(rule);
         content.push('\n');
@@ -261,6 +270,66 @@ fn write_rules(
     crate::safe_write_file_internal(path, &content, true)
         .then_some(())
         .ok_or_else(|| format!("failed to publish {}", path.display()))
+}
+
+/// Split the compatibility union using explicit endpoints, retaining ambiguous
+/// publisher domains only in the last, shared-platform fallback group.
+pub fn split_gaming_rules(root: &Path) -> Result<(), String> {
+    let directory = root.join("rulesets/RULE-SET");
+    let legacy = read_rules(&directory.join("Gaming.list"))?;
+    let load = |name: &str| -> Result<BTreeSet<String>, String> {
+        read_rules(&root.join(format!("rulesets/Sources/custom/{name}_manual.list")))?
+            .into_iter()
+            .map(|rule| {
+                crate::normalize_rule(&rule)
+                    .ok_or_else(|| format!("invalid {name} classification rule: {rule}"))
+            })
+            .collect()
+    };
+    let mut download = load("Gaming_Download")?;
+    let mut play = load("Gaming_Play")?;
+    let download_boundary = RuleBoundary::from_rules(&download);
+    let play_boundary = RuleBoundary::from_rules(&play);
+    if play.iter().any(|rule| download_boundary.intersects(rule)) {
+        return Err("Gaming Download and Play classification endpoints overlap".to_string());
+    }
+    let mut web = BTreeSet::new();
+    for rule in legacy {
+        if download_boundary.covers(&rule) {
+            download.insert(rule);
+        } else if play_boundary.covers(&rule) {
+            play.insert(rule);
+        } else if rule.starts_with("DOMAIN,") || rule.starts_with("DOMAIN-SUFFIX,") {
+            // Shared Microsoft sign-in also serves non-game apps; keep its normal routing.
+            if !matches!(
+                rule.split(',').nth(1),
+                Some("login.live.com" | "logincdn.msauth.net")
+            ) {
+                web.insert(rule);
+            }
+        }
+    }
+    for (name, rules) in [
+        ("Gaming_Download", &download),
+        ("Gaming_Play", &play),
+        ("Gaming_Web", &web),
+    ] {
+        write_rules(
+            &directory.join(format!("{name}.list")),
+            name,
+            "USER-DEFINED",
+            rules,
+        )?;
+        let mirror = directory.join("github");
+        fs::create_dir_all(&mirror).map_err(|error| error.to_string())?;
+        write_rules(
+            &mirror.join(format!("{name}.list")),
+            name,
+            "USER-DEFINED",
+            rules,
+        )?;
+    }
+    Ok(())
 }
 
 #[derive(Default)]
@@ -451,6 +520,26 @@ pub fn validate_category_boundaries(root: &Path) -> Result<Vec<String>, String> 
         None
     };
     let mut errors = Vec::new();
+    if directory.join("Gaming_Web.list").exists() {
+        let download = read_rules(&directory.join("Gaming_Download.list"))?;
+        let play = read_rules(&directory.join("Gaming_Play.list"))?;
+        let web = read_rules(&directory.join("Gaming_Web.list"))?;
+        let download_boundary = RuleBoundary::from_rules(&download);
+        if play.iter().any(|rule| download_boundary.intersects(rule)) {
+            errors.push("Gaming Download and Play overlap".to_string());
+        }
+        if [&download, &play, &web].into_iter().any(|rules| {
+            rules
+                .iter()
+                .any(|rule| !rule.starts_with("DOMAIN,") && !rule.starts_with("DOMAIN-SUFFIX,"))
+        }) {
+            errors
+                .push("Gaming profiles contain ambiguous process/keyword/global rules".to_string());
+        }
+        if !web.is_disjoint(&download) || !web.is_disjoint(&play) {
+            errors.push("Gaming Web contains exact Download/Play overlaps".to_string());
+        }
+    }
     let direct_adblock = coverage_count(&direct, &adblock);
     if direct_adblock > 0 {
         errors.push(format!(
@@ -546,8 +635,55 @@ pub fn enforce_category_boundaries(root: &Path) -> Result<(usize, usize, usize, 
 
 #[cfg(test)]
 mod tests {
-    use super::{discover_manifests, enforce_category_boundaries, validate_category_boundaries};
+    use super::{
+        discover_manifests, enforce_category_boundaries, split_gaming_rules,
+        validate_category_boundaries,
+    };
     use std::fs;
+
+    #[test]
+    fn gaming_split_prioritizes_endpoints_and_keeps_shared_domains_in_web() {
+        let root = std::env::temp_dir().join(format!("script-hub-gaming-{}", std::process::id()));
+        let rules = root.join("rulesets/RULE-SET");
+        let sources = root.join("rulesets/Sources/custom");
+        fs::create_dir_all(&rules).unwrap();
+        fs::create_dir_all(&sources).unwrap();
+        let legacy = "DOMAIN-SUFFIX,epicgames.com\nDOMAIN,download.epicgames.com\nDOMAIN,match.epicgames.com\nDOMAIN-SUFFIX,patchy-game.test\nDOMAIN,login.live.com\nDOMAIN-KEYWORD,epicgames\nPROCESS-NAME,launcher.exe\n";
+        fs::write(rules.join("Gaming.list"), legacy).unwrap();
+        fs::write(
+            sources.join("Gaming_Download_manual.list"),
+            "# download\nDOMAIN,download.epicgames.com\n",
+        )
+        .unwrap();
+        fs::write(
+            sources.join("Gaming_Play_manual.list"),
+            "DOMAIN,match.epicgames.com\n",
+        )
+        .unwrap();
+        split_gaming_rules(&root).unwrap();
+        let web = fs::read_to_string(rules.join("Gaming_Web.list")).unwrap();
+        assert!(web.contains("DOMAIN-SUFFIX,epicgames.com"));
+        assert!(web.contains("DOMAIN-SUFFIX,patchy-game.test"));
+        assert!(!web.contains("download.epicgames.com"));
+        assert!(!web.contains("match.epicgames.com"));
+        assert!(!web.contains("login.live.com"));
+        assert!(!web.contains("PROCESS-NAME") && !web.contains("DOMAIN-KEYWORD"));
+        assert_eq!(
+            fs::read_to_string(rules.join("Gaming.list")).unwrap(),
+            legacy
+        );
+        fs::write(
+            sources.join("Gaming_Play_manual.list"),
+            "DOMAIN-SUFFIX,epicgames.com\n",
+        )
+        .unwrap();
+        assert!(split_gaming_rules(&root).is_err());
+        assert_eq!(
+            fs::read_to_string(rules.join("Gaming_Web.list")).unwrap(),
+            web
+        );
+        fs::remove_dir_all(root).unwrap();
+    }
 
     #[test]
     fn category_boundaries_remove_only_mutually_exclusive_exact_rules() {
