@@ -36,7 +36,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         fetch-depth: 0
         persist-credentials: false
@@ -87,7 +87,7 @@ jobs:
 
     - name: Cache verified sing-box archive
       id: cache_singbox
-      uses: actions/cache@v5
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
       with:
         path: .cache/sing-box/sing-box.tar.gz
         key: singbox-${{ steps.singbox_version.outputs.version }}-${{ steps.singbox_version.outputs.sha256 }}-linux-amd64
@@ -137,7 +137,7 @@ jobs:
 
 
     - name: Set up Rust
-      uses: actions-rust-lang/setup-rust-toolchain@v1
+      uses: actions-rust-lang/setup-rust-toolchain@ecabd13d1c56bd1345c230e542e9144811ad706f # v2.0.0
       with:
         rust-src-dir: create/processor
 
