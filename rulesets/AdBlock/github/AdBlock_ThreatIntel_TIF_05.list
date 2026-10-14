@@ -3,6 +3,7 @@
 # Category-Key: ThreatIntel_TIF
 # Shard: 5/6
 # Total Rules: 100000
+DOMAIN-SUFFIX,runepedia.xyz
 DOMAIN-SUFFIX,runepics.xyz
 DOMAIN-SUFFIX,runepile.xyz
 DOMAIN-SUFFIX,runepixel.xyz
@@ -100002,4 +100003,3 @@ DOMAIN-SUFFIX,wilmingtonroof.com
 DOMAIN-SUFFIX,wilnorlegal.com
 DOMAIN-SUFFIX,wilresa.com
 DOMAIN-SUFFIX,wilrob.fr
-DOMAIN-SUFFIX,wilsonbrook.eu

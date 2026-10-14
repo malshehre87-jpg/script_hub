@@ -2,7 +2,8 @@
 # Purpose: HaGeZi TIF medium 威胁情报
 # Category-Key: ThreatIntel_TIF
 # Shard: 6/6
-# Total Rules: 19047
+# Total Rules: 19048
+DOMAIN-SUFFIX,wilsonbrook.eu
 DOMAIN-SUFFIX,wilsonpost13.com
 DOMAIN-SUFFIX,wilsonsalbanydumpsterrental.store
 DOMAIN-SUFFIX,wilsonsalhambradumpsterrentalinc.store

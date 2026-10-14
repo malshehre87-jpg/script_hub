@@ -2413,12 +2413,6 @@
   },
   {
     "source": "Advertising_All.list",
-    "candidate": "DOMAIN,images.service.belboon.com",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "Advertising_All.list",
     "candidate": "DOMAIN,images.topguncustomz.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
@@ -3871,6 +3865,12 @@
   },
   {
     "source": "Advertising_All.list",
+    "candidate": "DOMAIN-SUFFIX,29pt.7ipjpgy1nz4bzqx4y9q4r45cz4jy.cyou",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "Advertising_All.list",
     "candidate": "DOMAIN-SUFFIX,2n5kjrq32x68w.kklnlohzmvhu2k.cyou",
     "reason": "broad-media-domain",
     "risk": "broad-media"
@@ -4792,6 +4792,12 @@
     "candidate": "DOMAIN-SUFFIX,adv.ccb.com",
     "reason": "protected-domain-intersection",
     "risk": "protected-service"
+  },
+  {
+    "source": "Advertising_All.list",
+    "candidate": "DOMAIN-SUFFIX,adv.ocrwebmedia.com",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
   },
   {
     "source": "Advertising_All.list",
@@ -6355,6 +6361,12 @@
   },
   {
     "source": "Advertising_All.list",
+    "candidate": "DOMAIN-SUFFIX,ccc.portymultimedialne.pl",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "Advertising_All.list",
     "candidate": "DOMAIN-SUFFIX,cdj-dap.s3-ap-northeast-1.amazonaws.com",
     "reason": "protected-domain-intersection",
     "risk": "protected-service"
@@ -6895,6 +6907,12 @@
   },
   {
     "source": "Advertising_All.list",
+    "candidate": "DOMAIN-SUFFIX,connect.carave.video",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "Advertising_All.list",
     "candidate": "DOMAIN-SUFFIX,connect.thumbnailsmagneticas.com.br",
     "reason": "broad-media-domain",
     "risk": "broad-media"
@@ -6916,6 +6934,12 @@
     "candidate": "DOMAIN-SUFFIX,console.adbility-media.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
+  },
+  {
+    "source": "Advertising_All.list",
+    "candidate": "DOMAIN-SUFFIX,console.geminipub.com",
+    "reason": "protected-domain-intersection",
+    "risk": "protected-service"
   },
   {
     "source": "Advertising_All.list",
@@ -6950,6 +6974,12 @@
   {
     "source": "Advertising_All.list",
     "candidate": "DOMAIN-SUFFIX,conversantmedia.com",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "Advertising_All.list",
+    "candidate": "DOMAIN-SUFFIX,conversation-images.al-enterprise.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -10129,6 +10159,12 @@
   },
   {
     "source": "Advertising_All.list",
+    "candidate": "DOMAIN-SUFFIX,hmzupe.image-republic.com",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "Advertising_All.list",
     "candidate": "DOMAIN-SUFFIX,hollymediaa.biz",
     "reason": "broad-media-domain",
     "risk": "broad-media"
@@ -11372,6 +11408,12 @@
   {
     "source": "Advertising_All.list",
     "candidate": "DOMAIN-SUFFIX,images.e.chiefs.com",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "Advertising_All.list",
+    "candidate": "DOMAIN-SUFFIX,images.e.compactaprint.com.br",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -15211,6 +15253,12 @@
   },
   {
     "source": "Advertising_All.list",
+    "candidate": "DOMAIN-SUFFIX,load.at.golfgiftdays.com",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "Advertising_All.list",
     "candidate": "DOMAIN-SUFFIX,load.data.mulbahmedia.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
@@ -15224,12 +15272,6 @@
   {
     "source": "Advertising_All.list",
     "candidate": "DOMAIN-SUFFIX,load.dendrosenecio.dpmedias.com",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "Advertising_All.list",
-    "candidate": "DOMAIN-SUFFIX,load.gtm.camedia.de",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -15272,6 +15314,12 @@
   {
     "source": "Advertising_All.list",
     "candidate": "DOMAIN-SUFFIX,load.measure.elroimedia.ro",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "Advertising_All.list",
+    "candidate": "DOMAIN-SUFFIX,load.mrabx.camedia.de",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -15703,6 +15751,12 @@
   },
   {
     "source": "Advertising_All.list",
+    "candidate": "DOMAIN-SUFFIX,m8.iu65v9f18fgifekcv1p3gg.cyou",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "Advertising_All.list",
     "candidate": "DOMAIN-SUFFIX,madadsmedia.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
@@ -16100,6 +16154,12 @@
   {
     "source": "Advertising_All.list",
     "candidate": "DOMAIN-SUFFIX,media.bonnint.net",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "Advertising_All.list",
+    "candidate": "DOMAIN-SUFFIX,media.capitaltradinggroup.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -20647,6 +20707,12 @@
   },
   {
     "source": "Advertising_All.list",
+    "candidate": "DOMAIN-SUFFIX,sst.donutpressmedia.co",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "Advertising_All.list",
     "candidate": "DOMAIN-SUFFIX,sst.egiftspace.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
@@ -20768,6 +20834,12 @@
   {
     "source": "Advertising_All.list",
     "candidate": "DOMAIN-SUFFIX,stape.fazedoradevideos.com.br",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "Advertising_All.list",
+    "candidate": "DOMAIN-SUFFIX,stape.goosemediagroup.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -20959,6 +21031,12 @@
   },
   {
     "source": "Advertising_All.list",
+    "candidate": "DOMAIN-SUFFIX,static.frequency33media.com",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "Advertising_All.list",
     "candidate": "DOMAIN-SUFFIX,static.hollandhortimedia.nl",
     "reason": "broad-media-domain",
     "risk": "broad-media"
@@ -20972,6 +21050,12 @@
   {
     "source": "Advertising_All.list",
     "candidate": "DOMAIN-SUFFIX,static.re-media.info",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "Advertising_All.list",
+    "candidate": "DOMAIN-SUFFIX,static.regalrisemedia.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -22208,6 +22292,12 @@
   {
     "source": "Advertising_All.list",
     "candidate": "DOMAIN-SUFFIX,track.aptitudemedia.co",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "Advertising_All.list",
+    "candidate": "DOMAIN-SUFFIX,track.avatarhype.ai",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -24436,6 +24526,12 @@
     "candidate": "DOMAIN-SUFFIX,x.weather.com",
     "reason": "protected-domain-intersection",
     "risk": "protected-service"
+  },
+  {
+    "source": "Advertising_All.list",
+    "candidate": "DOMAIN-SUFFIX,x8pngknmmcn.klzf3q7xrolpel2.cyou",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
   },
   {
     "source": "Advertising_All.list",

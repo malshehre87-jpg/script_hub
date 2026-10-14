@@ -2,7 +2,10 @@
 # Purpose: HaGeZi DNS-Blocklists ultimate
 # Category-Key: ThreatIntel_Ultimate
 # Shard: 2/2
-# Total Rules: 34681
+# Total Rules: 34683
+DOMAIN-SUFFIX,somebestgamesus.com
+DOMAIN-SUFFIX,somehowoctavian.com
+DOMAIN-SUFFIX,someplaceopened.com
 DOMAIN-SUFFIX,somervillenj.org
 DOMAIN-SUFFIX,somethingenigma.com
 DOMAIN-SUFFIX,somethingmassive.com
@@ -16161,7 +16164,6 @@ DOMAIN-SUFFIX,tanner-shoes.com
 DOMAIN-SUFFIX,tannersleathercare.com
 DOMAIN-SUFFIX,tannoshealth.com
 DOMAIN-SUFFIX,tanop.uk
-DOMAIN-SUFFIX,tantegacor88.link
 DOMAIN-SUFFIX,tanvirhasan.dev
 DOMAIN-SUFFIX,tanwis.com
 DOMAIN-SUFFIX,tanzbienen.de

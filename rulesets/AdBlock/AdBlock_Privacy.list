@@ -2,7 +2,7 @@
 # Purpose: Privacy / tracking-protection / 防追踪列表
 # Category-Key: Privacy
 # Shard: 1/1
-# Total Rules: 4905
+# Total Rules: 4906
 DOMAIN,cn.app.chat.xiaomi.net
 DOMAIN,etl-xlmc-ssl.sandai.net
 DOMAIN,ios-pclog.i4.cn
@@ -3215,6 +3215,7 @@ DOMAIN-SUFFIX,paladion.actonservice.com
 DOMAIN-SUFFIX,palramamericas.actonservice.com
 DOMAIN-SUFFIX,pandg.tapad.com
 DOMAIN-SUFFIX,parallel6.actonservice.com
+DOMAIN-SUFFIX,partner.service.belboon.com
 DOMAIN-SUFFIX,patientpay.actonservice.com
 DOMAIN-SUFFIX,pawsplus.actonservice.com
 DOMAIN-SUFFIX,paydashboard.actonservice.com

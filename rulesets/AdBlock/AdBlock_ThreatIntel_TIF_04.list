@@ -3,6 +3,7 @@
 # Category-Key: ThreatIntel_TIF
 # Shard: 4/6
 # Total Rules: 100000
+DOMAIN-SUFFIX,lithuaniarank.xyz
 DOMAIN-SUFFIX,lithuaniarobo.xyz
 DOMAIN-SUFFIX,lithuaniatrip.xyz
 DOMAIN-SUFFIX,lithuaniawork.xyz
@@ -100002,4 +100003,3 @@ DOMAIN-SUFFIX,runentry.xyz
 DOMAIN-SUFFIX,runepace.xyz
 DOMAIN-SUFFIX,runepart.xyz
 DOMAIN-SUFFIX,runepassport.xyz
-DOMAIN-SUFFIX,runepedia.xyz
