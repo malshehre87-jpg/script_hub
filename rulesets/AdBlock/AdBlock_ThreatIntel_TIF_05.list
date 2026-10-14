@@ -3,19 +3,6 @@
 # Category-Key: ThreatIntel_TIF
 # Shard: 5/6
 # Total Rules: 100000
-DOMAIN-SUFFIX,runemusic.xyz
-DOMAIN-SUFFIX,runemutant.xyz
-DOMAIN-SUFFIX,runena.xyz
-DOMAIN-SUFFIX,runeneed.xyz
-DOMAIN-SUFFIX,runenode.xyz
-DOMAIN-SUFFIX,runenodes.xyz
-DOMAIN-SUFFIX,runenonfungible.xyz
-DOMAIN-SUFFIX,runenter.xyz
-DOMAIN-SUFFIX,runentry.xyz
-DOMAIN-SUFFIX,runepace.xyz
-DOMAIN-SUFFIX,runepart.xyz
-DOMAIN-SUFFIX,runepassport.xyz
-DOMAIN-SUFFIX,runepedia.xyz
 DOMAIN-SUFFIX,runepics.xyz
 DOMAIN-SUFFIX,runepile.xyz
 DOMAIN-SUFFIX,runepixel.xyz
@@ -2859,7 +2846,6 @@ DOMAIN-SUFFIX,samuelsbrothersdumpsterrental.store
 DOMAIN-SUFFIX,samueltaussat.com
 DOMAIN-SUFFIX,samuelvh.com
 DOMAIN-SUFFIX,samui-delivery.com
-DOMAIN-SUFFIX,samul.elblag.pl
 DOMAIN-SUFFIX,samunae.com
 DOMAIN-SUFFIX,samurai-car-jpn.com
 DOMAIN-SUFFIX,samuraibangalore.com
@@ -23526,6 +23512,7 @@ DOMAIN-SUFFIX,sogecodel-tracking.com
 DOMAIN-SUFFIX,sogepr967.info
 DOMAIN-SUFFIX,sogexoman.in
 DOMAIN-SUFFIX,soggudebil.store
+DOMAIN-SUFFIX,sogo-download.oss-cn-hongkong.aliyuncs.com
 DOMAIN-SUFFIX,sogou-ime.hl.cn
 DOMAIN-SUFFIX,sogou-ws.com
 DOMAIN-SUFFIX,sogoumuse.com.cn
@@ -27317,7 +27304,6 @@ DOMAIN-SUFFIX,sp-yijia-live.com
 DOMAIN-SUFFIX,sp-yuyantiyu-live.com
 DOMAIN-SUFFIX,sp.av.it
 DOMAIN-SUFFIX,sp.care-sale.shop
-DOMAIN-SUFFIX,sp.negrrwe.info
 DOMAIN-SUFFIX,sp0m.com
 DOMAIN-SUFFIX,sp0t.biz
 DOMAIN-SUFFIX,sp1-d.jp
@@ -34775,7 +34761,6 @@ DOMAIN-SUFFIX,stasy.in
 DOMAIN-SUFFIX,stat-ledger.com
 DOMAIN-SUFFIX,stat.51buy.com
 DOMAIN-SUFFIX,stat.appioapp.com
-DOMAIN-SUFFIX,stat.bestcompliance.net
 DOMAIN-SUFFIX,stat.info-stream.net
 DOMAIN-SUFFIX,stat.keitaro.company
 DOMAIN-SUFFIX,stat.upload-logs.com
@@ -44474,6 +44459,7 @@ DOMAIN-SUFFIX,sushi-com.surf
 DOMAIN-SUFFIX,sushi-express24.de
 DOMAIN-SUFFIX,sushi-swap.biz
 DOMAIN-SUFFIX,sushiacademy.xyz
+DOMAIN-SUFFIX,sushiandpoke.pt
 DOMAIN-SUFFIX,sushibig.xyz
 DOMAIN-SUFFIX,sushibio.xyz
 DOMAIN-SUFFIX,sushiboy.xyz
@@ -78564,6 +78550,7 @@ DOMAIN-SUFFIX,utvlifesport.com
 DOMAIN-SUFFIX,utvrent.com
 DOMAIN-SUFFIX,utyf1.com
 DOMAIN-SUFFIX,utzpkru.411.com1.ru
+DOMAIN-SUFFIX,uu.v2raynapps.com.cn
 DOMAIN-SUFFIX,uu1999.com
 DOMAIN-SUFFIX,uu88.fashion
 DOMAIN-SUFFIX,uu8833.com
@@ -81722,7 +81709,6 @@ DOMAIN-SUFFIX,vejasfr.fr
 DOMAIN-SUFFIX,vejasnorge.com
 DOMAIN-SUFFIX,vejasoldes.fr
 DOMAIN-SUFFIX,vejnerion.net
-DOMAIN-SUFFIX,vejnqoajk1soxy1x.public.blob.vercel-storage.com
 DOMAIN-SUFFIX,vek-re.com
 DOMAIN-SUFFIX,vekaria.com
 DOMAIN-SUFFIX,vekilhub.com
@@ -92280,6 +92266,7 @@ DOMAIN-SUFFIX,w4rqyw.casa
 DOMAIN-SUFFIX,w5ax7q.fit
 DOMAIN-SUFFIX,w5k9pr.fit
 DOMAIN-SUFFIX,w5mpc.cfd
+DOMAIN-SUFFIX,w5q.eu
 DOMAIN-SUFFIX,w5qarm.club
 DOMAIN-SUFFIX,w5sndz.sbs
 DOMAIN-SUFFIX,w61.1piecemanga.com
@@ -100003,3 +99990,16 @@ DOMAIN-SUFFIX,willowtable.eu
 DOMAIN-SUFFIX,willowveil.org
 DOMAIN-SUFFIX,willpconfi.store
 DOMAIN-SUFFIX,willrogersranchfoundation.org
+DOMAIN-SUFFIX,willscasino.fr
+DOMAIN-SUFFIX,willscovid19.com
+DOMAIN-SUFFIX,willstevenson.co.uk
+DOMAIN-SUFFIX,willstonemidlevel.com
+DOMAIN-SUFFIX,willwintrading.com
+DOMAIN-SUFFIX,willybudig5795.lat
+DOMAIN-SUFFIX,wilmanrossoinmobiliaria.com
+DOMAIN-SUFFIX,wilmingtonpaving.com
+DOMAIN-SUFFIX,wilmingtonroof.com
+DOMAIN-SUFFIX,wilnorlegal.com
+DOMAIN-SUFFIX,wilresa.com
+DOMAIN-SUFFIX,wilrob.fr
+DOMAIN-SUFFIX,wilsonbrook.eu

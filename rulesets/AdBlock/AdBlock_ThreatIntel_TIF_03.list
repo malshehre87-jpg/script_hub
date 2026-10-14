@@ -3,12 +3,6 @@
 # Category-Key: ThreatIntel_TIF
 # Shard: 3/6
 # Total Rules: 100000
-DOMAIN-SUFFIX,fenzophal.xyz
-DOMAIN-SUFFIX,fenzoria.com
-DOMAIN-SUFFIX,fenzpr.com
-DOMAIN-SUFFIX,fenzy.pl
-DOMAIN-SUFFIX,feo.info
-DOMAIN-SUFFIX,feordshiptransdelivery.live
 DOMAIN-SUFFIX,feouc.com
 DOMAIN-SUFFIX,fepal.com.br
 DOMAIN-SUFFIX,fepicoe.com
@@ -641,6 +635,7 @@ DOMAIN-SUFFIX,fictionallanguageservices.com
 DOMAIN-SUFFIX,fictionbitcoin.xyz
 DOMAIN-SUFFIX,fictioncypher.xyz
 DOMAIN-SUFFIX,fictionreaderssummit.com
+DOMAIN-SUFFIX,ficus.in
 DOMAIN-SUFFIX,fidalsa.de
 DOMAIN-SUFFIX,fidatacapitovia-it.live
 DOMAIN-SUFFIX,fidatacapitovia.com
@@ -13018,7 +13013,6 @@ DOMAIN-SUFFIX,fotomedia.hr
 DOMAIN-SUFFIX,fotopiksel.com.pl
 DOMAIN-SUFFIX,fotopuan.com
 DOMAIN-SUFFIX,fotosa.net
-DOMAIN-SUFFIX,fotoschop.cl
 DOMAIN-SUFFIX,fotosdevestidosdenovias.com
 DOMAIN-SUFFIX,fotosoner.live
 DOMAIN-SUFFIX,fotosypniewski.live
@@ -30210,7 +30204,6 @@ DOMAIN-SUFFIX,getorganiconamazon.com
 DOMAIN-SUFFIX,getout.besaba.com
 DOMAIN-SUFFIX,getoutdoors.xyz
 DOMAIN-SUFFIX,getoutofoffice.app
-DOMAIN-SUFFIX,getoutofthebackseat.com
 DOMAIN-SUFFIX,getowl.xyz
 DOMAIN-SUFFIX,getowns.xyz
 DOMAIN-SUFFIX,getpaani.xyz
@@ -73874,6 +73867,7 @@ DOMAIN-SUFFIX,indomatrixgroup.com
 DOMAIN-SUFFIX,indonesia-recipe.com
 DOMAIN-SUFFIX,indonesia.thor-hammer.me
 DOMAIN-SUFFIX,indonesiabertumbuh.com
+DOMAIN-SUFFIX,indonesias.me
 DOMAIN-SUFFIX,indooradventure.club
 DOMAIN-SUFFIX,indoorape.xyz
 DOMAIN-SUFFIX,indoorbiz.xyz
@@ -91087,7 +91081,6 @@ DOMAIN-SUFFIX,kratuxsillarepubblica.net
 DOMAIN-SUFFIX,kratuxsillarepublica.com
 DOMAIN-SUFFIX,kratuxsillarepublica.live
 DOMAIN-SUFFIX,krau32sdf5.eu.cc
-DOMAIN-SUFFIX,krause-fahrzeuge.de
 DOMAIN-SUFFIX,krautodetailing.com
 DOMAIN-SUFFIX,kravdil.shop
 DOMAIN-SUFFIX,kravelluxzorvianis.net
@@ -100003,3 +99996,10 @@ DOMAIN-SUFFIX,lithopaedia.net
 DOMAIN-SUFFIX,lithopaedia.org
 DOMAIN-SUFFIX,lithoscape.net
 DOMAIN-SUFFIX,lithoscapes.com
+DOMAIN-SUFFIX,lithoscapes.org
+DOMAIN-SUFFIX,lithuaniaauto.xyz
+DOMAIN-SUFFIX,lithuaniachat.xyz
+DOMAIN-SUFFIX,lithuaniadeep.xyz
+DOMAIN-SUFFIX,lithuaniamoon.xyz
+DOMAIN-SUFFIX,lithuaniaport.xyz
+DOMAIN-SUFFIX,lithuaniarank.xyz

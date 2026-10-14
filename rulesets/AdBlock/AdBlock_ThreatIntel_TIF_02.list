@@ -3,10 +3,6 @@
 # Category-Key: ThreatIntel_TIF
 # Shard: 2/6
 # Total Rules: 100000
-DOMAIN-SUFFIX,catalien.xyz
-DOMAIN-SUFFIX,catalinamckay.com
-DOMAIN-SUFFIX,catallyst.com.br
-DOMAIN-SUFFIX,catalog-delivery.com
 DOMAIN-SUFFIX,catalog.www-aldiana.de
 DOMAIN-SUFFIX,catalog.www-kupplung.de
 DOMAIN-SUFFIX,catalog3.calmtexture.click
@@ -5862,7 +5858,6 @@ DOMAIN-SUFFIX,cepal-caisse-epargne.fr
 DOMAIN-SUFFIX,cepama.top
 DOMAIN-SUFFIX,cepanex.com
 DOMAIN-SUFFIX,cepawin.com
-DOMAIN-SUFFIX,cepde.org
 DOMAIN-SUFFIX,cephidaetech.click
 DOMAIN-SUFFIX,cepiyi.net
 DOMAIN-SUFFIX,cepliss.info
@@ -36403,7 +36398,6 @@ DOMAIN-SUFFIX,csgoweaponskins.net
 DOMAIN-SUFFIX,csgowild.com
 DOMAIN-SUFFIX,csgoxdomain.us
 DOMAIN-SUFFIX,csgozone.co.uk
-DOMAIN-SUFFIX,csgroup.host
 DOMAIN-SUFFIX,csgroup.zip
 DOMAIN-SUFFIX,csgsuo.ru.com
 DOMAIN-SUFFIX,cshallows.click
@@ -89904,6 +89898,7 @@ DOMAIN-SUFFIX,everexedgefoundation.net
 DOMAIN-SUFFIX,everexedgefoundationes.com
 DOMAIN-SUFFIX,everfield.mobi
 DOMAIN-SUFFIX,everfinance.xyz
+DOMAIN-SUFFIX,evergabe-bund.de
 DOMAIN-SUFFIX,everglorylines.com
 DOMAIN-SUFFIX,evergreen-cloth.shop
 DOMAIN-SUFFIX,evergreen-design-studio.space
@@ -93154,7 +93149,6 @@ DOMAIN-SUFFIX,fablabmetalworks.com
 DOMAIN-SUFFIX,fablabsaigon.org
 DOMAIN-SUFFIX,fable-lair.com
 DOMAIN-SUFFIX,fable-range.com
-DOMAIN-SUFFIX,fable-shine.com
 DOMAIN-SUFFIX,fable-wheels.com
 DOMAIN-SUFFIX,fableandglass.xyz
 DOMAIN-SUFFIX,fableape.xyz
@@ -100003,3 +99997,9 @@ DOMAIN-SUFFIX,fenwickhouse.eu
 DOMAIN-SUFFIX,fenwickpier.com
 DOMAIN-SUFFIX,fenwicksonprovidence.com
 DOMAIN-SUFFIX,fenzgard.com
+DOMAIN-SUFFIX,fenzophal.xyz
+DOMAIN-SUFFIX,fenzoria.com
+DOMAIN-SUFFIX,fenzpr.com
+DOMAIN-SUFFIX,fenzy.pl
+DOMAIN-SUFFIX,feo.info
+DOMAIN-SUFFIX,feordshiptransdelivery.live

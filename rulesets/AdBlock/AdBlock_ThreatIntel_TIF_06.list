@@ -2,20 +2,7 @@
 # Purpose: HaGeZi TIF medium 威胁情报
 # Category-Key: ThreatIntel_TIF
 # Shard: 6/6
-# Total Rules: 19059
-DOMAIN-SUFFIX,willscasino.fr
-DOMAIN-SUFFIX,willscovid19.com
-DOMAIN-SUFFIX,willstevenson.co.uk
-DOMAIN-SUFFIX,willstonemidlevel.com
-DOMAIN-SUFFIX,willwintrading.com
-DOMAIN-SUFFIX,willybudig5795.lat
-DOMAIN-SUFFIX,wilmanrossoinmobiliaria.com
-DOMAIN-SUFFIX,wilmingtonpaving.com
-DOMAIN-SUFFIX,wilmingtonroof.com
-DOMAIN-SUFFIX,wilnorlegal.com
-DOMAIN-SUFFIX,wilresa.com
-DOMAIN-SUFFIX,wilrob.fr
-DOMAIN-SUFFIX,wilsonbrook.eu
+# Total Rules: 19047
 DOMAIN-SUFFIX,wilsonpost13.com
 DOMAIN-SUFFIX,wilsonsalbanydumpsterrental.store
 DOMAIN-SUFFIX,wilsonsalhambradumpsterrentalinc.store
@@ -7730,6 +7717,7 @@ DOMAIN-SUFFIX,xiarihuabei001.com
 DOMAIN-SUFFIX,xiayiqishuangseqiutuijiana.com.cn
 DOMAIN-SUFFIX,xiayiqishuangseqiutuijiana9.com.cn
 DOMAIN-SUFFIX,xiazai2.net
+DOMAIN-SUFFIX,xiazailianjie.com
 DOMAIN-SUFFIX,xiazailianjieoss.com
 DOMAIN-SUFFIX,xiazailou.co
 DOMAIN-SUFFIX,xibanyaliuxue365.com

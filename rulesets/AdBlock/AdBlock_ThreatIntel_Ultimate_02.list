@@ -2,13 +2,7 @@
 # Purpose: HaGeZi DNS-Blocklists ultimate
 # Category-Key: ThreatIntel_Ultimate
 # Shard: 2/2
-# Total Rules: 34687
-DOMAIN-SUFFIX,sombrero.yahoo.net
-DOMAIN-SUFFIX,somc-lifelog-logger.appspot.com
-DOMAIN-SUFFIX,some.demuz.ru
-DOMAIN-SUFFIX,somebestgamesus.com
-DOMAIN-SUFFIX,somehowoctavian.com
-DOMAIN-SUFFIX,someplaceopened.com
+# Total Rules: 34681
 DOMAIN-SUFFIX,somervillenj.org
 DOMAIN-SUFFIX,somethingenigma.com
 DOMAIN-SUFFIX,somethingmassive.com
@@ -14466,7 +14460,6 @@ DOMAIN-SUFFIX,summerstirs.com
 DOMAIN-SUFFIX,summervibes.de
 DOMAIN-SUFFIX,summervillespca.org
 DOMAIN-SUFFIX,summit.io
-DOMAIN-SUFFIX,summitcapitalpatners.ink
 DOMAIN-SUFFIX,summitmoments.com
 DOMAIN-SUFFIX,summitpublicadjuster.com
 DOMAIN-SUFFIX,summitray.com
@@ -16168,6 +16161,7 @@ DOMAIN-SUFFIX,tanner-shoes.com
 DOMAIN-SUFFIX,tannersleathercare.com
 DOMAIN-SUFFIX,tannoshealth.com
 DOMAIN-SUFFIX,tanop.uk
+DOMAIN-SUFFIX,tantegacor88.link
 DOMAIN-SUFFIX,tanvirhasan.dev
 DOMAIN-SUFFIX,tanwis.com
 DOMAIN-SUFFIX,tanzbienen.de

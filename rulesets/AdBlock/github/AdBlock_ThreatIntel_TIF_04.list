@@ -3,13 +3,6 @@
 # Category-Key: ThreatIntel_TIF
 # Shard: 4/6
 # Total Rules: 100000
-DOMAIN-SUFFIX,lithoscapes.org
-DOMAIN-SUFFIX,lithuaniaauto.xyz
-DOMAIN-SUFFIX,lithuaniachat.xyz
-DOMAIN-SUFFIX,lithuaniadeep.xyz
-DOMAIN-SUFFIX,lithuaniamoon.xyz
-DOMAIN-SUFFIX,lithuaniaport.xyz
-DOMAIN-SUFFIX,lithuaniarank.xyz
 DOMAIN-SUFFIX,lithuaniarobo.xyz
 DOMAIN-SUFFIX,lithuaniatrip.xyz
 DOMAIN-SUFFIX,lithuaniawork.xyz
@@ -1113,7 +1106,6 @@ DOMAIN-SUFFIX,livingdom.shop
 DOMAIN-SUFFIX,livingearthsolutions.com
 DOMAIN-SUFFIX,livingfullycoachingsite.com
 DOMAIN-SUFFIX,livingincinema.com
-DOMAIN-SUFFIX,livinginpurpose.co.za
 DOMAIN-SUFFIX,livinginsim.com
 DOMAIN-SUFFIX,livinglabimago.fr
 DOMAIN-SUFFIX,livingledger.online
@@ -5235,7 +5227,6 @@ DOMAIN-SUFFIX,lumineuxinvexustrade.com
 DOMAIN-SUFFIX,luminex-drive.com
 DOMAIN-SUFFIX,luminex-spiral.com
 DOMAIN-SUFFIX,luminexai-es.live
-DOMAIN-SUFFIX,luminexclient.net
 DOMAIN-SUFFIX,luminexence.com
 DOMAIN-SUFFIX,luminhjique.shop
 DOMAIN-SUFFIX,luminjob.com
@@ -8396,7 +8387,6 @@ DOMAIN-SUFFIX,mandaauto.xyz
 DOMAIN-SUFFIX,mandafarm.xyz
 DOMAIN-SUFFIX,mandala-ou.com
 DOMAIN-SUFFIX,mandallarealestate.com
-DOMAIN-SUFFIX,mandarin.net.au
 DOMAIN-SUFFIX,mandarinfranchise.com
 DOMAIN-SUFFIX,mandarinlatino.com
 DOMAIN-SUFFIX,mandash.xyz
@@ -23964,7 +23954,6 @@ DOMAIN-SUFFIX,mobilesigning.xyz
 DOMAIN-SUFFIX,mobilespatial.xyz
 DOMAIN-SUFFIX,mobiletesting.xyz
 DOMAIN-SUFFIX,mobiletip.xyz
-DOMAIN-SUFFIX,mobiletoolapp.com
 DOMAIN-SUFFIX,mobiletrustyguard.com
 DOMAIN-SUFFIX,mobilevendors.xyz
 DOMAIN-SUFFIX,mobilevibes.xyz
@@ -52314,6 +52303,7 @@ DOMAIN-SUFFIX,osbemmelhoresdalimpeza.com.br
 DOMAIN-SUFFIX,osbermegamarket.cbnalozhka.yandex.mpochtabank.cdek.mokid8064hofdcba0865503143update.gtllrvik33znrejm.l.tunwg.com
 DOMAIN-SUFFIX,osbglmoail.com
 DOMAIN-SUFFIX,osblock.xyz
+DOMAIN-SUFFIX,osbot.net
 DOMAIN-SUFFIX,osc36.whalepolice.xyz
 DOMAIN-SUFFIX,oscar-gift.com
 DOMAIN-SUFFIX,oscar-spin-casino.fr
@@ -52467,7 +52457,6 @@ DOMAIN-SUFFIX,osmangaziescortadresi.xyz
 DOMAIN-SUFFIX,osmaniyeescortadresi.xyz
 DOMAIN-SUFFIX,osmanlisark.com
 DOMAIN-SUFFIX,osmanlisorgupaneli.space
-DOMAIN-SUFFIX,osmb.net
 DOMAIN-SUFFIX,osmimedia.com
 DOMAIN-SUFFIX,osminor.com
 DOMAIN-SUFFIX,osmoghost.com
@@ -56775,7 +56764,6 @@ DOMAIN-SUFFIX,parentsvault.xyz
 DOMAIN-SUFFIX,parentsvision.xyz
 DOMAIN-SUFFIX,parentsyield.xyz
 DOMAIN-SUFFIX,paresidkpl.shop
-DOMAIN-SUFFIX,paretandassociates.screenconnect.com
 DOMAIN-SUFFIX,paretoreward.xyz
 DOMAIN-SUFFIX,paretotalent.com
 DOMAIN-SUFFIX,paretsdent.com
@@ -68753,7 +68741,6 @@ DOMAIN-SUFFIX,poligonbaltas.com
 DOMAIN-SUFFIX,poligun.com.tr
 DOMAIN-SUFFIX,polikov.hu
 DOMAIN-SUFFIX,polinef.id
-DOMAIN-SUFFIX,polinex.org
 DOMAIN-SUFFIX,polinexis-ai.com
 DOMAIN-SUFFIX,polinexpro.com
 DOMAIN-SUFFIX,polinortix-platform.com
@@ -100003,3 +99990,16 @@ DOMAIN-SUFFIX,runemodel.xyz
 DOMAIN-SUFFIX,runemonkes.xyz
 DOMAIN-SUFFIX,runemoon.xyz
 DOMAIN-SUFFIX,runemultichain.xyz
+DOMAIN-SUFFIX,runemusic.xyz
+DOMAIN-SUFFIX,runemutant.xyz
+DOMAIN-SUFFIX,runena.xyz
+DOMAIN-SUFFIX,runeneed.xyz
+DOMAIN-SUFFIX,runenode.xyz
+DOMAIN-SUFFIX,runenodes.xyz
+DOMAIN-SUFFIX,runenonfungible.xyz
+DOMAIN-SUFFIX,runenter.xyz
+DOMAIN-SUFFIX,runentry.xyz
+DOMAIN-SUFFIX,runepace.xyz
+DOMAIN-SUFFIX,runepart.xyz
+DOMAIN-SUFFIX,runepassport.xyz
+DOMAIN-SUFFIX,runepedia.xyz

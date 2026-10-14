@@ -47041,12 +47041,6 @@
   },
   {
     "source": "adg.list",
-    "candidate": "DOMAIN-SUFFIX,steamers77.com",
-    "reason": "protected-domain-intersection",
-    "risk": "protected-service"
-  },
-  {
-    "source": "adg.list",
     "candidate": "DOMAIN-SUFFIX,steammarge.cfd",
     "reason": "protected-domain-intersection",
     "risk": "protected-service"
@@ -52063,12 +52057,6 @@
   },
   {
     "source": "anti-ad-surge2.txt",
-    "candidate": ".dttjjkkllzbvesjzndtp.vercel.app",
-    "reason": "protected-domain-intersection",
-    "risk": "protected-service"
-  },
-  {
-    "source": "anti-ad-surge2.txt",
     "candidate": ".dualstack-logs.amap.com",
     "reason": "protected-domain-intersection",
     "risk": "protected-service"
@@ -52612,12 +52600,6 @@
     "candidate": ".ggxwb.miguvideo.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
-  },
-  {
-    "source": "anti-ad-surge2.txt",
-    "candidate": ".gibddru.vercel.app",
-    "reason": "protected-domain-intersection",
-    "risk": "protected-service"
   },
   {
     "source": "anti-ad-surge2.txt",
@@ -76544,12 +76526,6 @@
   {
     "source": "filter.txt",
     "candidate": "||steamedkipper.cyou^",
-    "reason": "protected-domain-intersection",
-    "risk": "protected-service"
-  },
-  {
-    "source": "filter.txt",
-    "candidate": "||steamers77.com^",
     "reason": "protected-domain-intersection",
     "risk": "protected-service"
   },
