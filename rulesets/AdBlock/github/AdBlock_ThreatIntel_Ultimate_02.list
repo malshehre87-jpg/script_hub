@@ -2,8 +2,7 @@
 # Purpose: HaGeZi DNS-Blocklists ultimate
 # Category-Key: ThreatIntel_Ultimate
 # Shard: 2/2
-# Total Rules: 38118
-DOMAIN-SUFFIX,sgtm.rijless.nl
+# Total Rules: 38117
 DOMAIN-SUFFIX,sgtm.riksbyggen.se
 DOMAIN-SUFFIX,sgtm.rinascimento.com
 DOMAIN-SUFFIX,sgtm.rinta-jouppi.com

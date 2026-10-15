@@ -2,7 +2,7 @@
 # Policy: PROXY
 # Node: Any
 # Description: Rust-merged canonical ruleset
-# Rules: 40053
+# Rules: 40059
 DOMAIN,083link.brsserver.com.br
 DOMAIN,10.speedtesttvzamora.com
 DOMAIN,1010.hkspeedtest.com
@@ -24635,6 +24635,7 @@ DOMAIN-SUFFIX,gv.com
 DOMAIN-SUFFIX,gvlib.com
 DOMAIN-SUFFIX,gvm.com.tw
 DOMAIN-SUFFIX,gvt0.com
+DOMAIN-SUFFIX,gvt1-cn.com
 DOMAIN-SUFFIX,gvt1.com
 DOMAIN-SUFFIX,gvt2-cn.com
 DOMAIN-SUFFIX,gvt2.com
@@ -31920,6 +31921,7 @@ DOMAIN-SUFFIX,playshowtv.com
 DOMAIN-SUFFIX,playstation
 DOMAIN-SUFFIX,playstation.com
 DOMAIN-SUFFIX,playstation.net
+DOMAIN-SUFFIX,playstationnetwork.com
 DOMAIN-SUFFIX,playvalorant.com
 DOMAIN-SUFFIX,playvids.com
 DOMAIN-SUFFIX,playwarcraft3.com
@@ -33669,6 +33671,7 @@ DOMAIN-SUFFIX,scatvids.club
 DOMAIN-SUFFIX,scatville.com
 DOMAIN-SUFFIX,scb.ru
 DOMAIN-SUFFIX,scdn.co
+DOMAIN-SUFFIX,scea.com
 DOMAIN-SUFFIX,scene7.com
 DOMAIN-SUFFIX,scenesource.me
 DOMAIN-SUFFIX,scharferporno.com
@@ -34621,6 +34624,7 @@ DOMAIN-SUFFIX,sony.com.ni
 DOMAIN-SUFFIX,sony.com.pa
 DOMAIN-SUFFIX,sony.com.pe
 DOMAIN-SUFFIX,sony.com.ph
+DOMAIN-SUFFIX,sony.com.py
 DOMAIN-SUFFIX,sony.com.sg
 DOMAIN-SUFFIX,sony.com.sv
 DOMAIN-SUFFIX,sony.com.tr
@@ -34663,8 +34667,10 @@ DOMAIN-SUFFIX,sonyclassics.com
 DOMAIN-SUFFIX,sonydesign.com
 DOMAIN-SUFFIX,sonydna.com
 DOMAIN-SUFFIX,sonyglobalsolutions.jp
+DOMAIN-SUFFIX,sonyinteractive.com
 DOMAIN-SUFFIX,sonykigyo.jp
 DOMAIN-SUFFIX,sonylatvija.com
+DOMAIN-SUFFIX,sonymusic.com.hk
 DOMAIN-SUFFIX,sonynetwork.co.jp
 DOMAIN-SUFFIX,sonypcl.jp
 DOMAIN-SUFFIX,sonypictures.com

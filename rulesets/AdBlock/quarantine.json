@@ -87607,6 +87607,12 @@
   },
   {
     "source": "reject.txt",
+    "candidate": ".123p.netflixlife.com",
+    "reason": "protected-domain-intersection",
+    "risk": "protected-service"
+  },
+  {
+    "source": "reject.txt",
     "candidate": ".152media.cloud",
     "reason": "broad-media-domain",
     "risk": "broad-media"
@@ -91178,6 +91184,12 @@
   {
     "source": "reject.txt",
     "candidate": ".djpgwdcspfixy.online",
+    "reason": "broad-media-domain",
+    "risk": "broad-media"
+  },
+  {
+    "source": "reject.txt",
+    "candidate": ".djpgypbrdacco.space",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -102730,12 +102742,6 @@
     "candidate": ".terriblethumb.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
-  },
-  {
-    "source": "reject.txt",
-    "candidate": ".teslaamg.obs.cn-east-3.myhuaweicloud.com",
-    "reason": "protected-domain-intersection",
-    "risk": "protected-service"
   },
   {
     "source": "reject.txt",
