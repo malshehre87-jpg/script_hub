@@ -2,7 +2,7 @@
 # Purpose: HaGeZi / skk 其它威胁与钓鱼域名集
 # Category-Key: ThreatIntel
 # Shard: 1/1
-# Total Rules: 86356
+# Total Rules: 86357
 DOMAIN-SUFFIX,0-1-x.16215785.xyz
 DOMAIN-SUFFIX,0-1-x.26215785.xyz
 DOMAIN-SUFFIX,00-uludag-edu-tr.weebly.com
@@ -45655,6 +45655,7 @@ DOMAIN-SUFFIX,limonium.lakeudenvesi.info
 DOMAIN-SUFFIX,limonrinki.cyou
 DOMAIN-SUFFIX,limpost.b6vtfc.sbs
 DOMAIN-SUFFIX,limueol.shop
+DOMAIN-SUFFIX,lin01.bid
 DOMAIN-SUFFIX,lin2er.lat
 DOMAIN-SUFFIX,linaryzh.site
 DOMAIN-SUFFIX,linatibifadao.pro

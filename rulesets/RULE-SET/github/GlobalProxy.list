@@ -2,7 +2,7 @@
 # Policy: PROXY
 # Node: Any
 # Description: Rust-merged canonical ruleset
-# Rules: 40054
+# Rules: 40053
 DOMAIN,083link.brsserver.com.br
 DOMAIN,10.speedtesttvzamora.com
 DOMAIN,1010.hkspeedtest.com
@@ -24635,7 +24635,6 @@ DOMAIN-SUFFIX,gv.com
 DOMAIN-SUFFIX,gvlib.com
 DOMAIN-SUFFIX,gvm.com.tw
 DOMAIN-SUFFIX,gvt0.com
-DOMAIN-SUFFIX,gvt1-cn.com
 DOMAIN-SUFFIX,gvt1.com
 DOMAIN-SUFFIX,gvt2-cn.com
 DOMAIN-SUFFIX,gvt2.com
