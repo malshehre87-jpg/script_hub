@@ -439,38 +439,26 @@ impl RuleBoundary {
     }
 }
 
-fn read_adblock_boundary(root: &Path) -> Result<RuleBoundary, String> {
+fn read_adblock_boundary(
+    root: &Path,
+    apple: Option<&RuleBoundary>,
+) -> Result<(RuleBoundary, usize), String> {
     let mut boundary = RuleBoundary::default();
-    for entry in fs::read_dir(root.join("rulesets/AdBlock"))
-        .map_err(|error| error.to_string())?
-        .filter_map(Result::ok)
-    {
-        let path = entry.path();
+    let mut apple_overlaps = 0;
+    for entry in fs::read_dir(root.join("rulesets/AdBlock")).map_err(|error| error.to_string())? {
+        let path = entry.map_err(|error| error.to_string())?.path();
         if path.extension().and_then(|value| value.to_str()) == Some("list") {
-            for rule in read_rules(&path)? {
+            let rules = read_rules(&path)?;
+            if let Some(apple) = apple {
+                apple_overlaps += overlap_count(&rules, apple);
+            }
+            for rule in rules {
                 boundary.insert(&rule);
             }
         }
     }
     boundary.finish();
-    Ok(boundary)
-}
-
-fn count_adblock_overlaps(root: &Path, boundary: &RuleBoundary) -> Result<usize, String> {
-    let mut count = 0;
-    for entry in fs::read_dir(root.join("rulesets/AdBlock"))
-        .map_err(|error| error.to_string())?
-        .filter_map(Result::ok)
-    {
-        let path = entry.path();
-        if path.extension().and_then(|value| value.to_str()) == Some("list") {
-            count += read_rules(&path)?
-                .iter()
-                .filter(|rule| boundary.intersects(rule))
-                .count();
-        }
-    }
-    Ok(count)
+    Ok((boundary, apple_overlaps))
 }
 
 fn read_nsfw_protected_rules(root: &Path) -> Result<BTreeSet<String>, String> {
@@ -516,7 +504,6 @@ pub fn validate_category_boundaries(root: &Path) -> Result<Vec<String>, String> 
     let directory = root.join("rulesets/RULE-SET");
     let direct = read_rules(&directory.join("Direct.list"))?;
     let proxy = read_rules(&directory.join("GlobalProxy.list"))?;
-    let adblock = read_adblock_boundary(root)?;
     let apple_path = directory.join("Apple.list");
     let apple = if apple_path.is_file() {
         let rules = read_rules(&apple_path)?;
@@ -524,6 +511,7 @@ pub fn validate_category_boundaries(root: &Path) -> Result<Vec<String>, String> 
     } else {
         None
     };
+    let (adblock, apple_adblock) = read_adblock_boundary(root, apple.as_ref())?;
     let mut errors = Vec::new();
     if directory.join("Gaming_Web.list").exists() {
         let download = read_rules(&directory.join("Gaming_Download.list"))?;
@@ -583,13 +571,10 @@ pub fn validate_category_boundaries(root: &Path) -> Result<Vec<String>, String> 
             ));
         }
     }
-    if let Some(apple) = &apple {
-        let apple_adblock = count_adblock_overlaps(root, apple)?;
-        if apple_adblock > 0 {
-            errors.push(format!(
-                "AdBlock contains {apple_adblock} Apple service overlap(s)"
-            ));
-        }
+    if apple_adblock > 0 {
+        errors.push(format!(
+            "AdBlock contains {apple_adblock} Apple service overlap(s)"
+        ));
     }
     Ok(errors)
 }
@@ -605,7 +590,7 @@ pub fn enforce_category_boundaries(root: &Path) -> Result<(usize, usize, usize, 
     let apple = RuleBoundary::from_rules(&apple_rules);
     let removed_apple_from_direct = remove_covered(&mut direct, &apple);
     let removed_apple_from_proxy = remove_covered(&mut proxy, &apple);
-    let adblock = read_adblock_boundary(root)?;
+    let (adblock, _) = read_adblock_boundary(root, None)?;
 
     let removed_from_direct = remove_covered(&mut direct, &adblock);
     let proxy_before = proxy.len();
@@ -784,6 +769,11 @@ mod tests {
             "DOMAIN,metrics.apple.test\n",
         )
         .unwrap();
+        fs::write(
+            adblock.join("Telemetry.list"),
+            "DOMAIN,notifications.apple.test\n",
+        )
+        .unwrap();
 
         let errors = validate_category_boundaries(&root).unwrap();
         assert_eq!(
@@ -791,7 +781,7 @@ mod tests {
             vec![
                 "Direct contains 1 Apple-owned rule(s); Apple routing belongs to Apple.list",
                 "GlobalProxy contains 1 Apple-owned rule(s); Apple routing belongs to Apple.list",
-                "AdBlock contains 1 Apple service overlap(s)",
+                "AdBlock contains 2 Apple service overlap(s)",
             ]
         );
         assert_eq!(enforce_category_boundaries(&root).unwrap(), (0, 1, 1, 0));
