@@ -2,6 +2,7 @@ use regex::escape;
 use serde::Serialize;
 use std::collections::{HashMap, HashSet};
 use std::fs;
+use std::io::Read;
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
@@ -15,6 +16,34 @@ fn wildcard_to_regex(value: &str) -> String {
     let escaped = escape(value);
     let r = escaped.replace(r"\*", ".*").replace(r"\?", ".");
     format!("^{}$", r)
+}
+
+fn rule_fields(line: &str) -> Option<(&str, &str)> {
+    let mut fields = line.split(',');
+    Some((fields.next()?.trim(), fields.next()?.trim()))
+}
+
+fn files_equal(left: &Path, right: &Path) -> std::io::Result<bool> {
+    let mut left = fs::File::open(left)?;
+    let mut right = fs::File::open(right)?;
+    let left_len = left.metadata()?.len();
+    if left_len != right.metadata()?.len() {
+        return Ok(false);
+    }
+
+    let mut remaining = left_len;
+    let mut left_buffer = [0_u8; 32 * 1024];
+    let mut right_buffer = [0_u8; 32 * 1024];
+    while remaining > 0 {
+        let chunk_len = remaining.min(left_buffer.len() as u64) as usize;
+        left.read_exact(&mut left_buffer[..chunk_len])?;
+        right.read_exact(&mut right_buffer[..chunk_len])?;
+        if left_buffer[..chunk_len] != right_buffer[..chunk_len] {
+            return Ok(false);
+        }
+        remaining -= chunk_len as u64;
+    }
+    Ok(true)
 }
 
 fn srs_output_dir(list_file: &Path, root_dir: &Path) -> PathBuf {
@@ -54,7 +83,7 @@ fn compile_srs(list_file: &Path, root_dir: &Path, singbox_path: &str) -> bool {
         Err(_) => return false,
     };
 
-    let mut merged_rules: HashMap<String, HashSet<String>> = HashMap::new();
+    let mut merged_rules: HashMap<String, HashSet<String>> = HashMap::with_capacity(6);
     merged_rules.insert("domain".to_string(), HashSet::new());
     merged_rules.insert("domain_suffix".to_string(), HashSet::new());
     merged_rules.insert("domain_keyword".to_string(), HashSet::new());
@@ -67,54 +96,51 @@ fn compile_srs(list_file: &Path, root_dir: &Path, singbox_path: &str) -> bool {
         if trimmed.is_empty() || trimmed.starts_with('#') {
             continue;
         }
-        let parts: Vec<&str> = trimmed.split(',').collect();
-        if parts.len() < 2 {
+        let Some((rtype, val)) = rule_fields(trimmed) else {
             continue;
-        }
-        let rtype = parts[0].trim();
-        let val = parts[1].trim().to_string();
+        };
 
         match rtype {
             "DOMAIN" => {
                 if let Some(set) = merged_rules.get_mut("domain") {
-                    set.insert(val);
+                    set.insert(val.to_string());
                 }
             }
             "DOMAIN-SUFFIX" => {
                 if let Some(set) = merged_rules.get_mut("domain_suffix") {
-                    set.insert(val);
+                    set.insert(val.to_string());
                 }
             }
             "DOMAIN-KEYWORD" => {
                 if let Some(set) = merged_rules.get_mut("domain_keyword") {
-                    set.insert(val);
+                    set.insert(val.to_string());
                 }
             }
             "DOMAIN-REGEX" => {
                 if let Some(set) = merged_rules.get_mut("domain_regex") {
-                    set.insert(val);
+                    set.insert(val.to_string());
                 }
             }
             "DOMAIN-WILDCARD" => {
                 if let Some(set) = merged_rules.get_mut("domain_regex") {
-                    set.insert(wildcard_to_regex(&val));
+                    set.insert(wildcard_to_regex(val));
                 }
             }
             "IP-CIDR" | "IP-CIDR6" => {
                 if let Some(set) = merged_rules.get_mut("ip_cidr") {
-                    set.insert(val);
+                    set.insert(val.to_string());
                 }
             }
             "PROCESS-NAME" => {
                 if let Some(set) = merged_rules.get_mut("process_name") {
-                    set.insert(val);
+                    set.insert(val.to_string());
                 }
             }
             _ => {}
         }
     }
 
-    let mut final_rules: HashMap<String, Vec<String>> = HashMap::new();
+    let mut final_rules: HashMap<String, Vec<String>> = HashMap::with_capacity(6);
     for (k, v) in merged_rules {
         if !v.is_empty() {
             let mut list: Vec<String> = v.into_iter().collect();
@@ -155,9 +181,7 @@ fn compile_srs(list_file: &Path, root_dir: &Path, singbox_path: &str) -> bool {
     match output {
         Ok(out) => {
             if out.status.success() {
-                let changed = fs::read(&srs_tmp).ok().is_none_or(|new_bytes| {
-                    fs::read(&srs_file).map_or(true, |old_bytes| old_bytes != new_bytes)
-                });
+                let changed = !files_equal(&srs_tmp, &srs_file).unwrap_or(false);
                 if changed {
                     if fs::rename(&srs_tmp, &srs_file).is_err() {
                         let _ = fs::remove_file(&srs_tmp);
@@ -203,15 +227,18 @@ fn collect_srs_outputs(directory: &Path, outputs: &mut Vec<PathBuf>) -> Result<(
         let file_type = entry
             .file_type()
             .map_err(|error| format!("cannot inspect {}: {error}", entry.path().display()))?;
-        if file_type.is_file() && entry.path().extension().is_some_and(|ext| ext == "srs") {
-            outputs.push(entry.path());
+        if file_type.is_file() {
+            let path = entry.path();
+            if path.extension().is_some_and(|ext| ext == "srs") {
+                outputs.push(path);
+            }
         }
     }
     Ok(())
 }
 
 fn prune_stale_srs(list_files: &[PathBuf], root_dir: &Path) -> bool {
-    let mut expected_srs: HashSet<PathBuf> = HashSet::new();
+    let mut expected_srs: HashSet<PathBuf> = HashSet::with_capacity(list_files.len());
     for lf in list_files {
         if let Some(file_name) = lf.file_name().and_then(|f| f.to_str()) {
             let name = file_name.trim_end_matches(".list");
@@ -307,19 +334,20 @@ pub fn run_srs_generator(root_path: &str, singbox_path: &str) -> bool {
                     return false;
                 }
             };
-            if file_type.is_file()
-                && entry
-                    .path()
+            if file_type.is_file() {
+                let path = entry.path();
+                if path
                     .extension()
                     .is_some_and(|extension| extension == "list")
-            {
-                list_files.push(entry.path());
+                {
+                    list_files.push(path);
+                }
             }
         }
     }
 
     // Add extra files
-    let extra_source_files = vec![
+    let extra_source_files = [
         root_dir.join("rulesets/AdBlock/reject-drop.list"),
         root_dir.join("rulesets/AdBlock/reject-no-drop.list"),
         root_dir.join("rulesets/Sources/custom/substore.list"),
@@ -356,7 +384,7 @@ pub fn run_srs_generator(root_path: &str, singbox_path: &str) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use super::{prune_stale_srs, run_srs_generator};
+    use super::{files_equal, prune_stale_srs, rule_fields, run_srs_generator};
     use std::fs;
     use std::time::{SystemTime, UNIX_EPOCH};
 
@@ -366,6 +394,33 @@ mod tests {
             .unwrap()
             .as_nanos();
         std::env::temp_dir().join(format!("script-hub-srs-{name}-{unique}"))
+    }
+
+    #[test]
+    fn rule_fields_borrows_the_first_two_fields_without_changing_csv_semantics() {
+        assert_eq!(
+            rule_fields(" DOMAIN-SUFFIX , example.com , REJECT "),
+            Some(("DOMAIN-SUFFIX", "example.com"))
+        );
+        assert_eq!(rule_fields("DOMAIN-SUFFIX"), None);
+    }
+
+    #[test]
+    fn files_equal_compares_content_with_equal_and_different_sizes() {
+        let root = fixture_root("file-compare");
+        fs::create_dir_all(&root).unwrap();
+        let left = root.join("left.srs");
+        let right = root.join("right.srs");
+        fs::write(&left, b"stable output").unwrap();
+        fs::write(&right, b"stable output").unwrap();
+        assert!(files_equal(&left, &right).unwrap());
+
+        fs::write(&right, b"stable outpuX").unwrap();
+        assert!(!files_equal(&left, &right).unwrap());
+
+        fs::write(&right, b"changed").unwrap();
+        assert!(!files_equal(&left, &right).unwrap());
+        fs::remove_dir_all(root).unwrap();
     }
 
     #[test]

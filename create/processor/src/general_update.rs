@@ -314,6 +314,8 @@ pub fn split_gaming_rules(root: &Path) -> Result<(), String> {
             }
         }
     }
+    let mirror = directory.join("github");
+    fs::create_dir_all(&mirror).map_err(|error| error.to_string())?;
     for (name, rules) in [
         ("Gaming_Download", &download),
         ("Gaming_Play", &play),
@@ -325,8 +327,6 @@ pub fn split_gaming_rules(root: &Path) -> Result<(), String> {
             "USER-DEFINED",
             rules,
         )?;
-        let mirror = directory.join("github");
-        fs::create_dir_all(&mirror).map_err(|error| error.to_string())?;
         write_rules(
             &mirror.join(format!("{name}.list")),
             name,
@@ -343,6 +343,19 @@ struct RuleBoundary {
     suffixes: HashSet<String>,
     other: HashSet<String>,
     reversed_hosts: Vec<String>,
+}
+
+fn reverse_domain_labels(host: &str) -> String {
+    let mut reversed = String::with_capacity(host.len());
+    let mut first = true;
+    for label in host.rsplit('.') {
+        if !first {
+            reversed.push('.');
+        }
+        first = false;
+        reversed.push_str(label);
+    }
+    reversed
 }
 
 impl RuleBoundary {
@@ -371,12 +384,15 @@ impl RuleBoundary {
     }
 
     fn finish(&mut self) {
-        self.reversed_hosts = self
-            .domains
-            .iter()
-            .chain(&self.suffixes)
-            .map(|host| host.split('.').rev().collect::<Vec<_>>().join("."))
-            .collect();
+        let capacity = self.domains.len().saturating_add(self.suffixes.len());
+        let mut reversed_hosts = Vec::with_capacity(capacity);
+        reversed_hosts.extend(
+            self.domains
+                .iter()
+                .chain(&self.suffixes)
+                .map(|host| reverse_domain_labels(host)),
+        );
+        self.reversed_hosts = reversed_hosts;
         self.reversed_hosts.sort();
         self.reversed_hosts.dedup();
     }
@@ -395,7 +411,8 @@ impl RuleBoundary {
     }
 
     fn has_descendant(&self, suffix: &str) -> bool {
-        let prefix = format!("{}.", suffix.split('.').rev().collect::<Vec<_>>().join("."));
+        let mut prefix = reverse_domain_labels(suffix);
+        prefix.push('.');
         let index = self.reversed_hosts.partition_point(|host| host < &prefix);
         self.reversed_hosts
             .get(index)
@@ -626,10 +643,17 @@ pub fn enforce_category_boundaries(root: &Path) -> Result<(usize, usize, usize, 
 #[cfg(test)]
 mod tests {
     use super::{
-        discover_manifests, enforce_category_boundaries, split_gaming_rules,
+        discover_manifests, enforce_category_boundaries, reverse_domain_labels, split_gaming_rules,
         validate_category_boundaries,
     };
     use std::fs;
+
+    #[test]
+    fn reverse_domain_labels_avoids_intermediate_storage_without_changing_labels() {
+        assert_eq!(reverse_domain_labels("www.example.com"), "com.example.www");
+        assert_eq!(reverse_domain_labels("bücher.example"), "example.bücher");
+        assert_eq!(reverse_domain_labels("example."), ".example");
+    }
 
     #[test]
     fn gaming_split_prioritizes_endpoints_and_keeps_shared_domains_in_web() {
