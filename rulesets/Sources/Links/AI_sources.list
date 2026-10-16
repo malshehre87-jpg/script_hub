@@ -17,11 +17,11 @@ https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Copil
 
 
 
-# MetaCubeX 本地规则 (已转换为Surge格式)
-../deco/MetaCubeX_openai.list
+# MetaCubeX official geosite source
+https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/openai.list
 
 # MetaCubeX local rules
-../MetaCubeX/MetaCubeX_category-ai-cn.list
+https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-cn.list
 # AI Process - AI应用进程规则
 # 更新: 2025-12-07
 
@@ -34,4 +34,4 @@ https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Copil
 ../custom/SmartConfigKit/SCK_AI.list
 
 # Sukka AI
-../skk_upstream/ai.list
+https://ruleset.skk.moe/List/non_ip/ai.conf

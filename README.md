@@ -45,7 +45,7 @@ RULE-SET,https://cdn.jsdelivr.net/gh/nowaytouse/script_hub@master/rulesets/RULE-
 
 通用 Microsoft 登录域名 `login.live.com`、`logincdn.msauth.net` 不进入专用游戏组，以免游戏策略覆盖其他应用的账号登录；由用户的 Microsoft/普通分流规则处理。旧 `Gaming_ip.list` 也不自动并入专用联机组，其共享云 IP 无法仅凭地址确定是游戏流量。
 
-旧 `Gaming.list` 继续保留兼容全集，包括既有进程/关键词规则；迁移到上述三个文件后，应移除旧全集引用，避免其抢先匹配。分类端点维护于 `rulesets/Sources/custom/Gaming_Download_manual.list` 与 `Gaming_Play_manual.list`，更新时由 Rust 在通用清理后重新分类，随后生成镜像与 SRS。专用组不含启动器整进程、公司域名关键词或写死的 DIRECT/PROXY 策略。
+旧 `Gaming.list` 继续保留兼容全集，包括既有进程/关键词规则；迁移到上述三个文件后，应移除旧全集引用，避免其抢先匹配。游戏下载组同时吸收 Sukka 官方 game-download 规则和本地精确端点；联机分类端点维护于 `rulesets/Sources/custom/Gaming_Play_manual.list`。更新时由 Rust 合并上游与手动分类，再生成镜像和 SRS。专用组不含启动器整进程、公司域名关键词或写死的 DIRECT/PROXY 策略。
 
 ## Rust 更新入口
 
@@ -58,6 +58,6 @@ cargo run --manifest-path create/processor/Cargo.toml --bin validate -- --root .
 
 `--quick` 仅跳过可选的功能模块上游刷新，PROMAX 规则仍会完整抓取、编译和验证。生成器会保留仅日期、注释、排版或顺序变化的旧文件，避免没有实质更新时产生自动提交。
 
-`--gaming-only` 用当前已验证的 `Gaming.list` 与本地端点清单重新生成三类游戏规则及镜像，不下载上游源。带 `--singbox` 时同时同步 SRS；适合轻量验证游戏分类改动。
+`--gaming-only` 用当前的 `Gaming.list`、游戏下载源结果与本地分类端点重新生成三类游戏规则及镜像，不下载上游源。带 `--singbox` 时同时同步 SRS；适合轻量验证游戏分类改动。
 
 规则源在 `rulesets/Sources/Links/AdBlock_sources.list` 中以 `SOURCE|POLICY|KIND|CATEGORY` 明确登记；脚本/重写源在 `AdBlock_functional_sources.list` 中维护。项目自有更新流程不再使用 Go、Python 或 Shell 脚本。

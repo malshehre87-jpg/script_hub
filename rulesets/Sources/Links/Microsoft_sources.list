@@ -1,7 +1,7 @@
 https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Microsoft/Microsoft.list
 
-# MetaCubeX 本地规则 (从.srs反编译)
-../MetaCubeX/MetaCubeX_microsoft.list
+# MetaCubeX official geosite source
+https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.list
 
 # Bing Rules
 https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Bing/Bing.list
@@ -10,4 +10,4 @@ https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Bing/
 ../custom/SmartConfigKit/SCK_Microsoft.list
 
 # Sukka Microsoft
-../skk_upstream/microsoft.list
+https://ruleset.skk.moe/List/non_ip/microsoft.conf

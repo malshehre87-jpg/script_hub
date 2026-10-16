@@ -3,12 +3,12 @@
 
 # Core Gaming Services (General)
 https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Game/Game.list
-../MetaCubeX/MetaCubeX_category-games.list
+https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games.list
 ../custom/Gaming_manual.list
 
 # Steam
 https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Steam/Steam.list
-../MetaCubeX/MetaCubeX_steam.list
+https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam.list
 
 # Epic Games
 https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Epic/Epic.list

@@ -2235,11 +2235,7 @@ impl AdBlockManager {
 
         rule_lines.extend(vec![
             "# --- SYNCED PORT RULES END ---".to_string(),
-            "# Block app-layer HTTPDNS first".to_string(),
-            format!(
-                "RULE-SET,{}rulesets/AdBlock/HTTPDNS_Hijack.list,REJECT",
-                base_url
-            ),
+            "# HTTPDNS rules are compiled from the maintained AdBlock source manifest.".to_string(),
             "# Split REJECT Rulesets (purpose-grouped; see rulesets/AdBlock/README.md)".to_string(),
         ]);
 
@@ -2275,10 +2271,9 @@ impl AdBlockManager {
 
         rule_lines.extend(vec![
             "".to_string(),
-            "# SKK Upstream Rulesets".to_string(),
-            format!("RULE-SET,{}rulesets/Sources/skk_upstream/reject-no-drop.list,REJECT-NO-DROP,extended-matching,pre-matching,update-interval=86400,no-resolve", base_url),
-            format!("RULE-SET,{}rulesets/Sources/skk_upstream/reject-drop.list,REJECT-DROP,extended-matching,pre-matching,update-interval=86400,no-resolve", base_url),
-            format!("RULE-SET,{}rulesets/Sources/skk_upstream/BlockHttpDNS.list,REJECT-DROP,extended-matching,pre-matching,update-interval=86400,no-resolve", base_url),
+            "# Sukka live upstream rulesets".to_string(),
+            "RULE-SET,https://ruleset.skk.moe/List/non_ip/reject-no-drop.conf,REJECT-NO-DROP,extended-matching,pre-matching,update-interval=86400,no-resolve".to_string(),
+            "RULE-SET,https://ruleset.skk.moe/List/non_ip/reject-drop.conf,REJECT-DROP,extended-matching,pre-matching,update-interval=86400,no-resolve".to_string(),
         ]);
 
         let mut complex_seen = HashSet::new();
@@ -3074,6 +3069,18 @@ hostname = split-ad.fixture.test, protected0.example
             let content = fs::read_to_string(root.join(product)).unwrap();
             assert!(content.contains("scripts.fixture.test/remove.js"));
             assert!(!content.contains("creditcardapp.bankcomm.com"));
+            if product.contains("surge/") || product.contains("shadowrocket/") {
+                assert!(
+                    content.contains("https://ruleset.skk.moe/List/non_ip/reject-no-drop.conf")
+                );
+                assert!(content.contains("https://ruleset.skk.moe/List/non_ip/reject-drop.conf"));
+                assert!(!content.contains("rulesets/Sources/skk_upstream/"));
+                assert!(!content.contains("rulesets/AdBlock/HTTPDNS_Hijack.list"));
+                if product.contains("shadowrocket/") {
+                    assert!(content.contains("reject-no-drop.conf,REJECT"));
+                    assert!(content.contains("reject-drop.conf,REJECT"));
+                }
+            }
         }
         assert!(root.join("rulesets/AdBlock/catalog.json").is_file());
         assert!(root.join("rulesets/AdBlock/README.md").is_file());

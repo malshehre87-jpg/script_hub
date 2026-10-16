@@ -286,7 +286,12 @@ pub fn split_gaming_rules(root: &Path) -> Result<(), String> {
             })
             .collect()
     };
-    let mut download = load("Gaming_Download")?;
+    let mut download = if directory.join("Gaming_Download.list").is_file() {
+        read_rules(&directory.join("Gaming_Download.list"))?
+    } else {
+        BTreeSet::new()
+    };
+    download.extend(load("Gaming_Download")?);
     let mut play = load("Gaming_Play")?;
     let download_boundary = RuleBoundary::from_rules(&download);
     let play_boundary = RuleBoundary::from_rules(&play);
@@ -651,6 +656,11 @@ mod tests {
         let legacy = "DOMAIN-SUFFIX,epicgames.com\nDOMAIN,download.epicgames.com\nDOMAIN,match.epicgames.com\nDOMAIN-SUFFIX,patchy-game.test\nDOMAIN,login.live.com\nDOMAIN-KEYWORD,epicgames\nPROCESS-NAME,launcher.exe\n";
         fs::write(rules.join("Gaming.list"), legacy).unwrap();
         fs::write(
+            rules.join("Gaming_Download.list"),
+            "DOMAIN-SUFFIX,game-cdn.example\n",
+        )
+        .unwrap();
+        fs::write(
             sources.join("Gaming_Download_manual.list"),
             "# download\nDOMAIN,download.epicgames.com\n",
         )
@@ -661,6 +671,9 @@ mod tests {
         )
         .unwrap();
         split_gaming_rules(&root).unwrap();
+        let download = fs::read_to_string(rules.join("Gaming_Download.list")).unwrap();
+        assert!(download.contains("DOMAIN-SUFFIX,game-cdn.example"));
+        assert!(download.contains("DOMAIN,download.epicgames.com"));
         let web = fs::read_to_string(rules.join("Gaming_Web.list")).unwrap();
         assert!(web.contains("DOMAIN-SUFFIX,epicgames.com"));
         assert!(web.contains("DOMAIN-SUFFIX,patchy-game.test"));

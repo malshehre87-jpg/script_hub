@@ -25,7 +25,7 @@ const LOCAL_SOURCES: &[(&str, &str)] = &[
     ),
     (
         "BiliBili.ADBlock.sgmodule",
-        "https://github.com/BiliUniverse/ADBlock/releases/latest/download/BiliBili.ADBlock.sgmodule",
+        "https://github.com/Biliverse/ADBlock/releases/latest/download/BiliBili.ADBlock.sgmodule",
     ),
     (
         "[Sukka] Enhance Better ADBlock for Surge.sgmodule",
@@ -73,22 +73,22 @@ const DUALSUBS: &[RemoteSource] = &[RemoteSource {
 const BILIBILI: &[RemoteSource] = &[
     RemoteSource {
         label: "Enhanced",
-        url: "https://github.com/BiliUniverse/Enhanced/releases/latest/download/BiliBili.Enhanced.sgmodule",
+        url: "https://github.com/Biliverse/Enhanced/releases/latest/download/Biliverse.Enhanced.sgmodule",
         required: true,
     },
     RemoteSource {
         label: "Global",
-        url: "https://github.com/BiliUniverse/Global/releases/latest/download/BiliBili.Global.sgmodule",
+        url: "https://github.com/Biliverse/Global/releases/latest/download/BiliBili.Global.sgmodule",
         required: true,
     },
     RemoteSource {
         label: "Redirect",
-        url: "https://github.com/BiliUniverse/Redirect/releases/latest/download/BiliBili.Redirect.sgmodule",
+        url: "https://github.com/Biliverse/Redirect/releases/latest/download/BiliBili.Redirect.sgmodule",
         required: true,
     },
     RemoteSource {
         label: "Helper",
-        url: "https://cdn.jsdelivr.net/gh/Maasea/sgmodule@master/Bilibili.Helper.sgmodule",
+        url: "https://raw.githubusercontent.com/Maasea/sgmodule/master/Bilibili.Helper.sgmodule",
         required: false,
     },
 ];
@@ -524,9 +524,9 @@ pub fn run_functional_updates(root: &Path) -> Vec<String> {
                     ("name", "📺 BiliBili增强合集"),
                     (
                         "desc",
-                        "合并 BiliUniverse 与 Maasea 的增强、全球、重定向和广告辅助能力",
+                        "合并 Biliverse 与 Maasea 官方源的增强、全球、重定向和广告辅助能力",
                     ),
-                    ("author", "BiliUniverse, Maasea"),
+                    ("author", "Biliverse, Maasea"),
                     ("icon", "https://www.bilibili.com/favicon.ico"),
                     ("category", "『 🛠️ Amplify Nexus › 增幅枢纽 』"),
                     ("tag", "BiliBili, 增强"),
@@ -564,7 +564,7 @@ pub fn run_functional_updates(root: &Path) -> Vec<String> {
                 ],
                 specs: &[RemoteSource {
                     label: "YouTube.Enhance",
-                    url: "https://cdn.jsdelivr.net/gh/Maasea/sgmodule@master/YouTube.Enhance.sgmodule",
+                    url: "https://raw.githubusercontent.com/Maasea/sgmodule/master/YouTube.Enhance.sgmodule",
                     required: true,
                 }],
                 replacements: &[],

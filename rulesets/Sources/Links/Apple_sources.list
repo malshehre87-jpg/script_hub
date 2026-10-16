@@ -1,7 +1,7 @@
 https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Apple/Apple.list
 
-# MetaCubeX 本地规则 (从.srs反编译)
-../MetaCubeX/MetaCubeX_apple.list
+# MetaCubeX official geosite source
+https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.list
 
 # Surge 配置文件吸取的规则 (自动同步)
 ../conf/SurgeConf_Apple.list
@@ -13,7 +13,7 @@ https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Apple
 ../custom/SmartConfigKit/SCK_Apple.list
 
 # Sukka Apple Rulesets
-../skk_upstream/apple_cn.list
-../skk_upstream/apple_intelligence.list
-../skk_upstream/apple_services.list
-../skk_upstream/apple_services-ip.list
+https://ruleset.skk.moe/List/non_ip/apple_cn.conf
+https://ruleset.skk.moe/List/non_ip/apple_intelligence.conf
+https://ruleset.skk.moe/List/non_ip/apple_services.conf
+https://ruleset.skk.moe/List/ip/apple_services.conf

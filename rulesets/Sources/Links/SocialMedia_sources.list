@@ -8,15 +8,15 @@ https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Reddi
 https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Discord/Discord.list
 https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Facebook/Facebook.list
 
-# MetaCubeX 本地规则
-../MetaCubeX/MetaCubeX_facebook.list
-../MetaCubeX/MetaCubeX_whatsapp.list
+# MetaCubeX official geosite sources
+https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/facebook.list
+https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/whatsapp.list
 
 # Telegram & TikTok Rules
 https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Telegram/Telegram.list
-../MetaCubeX/MetaCubeX_telegram.list
+https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.list
 https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/TikTok/TikTok.list
-../MetaCubeX/MetaCubeX_tiktok.list
+https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.list
 
 # Fediverse / Bluesky / AT Protocol
 ../custom/Fediverse_manual.list
@@ -25,6 +25,6 @@ https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/TikTo
 ../custom/SmartConfigKit/SCK_SocialMedia.list
 
 # Sukka Telegram
-../skk_upstream/telegram.list
-../skk_upstream/telegram-ip.list
-../skk_upstream/telegram_asn-ip.list
+https://ruleset.skk.moe/List/non_ip/telegram.conf
+https://ruleset.skk.moe/List/ip/telegram.conf
+https://ruleset.skk.moe/List/ip/telegram_asn.conf
