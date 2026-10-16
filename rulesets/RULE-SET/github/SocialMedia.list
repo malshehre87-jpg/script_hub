@@ -9,6 +9,7 @@ DOMAIN,fbcdn-a.akamaihd.net
 DOMAIN,lf16-effectcdn.byteeffecttos-g.com
 DOMAIN,lf16-pkgcdn.pitaya-clientai.com
 DOMAIN,m.cmx.im
+DOMAIN,p16-tiktok-dm-sticker-sign-sg.ibyteimg.com
 DOMAIN,p16-tiktokcdn-com.akamaized.net
 DOMAIN,roovza-launches.appsflyersdk.com
 DOMAIN,roovza.inapps.appsflyersdk.com
@@ -463,8 +464,6 @@ DOMAIN-SUFFIX,gacebook.com
 DOMAIN-SUFFIX,gameroom.com
 DOMAIN-SUFFIX,gfacecbook.com
 DOMAIN-SUFFIX,graph.org
-DOMAIN-SUFFIX,graph.whatsapp.com
-DOMAIN-SUFFIX,graph.whatsapp.net
 DOMAIN-SUFFIX,grok.com
 DOMAIN-SUFFIX,groups.com
 DOMAIN-SUFFIX,hackerfacebook.com
@@ -653,6 +652,7 @@ DOMAIN-SUFFIX,telegramdownload.com
 DOMAIN-SUFFIX,telesco.pe
 DOMAIN-SUFFIX,tellapart.com
 DOMAIN-SUFFIX,terragraph.com
+DOMAIN-SUFFIX,tfbnw.net
 DOMAIN-SUFFIX,tg.dev
 DOMAIN-SUFFIX,thefacebook.com
 DOMAIN-SUFFIX,thefacebook.net

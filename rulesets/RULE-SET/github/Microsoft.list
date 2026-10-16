@@ -31,7 +31,6 @@ DOMAIN,download.visualstudio.microsoft.com
 DOMAIN,dreamspark.download.prss.microsoft.com
 DOMAIN,dreamsparkuat.download.prss.microsoft.com
 DOMAIN,dtlgalleryint.cloudapp.net
-DOMAIN,emoi-cncdn.bing.com
 DOMAIN,f.c2r.ts.cdn.office.net
 DOMAIN,flightsimulator.azureedge.net
 DOMAIN,github-api.arkoselabs.com
@@ -302,6 +301,7 @@ DOMAIN-SUFFIX,breakdown.me
 DOMAIN-SUFFIX,browser.events.data.msn.cn
 DOMAIN-SUFFIX,browser.events.data.msn.com
 DOMAIN-SUFFIX,c-msedge.net
+DOMAIN-SUFFIX,cafe.github.com
 DOMAIN-SUFFIX,callersbane.com
 DOMAIN-SUFFIX,cegid-cloud.cn
 DOMAIN-SUFFIX,centralvalidation.com

@@ -1,8 +1,8 @@
 # Ruleset: GitHub
 # Policy: PROXY
 # Node: Any
-# Description: Auto-merged ruleset
-# Rules: 74
+# Description: Rust-merged canonical ruleset
+# Rules: 75
 DOMAIN,copilot-proxy.githubusercontent.com
 DOMAIN,copilot-telemetry-service.githubusercontent.com
 DOMAIN,copilot-telemetry.githubusercontent.com
@@ -37,6 +37,7 @@ DOMAIN,productionresultssa8.blob.core.windows.net
 DOMAIN,productionresultssa9.blob.core.windows.net
 DOMAIN-KEYWORD,github
 DOMAIN-SUFFIX,atom.io
+DOMAIN-SUFFIX,cafe.github.com
 DOMAIN-SUFFIX,collector.github.com
 DOMAIN-SUFFIX,dependabot.com
 DOMAIN-SUFFIX,gh.io

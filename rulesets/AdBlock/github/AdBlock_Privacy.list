@@ -2,7 +2,7 @@
 # Purpose: Privacy / tracking-protection / 防追踪列表
 # Category-Key: Privacy
 # Shard: 1/1
-# Total Rules: 4906
+# Total Rules: 4912
 DOMAIN,cn.app.chat.xiaomi.net
 DOMAIN,etl-xlmc-ssl.sandai.net
 DOMAIN,ios-pclog.i4.cn
@@ -24,6 +24,7 @@ DOMAIN-SUFFIX,9b5gjkrnw71r.it.themoneytizer.com
 DOMAIN-SUFFIX,9uim1pc4ej4n.ru.themoneytizer.com
 DOMAIN-SUFFIX,a.appbaqend.com
 DOMAIN-SUFFIX,a.evergage.com
+DOMAIN-SUFFIX,a.itsmore.cn
 DOMAIN-SUFFIX,a.smetrics.sovereign.com
 DOMAIN-SUFFIX,a10053.actonservice.com
 DOMAIN-SUFFIX,a10555.actonservice.com
@@ -2409,6 +2410,7 @@ DOMAIN-SUFFIX,aip.actonservice.com
 DOMAIN-SUFFIX,air-weigh.actonservice.com
 DOMAIN-SUFFIX,aircuity.actonservice.com
 DOMAIN-SUFFIX,airefcoinc.actonservice.com
+DOMAIN-SUFFIX,akatracking.esearchvision.com
 DOMAIN-SUFFIX,alamocapital.actonservice.com
 DOMAIN-SUFFIX,alereinc.actonservice.com
 DOMAIN-SUFFIX,aleroninc.actonservice.com
@@ -2441,8 +2443,10 @@ DOMAIN-SUFFIX,amitracks.actonservice.com
 DOMAIN-SUFFIX,amsunsolar.actonservice.com
 DOMAIN-SUFFIX,analytics-ios-tcp.rayjump.com
 DOMAIN-SUFFIX,analytics-prod2.glance-internal.inmobi.com
+DOMAIN-SUFFIX,analytics.aita.gov.vn
 DOMAIN-SUFFIX,analytics.ensighten.com
 DOMAIN-SUFFIX,analytics.glance.inmobi.com
+DOMAIN-SUFFIX,analytics.gvim.mobi
 DOMAIN-SUFFIX,analytics.liftoff.io
 DOMAIN-SUFFIX,analytics.rayjump.com
 DOMAIN-SUFFIX,analytics.tradedoubler.com
@@ -2467,6 +2471,7 @@ DOMAIN-SUFFIX,apwip.actonservice.com
 DOMAIN-SUFFIX,aqr.actonservice.com
 DOMAIN-SUFFIX,aragenbio.actonservice.com
 DOMAIN-SUFFIX,aragonresearch.actonservice.com
+DOMAIN-SUFFIX,arch.net.jumia.ug
 DOMAIN-SUFFIX,argyleforum.actonservice.com
 DOMAIN-SUFFIX,arisglobal.actonservice.com
 DOMAIN-SUFFIX,arrayasolutions.actonservice.com
@@ -2633,7 +2638,6 @@ DOMAIN-SUFFIX,clearbrands.actonservice.com
 DOMAIN-SUFFIX,clevertapsendgrid.branch.rocks
 DOMAIN-SUFFIX,click1.email-postup.branch.rocks
 DOMAIN-SUFFIX,clickatell.actonservice.com
-DOMAIN-SUFFIX,cloud.conversion.pl
 DOMAIN-SUFFIX,cloudhosting.actonservice.com
 DOMAIN-SUFFIX,cmme.actonservice.com
 DOMAIN-SUFFIX,cns-service.actonservice.com
@@ -2667,6 +2671,7 @@ DOMAIN-SUFFIX,ctg.actonservice.com
 DOMAIN-SUFFIX,cttest.branch.rocks
 DOMAIN-SUFFIX,ctx.citiservi.es
 DOMAIN-SUFFIX,culliganwaterco.actonservice.com
+DOMAIN-SUFFIX,cust01-cucm-sub-07-cl6.int.net.jumia.ug
 DOMAIN-SUFFIX,cws-hulu.conviva.com
 DOMAIN-SUFFIX,cws.conviva.com
 DOMAIN-SUFFIX,cy-pr.com
@@ -2676,6 +2681,7 @@ DOMAIN-SUFFIX,daegis.actonservice.com
 DOMAIN-SUFFIX,danielsmoving.actonservice.com
 DOMAIN-SUFFIX,data.adobedc.net
 DOMAIN-SUFFIX,data.email.tangerine.ca
+DOMAIN-SUFFIX,data.minute.ly
 DOMAIN-SUFFIX,data.privacy.ensighten.com
 DOMAIN-SUFFIX,datafiletechnologies.actonservice.com
 DOMAIN-SUFFIX,dbbest.actonservice.com
@@ -2789,6 +2795,7 @@ DOMAIN-SUFFIX,erepublic.actonservice.com
 DOMAIN-SUFFIX,es.sharpmarketing.eu
 DOMAIN-SUFFIX,eschsupply.actonservice.com
 DOMAIN-SUFFIX,esri.nl.actonservice.com
+DOMAIN-SUFFIX,eu-data.kameleoon.io
 DOMAIN-SUFFIX,eu.pftk.temu.com
 DOMAIN-SUFFIX,eu.sharpmarketing.eu
 DOMAIN-SUFFIX,eu.thtk.temu.com
@@ -2857,11 +2864,13 @@ DOMAIN-SUFFIX,gameplanfinancial.actonservice.com
 DOMAIN-SUFFIX,gatan.actonservice.com
 DOMAIN-SUFFIX,gate.hockeyapp.net.iberostar.com
 DOMAIN-SUFFIX,gd-stats.jpush.cn
+DOMAIN-SUFFIX,gea-exchange-03.net.jumia.ug
 DOMAIN-SUFFIX,geico.com.ssl.sc.omtrdc.net
 DOMAIN-SUFFIX,geo-service.adtelligent.com
 DOMAIN-SUFFIX,geo.met.vgwort.de
 DOMAIN-SUFFIX,geonetric.actonservice.com
 DOMAIN-SUFFIX,global-guardians.actonservice.com
+DOMAIN-SUFFIX,global-receiver-ta.thinkingdata.cn
 DOMAIN-SUFFIX,global.px.quantserve.com
 DOMAIN-SUFFIX,globalapi.ad.xiaomi.com
 DOMAIN-SUFFIX,globallearningsystems.actonservice.com
@@ -2966,7 +2975,6 @@ DOMAIN-SUFFIX,impact-dm.actonservice.com
 DOMAIN-SUFFIX,incisive.actonservice.com
 DOMAIN-SUFFIX,inetprocess.actonservice.com
 DOMAIN-SUFFIX,info-trek.actonservice.com
-DOMAIN-SUFFIX,info.mercent.com
 DOMAIN-SUFFIX,info.thunderhead.com
 DOMAIN-SUFFIX,infoland.actonservice.com
 DOMAIN-SUFFIX,inkubate.actonservice.com
@@ -3098,9 +3106,6 @@ DOMAIN-SUFFIX,martech.condenastdigital.com
 DOMAIN-SUFFIX,masternaut.actonservice.com
 DOMAIN-SUFFIX,matrix42.actonservice.com
 DOMAIN-SUFFIX,mbaco.actonservice.com
-DOMAIN-SUFFIX,mbox.offermatica.com
-DOMAIN-SUFFIX,mbox3.offermatica.com
-DOMAIN-SUFFIX,mbox6.offermatica.com
 DOMAIN-SUFFIX,mcw.actonservice.com
 DOMAIN-SUFFIX,mdfcrm.actonservice.com
 DOMAIN-SUFFIX,meanwellaustralia.actonservice.com
@@ -3116,7 +3121,6 @@ DOMAIN-SUFFIX,metapack.actonservice.com
 DOMAIN-SUFFIX,metrics.adflake.com
 DOMAIN-SUFFIX,metrics.ezmob.com
 DOMAIN-SUFFIX,metrics.pgi.com
-DOMAIN-SUFFIX,metrics.reedbusiness.net
 DOMAIN-SUFFIX,meylercapital.actonservice.com
 DOMAIN-SUFFIX,mfrmls.actonservice.com
 DOMAIN-SUFFIX,mhinvest.actonservice.com
@@ -3162,11 +3166,11 @@ DOMAIN-SUFFIX,naidileobram.actonservice.com
 DOMAIN-SUFFIX,nakisa.actonservice.com
 DOMAIN-SUFFIX,nanthealth.actonservice.com
 DOMAIN-SUFFIX,narc-dc.actonservice.com
+DOMAIN-SUFFIX,nbcxa65t001z.net.jumia.ug
 DOMAIN-SUFFIX,nccer.actonservice.com
 DOMAIN-SUFFIX,neathousepartners.actonservice.com
 DOMAIN-SUFFIX,nedasco.actonservice.com
 DOMAIN-SUFFIX,neosllc.actonservice.com
-DOMAIN-SUFFIX,net.quisma.com
 DOMAIN-SUFFIX,netinsight.actonservice.com
 DOMAIN-SUFFIX,newserv.xyz
 DOMAIN-SUFFIX,ngs.actonservice.com
@@ -3177,10 +3181,10 @@ DOMAIN-SUFFIX,northwire.actonservice.com
 DOMAIN-SUFFIX,nova-healthcare.actonservice.com
 DOMAIN-SUFFIX,novarecoverycenter.actonservice.com
 DOMAIN-SUFFIX,nparallel.actonservice.com
+DOMAIN-SUFFIX,nr.bidderstack.com
 DOMAIN-SUFFIX,nsfocus.actonservice.com
 DOMAIN-SUFFIX,nuvi.actonservice.com
 DOMAIN-SUFFIX,o.addthis.com
-DOMAIN-SUFFIX,o11y-proxy-otel-frontend.meli.com
 DOMAIN-SUFFIX,oasisadvantage.actonservice.com
 DOMAIN-SUFFIX,ob.cheqzone.com
 DOMAIN-SUFFIX,objectpartners.actonservice.com
@@ -3359,6 +3363,7 @@ DOMAIN-SUFFIX,rystadenergy.actonservice.com
 DOMAIN-SUFFIX,s.axon.ai
 DOMAIN-SUFFIX,s.clickiocdn.com
 DOMAIN-SUFFIX,s.izrnvo.com
+DOMAIN-SUFFIX,s.metrics.artistsnetwork.com
 DOMAIN-SUFFIX,s.metrics.skyandtelescope.com
 DOMAIN-SUFFIX,s010.net.jumia.sn
 DOMAIN-SUFFIX,sabic.actonservice.com
@@ -3406,6 +3411,8 @@ DOMAIN-SUFFIX,secure.alda1mure.com
 DOMAIN-SUFFIX,secure.alea6badb.com
 DOMAIN-SUFFIX,secure.alga9frog.com
 DOMAIN-SUFFIX,secure.amos5lynn.com
+DOMAIN-SUFFIX,secure.analytics.crowneplaza.com
+DOMAIN-SUFFIX,secure.analytics.intercontinental.com
 DOMAIN-SUFFIX,secure.aran9midi.com
 DOMAIN-SUFFIX,secure.arid5glop.com
 DOMAIN-SUFFIX,secure.badb5refl.com
@@ -4309,7 +4316,6 @@ DOMAIN-SUFFIX,tr.urfk08c.espmp-cufr.net
 DOMAIN-SUFFIX,tr.vf7n.espmp-agfr.net
 DOMAIN-SUFFIX,tr.wuei.espmp-agfr.net
 DOMAIN-SUFFIX,track.analitycs.net
-DOMAIN-SUFFIX,track.kinetiksoft.com
 DOMAIN-SUFFIX,track.leadhit.ru
 DOMAIN-SUFFIX,track.mobshark.net
 DOMAIN-SUFFIX,track.mp3bars.com
@@ -4317,7 +4323,6 @@ DOMAIN-SUFFIX,track.mp3vizor.com
 DOMAIN-SUFFIX,track.my1elitclub.com
 DOMAIN-SUFFIX,track.securedvisit.com
 DOMAIN-SUFFIX,track.special-offers.online
-DOMAIN-SUFFIX,track.st.dbfocus.jp
 DOMAIN-SUFFIX,track.tappx.com
 DOMAIN-SUFFIX,track.tcppu.com
 DOMAIN-SUFFIX,tracker.remp-beam.golem.de
@@ -4338,6 +4343,7 @@ DOMAIN-SUFFIX,triconah.actonservice.com
 DOMAIN-SUFFIX,trinityconsultants.actonservice.com
 DOMAIN-SUFFIX,triton.actonservice.com
 DOMAIN-SUFFIX,triumph.actonservice.com
+DOMAIN-SUFFIX,trk.elq.mcphersonoil.com
 DOMAIN-SUFFIX,trk.living.chartwell.com
 DOMAIN-SUFFIX,truefaced.actonservice.com
 DOMAIN-SUFFIX,truemfg.actonservice.com

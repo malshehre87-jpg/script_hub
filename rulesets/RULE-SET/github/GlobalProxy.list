@@ -2,7 +2,7 @@
 # Policy: PROXY
 # Node: Any
 # Description: Rust-merged canonical ruleset
-# Rules: 40059
+# Rules: 40064
 DOMAIN,083link.brsserver.com.br
 DOMAIN,10.speedtesttvzamora.com
 DOMAIN,1010.hkspeedtest.com
@@ -16667,6 +16667,7 @@ DOMAIN-SUFFIX,applicationinsights.io
 DOMAIN-SUFFIX,applicationinsights.net
 DOMAIN-SUFFIX,appmedia.jp
 DOMAIN-SUFFIX,approvedusedbmw.com
+DOMAIN-SUFFIX,approveit.today
 DOMAIN-SUFFIX,apps.evozi.com
 DOMAIN-SUFFIX,apps5.oingo.com
 DOMAIN-SUFFIX,appshopper.com
@@ -18604,6 +18605,7 @@ DOMAIN-SUFFIX,bowlroll.net
 DOMAIN-SUFFIX,bowsersinsidestory.com
 DOMAIN-SUFFIX,box.com
 DOMAIN-SUFFIX,box57.one
+DOMAIN-SUFFIX,boxcloud.com
 DOMAIN-SUFFIX,boxofficemojo.com
 DOMAIN-SUFFIX,boxpn.com
 DOMAIN-SUFFIX,boxun.com
@@ -35238,6 +35240,7 @@ DOMAIN-SUFFIX,surrenderat20.net
 DOMAIN-SUFFIX,suruga-ya.com
 DOMAIN-SUFFIX,suruga-ya.jp
 DOMAIN-SUFFIX,surugabank.co.jp
+DOMAIN-SUFFIX,surveymonkey.com
 DOMAIN-SUFFIX,sushi.ski
 DOMAIN-SUFFIX,susiewildin.com
 DOMAIN-SUFFIX,sustainablebuildingstudio.com
@@ -36079,6 +36082,7 @@ DOMAIN-SUFFIX,tok.media
 DOMAIN-SUFFIX,token.im
 DOMAIN-SUFFIX,tokenlon.im
 DOMAIN-SUFFIX,tokenplus.app
+DOMAIN-SUFFIX,tokens.ci
 DOMAIN-SUFFIX,tokto-motion.net
 DOMAIN-SUFFIX,tokyo-hot.com
 DOMAIN-SUFFIX,tokyo-porn-tube.com
@@ -36953,6 +36957,7 @@ DOMAIN-SUFFIX,vanitha.in
 DOMAIN-SUFFIX,vanithaveedu.com
 DOMAIN-SUFFIX,vanityfair.com
 DOMAIN-SUFFIX,vansky.com
+DOMAIN-SUFFIX,vanta.com
 DOMAIN-SUFFIX,vastenm.com
 DOMAIN-SUFFIX,vaticannews.va
 DOMAIN-SUFFIX,vatn.org

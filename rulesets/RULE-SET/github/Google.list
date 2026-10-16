@@ -2,7 +2,11 @@
 # Policy: PROXY
 # Node: Any
 # Description: Rust-merged canonical ruleset
-# Rules: 1149
+# Rules: 1179
+DOMAIN,2mdn-cn.net
+DOMAIN,2mdn.net
+DOMAIN,admob-cn.com
+DOMAIN,adservice.google.com
 DOMAIN,ai.google.dev
 DOMAIN,alkalicore-pa.clients6.google.com
 DOMAIN,alkalimakersuite-pa.clients6.google.com
@@ -18,6 +22,9 @@ DOMAIN,analytics.google.com
 DOMAIN,android.googlesource.com
 DOMAIN,antigravity-pa.googleapis.com
 DOMAIN,antigravity.googleapis.com
+DOMAIN,app-analytics-services.com
+DOMAIN,app-measurement-cn.com
+DOMAIN,app-measurement.com
 DOMAIN,apps5.oingo.com
 DOMAIN,avail.googleflights.net
 DOMAIN,beacons.gcp.gvt2.com
@@ -48,12 +55,15 @@ DOMAIN,dartsearch-cn.net
 DOMAIN,dg-meta.video.google.com
 DOMAIN,dl.google.com
 DOMAIN,dl.l.google.com
+DOMAIN,doubleclick-cn.net
+DOMAIN,doubleclick.net
 DOMAIN,download.mlcc.google.com
 DOMAIN,download.tensorflow.google.com
 DOMAIN,firebase-settings.crashlytics.com
-DOMAIN,firebase.google.com
 DOMAIN,firebase.googleapis.com
 DOMAIN,firebaseappcheck.googleapis.com
+DOMAIN,firebaseappdistribution.googleapis.com
+DOMAIN,firebaseapptesters.googleapis.com
 DOMAIN,firebasedynamiclinks-ipv4.googleapis.com
 DOMAIN,firebasedynamiclinks-ipv6.googleapis.com
 DOMAIN,firebasedynamiclinks.googleapis.com
@@ -70,11 +80,30 @@ DOMAIN,g0.gstatic.com
 DOMAIN,g1.gstatic.com
 DOMAIN,g2.gstatic.com
 DOMAIN,g3.gstatic.com
+DOMAIN,geminiweb-pa.clients.google.com
+DOMAIN,geminiweb-pa.clients6.google.com
+DOMAIN,gonglchuangl.net
 DOMAIN,gongyichuangyi.net
+DOMAIN,google-analytics-cn.com
+DOMAIN,google-analytics.com
 DOMAIN,google-ohttp-relay-safebrowsing.fastly-edge.com
+DOMAIN,googleadservices-cn.com
+DOMAIN,googleadservices.com
+DOMAIN,googleanalytics.com
 DOMAIN,googleapis-cn.com
 DOMAIN,googleapps-cn.com
 DOMAIN,googleflights-cn.net
+DOMAIN,googleoptimize-cn.com
+DOMAIN,googleoptimize.com
+DOMAIN,googlesyndication-cn.com
+DOMAIN,googlesyndication.com
+DOMAIN,googletagmanager-cn.com
+DOMAIN,googletagmanager.com
+DOMAIN,googletagservices-cn.com
+DOMAIN,googletagservices.com
+DOMAIN,googletraveladservices-cn.com
+DOMAIN,googletraveladservices.com
+DOMAIN,googlevads-cn.com
 DOMAIN,gstatic-cn.com
 DOMAIN,gstaticadssl.l.google.com
 DOMAIN,gtm.oasisfeng.com
@@ -436,6 +465,7 @@ DOMAIN-SUFFIX,feedburner.com
 DOMAIN-SUFFIX,fflick.com
 DOMAIN-SUFFIX,financeleadsonline.com
 DOMAIN-SUFFIX,firebase.com
+DOMAIN-SUFFIX,firebase.dev
 DOMAIN-SUFFIX,firebase.io
 DOMAIN-SUFFIX,firebaseapp.com
 DOMAIN-SUFFIX,firebaseio.com

@@ -75,10 +75,10 @@
           "url": "https://cdn.jsdelivr.net/gh/nowaytouse/script_hub@master/modules/shadowrocket/amplify%5Fnexus/%F0%9F%93%8A%20%E9%9D%A2%E6%9D%BF%E5%B7%A5%E5%85%B7%E5%90%88%E9%9B%86%2Emodule"
         },
         {
-          "author": "BiliUniverse, Maasea",
+          "author": "Biliverse, Maasea",
           "badge": "",
-          "date": "2026-09-16 17:21:01",
-          "desc": "[🚀SR] 合并 BiliUniverse 与 Maasea 的增强、全球、重定向和广告辅助能力\\n\\n【Bundled Modules】\\n✦ 📺 BiliBili: ⚙️ Enhanced: 哔哩哔哩：增强模式\\n中国站功能增强及UI自定义\\n\\n✦ 📺 BiliBili: 🌐 Global: 哔哩哔哩：全球模式\\n中国站自动线路及全区搜索\\n\\n✦ 📺 BiliBili: 🔀 Redirect: 哔哩哔哩：重定向\\n中国站CDN自定义\\n\\n✦ Bilibili Helper: 去除扰人内容 & 禁用 P2P 连接",
+          "date": "2026-10-16 11:38:12",
+          "desc": "[🚀SR] 合并 Biliverse 与 Maasea 官方源的增强、全球、重定向和广告辅助能力\\n\\n【Bundled Modules】\\n✦ 🪐 Biliverse: ⚙️ Enhanced: 哔哩哔哩：增强模式\\n中国站功能增强及UI自定义\\n\\n✦ 📺 BiliBili: 🌐 Global: 哔哩哔哩：全球模式\\n中国站自动线路及全区搜索\\n\\n✦ 📺 BiliBili: 🔀 Redirect: 哔哩哔哩：重定向\\n中国站CDN自定义\\n\\n✦ Bilibili Helper: 去除扰人内容 & 禁用 P2P 连接",
           "filename": "📺 BiliBili增强合集.module",
           "github_url": "https://raw.githubusercontent.com/nowaytouse/script_hub/master/modules/shadowrocket/amplify%5Fnexus/github/%F0%9F%93%BA%20BiliBili%E5%A2%9E%E5%BC%BA%E5%90%88%E9%9B%86%2Emodule",
           "icon": "https://www.bilibili.com/favicon.ico",
@@ -142,8 +142,8 @@
         {
           "author": "ScriptHub-Automated",
           "badge": "🔥",
-          "date": "2026-10-16 01:15:54",
-          "desc": "[🚀SR] 按用途分片(17片) + 应用内去广告(URL Rewrite=547, Map Local=1234, Script=273, Body Rewrite=88, MITM=734); 索引 rulesets/AdBlock/catalog.json",
+          "date": "2026-10-16 11:38:58",
+          "desc": "[🚀SR] 按用途分片(18片) + 应用内去广告(URL Rewrite=547, Map Local=1234, Script=273, Body Rewrite=88, MITM=734); 索引 rulesets/AdBlock/catalog.json",
           "filename": "🚫 Universal Ad-Blocking Rules Dependency Component PROMAX (Kali-style).module",
           "github_url": "https://raw.githubusercontent.com/nowaytouse/script_hub/master/modules/shadowrocket/head%5Fexpanse/github/%F0%9F%9A%AB%20Universal%20Ad%2DBlocking%20Rules%20Dependency%20Component%20PROMAX%20%28Kali%2Dstyle%29%2Emodule",
           "icon": "https://cdn.jsdelivr.net/gh/luestr/IconResource@main/Other_icon/120px/KeLee.png",
@@ -171,6 +171,6 @@
       "name": "🎯 Narrow Pierce › 窄域穿刺"
     }
   },
-  "generated": "2026-10-16 01:15:54",
+  "generated": "2026-10-16 11:38:58",
   "total": 13
 }

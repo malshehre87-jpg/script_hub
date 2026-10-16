@@ -2,7 +2,7 @@
 # Policy: PROXY
 # Node: Any
 # Description: Rust-merged canonical ruleset
-# Rules: 1852
+# Rules: 1853
 DOMAIN,a1.mzstatic.com
 DOMAIN,a2.mzstatic.com
 DOMAIN,a3.mzstatic.com
@@ -155,6 +155,7 @@ DOMAIN,is4-ssl.mzstatic.com
 DOMAIN,is4.mzstatic.com
 DOMAIN,is5-ssl.mzstatic.com
 DOMAIN,is5.mzstatic.com
+DOMAIN,itunes-apple.com.akadns.net
 DOMAIN,itunes.apple.com
 DOMAIN,itunesconnect.apple.com
 DOMAIN,js-cdn.music.apple.com

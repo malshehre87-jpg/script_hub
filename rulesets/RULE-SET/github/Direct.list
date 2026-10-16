@@ -2,7 +2,7 @@
 # Policy: DIRECT
 # Node: Any
 # Description: Rust-merged canonical ruleset
-# Rules: 123481
+# Rules: 123478
 DOMAIN,004430.xyz
 DOMAIN,021912.xyz
 DOMAIN,1-fss24-s0.streamhoster.com
@@ -21078,7 +21078,6 @@ DOMAIN-SUFFIX,bitbrowser.net
 DOMAIN-SUFFIX,bitcar.com
 DOMAIN-SUFFIX,bitcellulose.com
 DOMAIN-SUFFIX,bitcron.com
-DOMAIN-SUFFIX,bitdefender-cn.com
 DOMAIN-SUFFIX,biteabc.com
 DOMAIN-SUFFIX,bitech-automotive-wuhu.com
 DOMAIN-SUFFIX,bitecoin.com
@@ -60305,7 +60304,6 @@ DOMAIN-SUFFIX,jetgroup-cn.com
 DOMAIN-SUFFIX,jetgroup-nb.com
 DOMAIN-SUFFIX,jethoo.com
 DOMAIN-SUFFIX,jethro.fun
-DOMAIN-SUFFIX,jetionservice.com
 DOMAIN-SUFFIX,jetlogistic.com
 DOMAIN-SUFFIX,jetmobo.com
 DOMAIN-SUFFIX,jetneed.com
@@ -108162,7 +108160,6 @@ DOMAIN-SUFFIX,wzzysm.com
 DOMAIN-SUFFIX,x-bull.com
 DOMAIN-SUFFIX,x-cloud.cc
 DOMAIN-SUFFIX,x-cmd.com
-DOMAIN-SUFFIX,x-dao.io
 DOMAIN-SUFFIX,x-droners.com
 DOMAIN-SUFFIX,x-gpu.com
 DOMAIN-SUFFIX,x-imagine.com

@@ -2,7 +2,7 @@
 # Policy: USER-DEFINED
 # Node: Any
 # Description: Stores, accounts, communities and shared-platform fallback; not a gameplay-only list
-# Rules: 1183
+# Rules: 1181
 DOMAIN,a.ppy.sh
 DOMAIN,a4e8s8k3.map2.ssl.hwcdn.net
 DOMAIN,assets.ppy.sh
@@ -18,7 +18,6 @@ DOMAIN,cdngarenanow-a.akamaihd.net
 DOMAIN,cloudsync-prod.s3.amazonaws.com
 DOMAIN,d1unuk07s6td74.cloudfront.net
 DOMAIN,datarouter.apps.netherrealm.com
-DOMAIN,dlgarenanow-a.akamaihd.net
 DOMAIN,dlmobilegarena-a.akamaihd.net
 DOMAIN,ea.tt.omtrdc.net
 DOMAIN,eaasserts-a.akamaihd.net
@@ -36,7 +35,6 @@ DOMAIN,lv.queniujq.cn
 DOMAIN,media-rockstargames-com.akamaized.net
 DOMAIN,notify.ppy.sh
 DOMAIN,opgg-static.akamaized.net
-DOMAIN,origin-a.akamaihd.net
 DOMAIN,originasserts.akamaized.net
 DOMAIN,osu.ppy.sh
 DOMAIN,prd-priconne-redive.akamaized.net
@@ -361,7 +359,6 @@ DOMAIN-SUFFIX,embark.games
 DOMAIN-SUFFIX,enlisted.net
 DOMAIN-SUFFIX,epicgames.com
 DOMAIN-SUFFIX,epicgames.dev
-DOMAIN-SUFFIX,epicgamescdn.com
 DOMAIN-SUFFIX,escapefromtarkov.com
 DOMAIN-SUFFIX,europeanwarzoneseries.com
 DOMAIN-SUFFIX,excitebots.com
@@ -877,6 +874,7 @@ DOMAIN-SUFFIX,rockstarnorth.com
 DOMAIN-SUFFIX,roco.qq.com
 DOMAIN-SUFFIX,rowblocks.com
 DOMAIN-SUFFIX,rowblox.com
+DOMAIN-SUFFIX,rsg.ms
 DOMAIN-SUFFIX,rsg.sc
 DOMAIN-SUFFIX,rstatic.net
 DOMAIN-SUFFIX,ruinedking.com

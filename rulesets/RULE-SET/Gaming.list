@@ -106,7 +106,6 @@ DOMAIN,ubistatic6-a.akamaihd.net
 DOMAIN,ubistatic7-a.akamaihd.net
 DOMAIN,ubistatic8-a.akamaihd.net
 DOMAIN,ubistatic9-a.akamaihd.net
-DOMAIN,uplaypc-s-ubisoft.cdn.ubi.com
 DOMAIN,videos-rockstargames-com.akamaized.net
 DOMAIN,wb-agora-hydra-file-storage-k1.s3.amazonaws.com
 DOMAIN,xz.pphimalayanrt.com
@@ -911,6 +910,7 @@ DOMAIN-SUFFIX,rockstarnorth.com
 DOMAIN-SUFFIX,roco.qq.com
 DOMAIN-SUFFIX,rowblocks.com
 DOMAIN-SUFFIX,rowblox.com
+DOMAIN-SUFFIX,rsg.ms
 DOMAIN-SUFFIX,rsg.sc
 DOMAIN-SUFFIX,rstatic.net
 DOMAIN-SUFFIX,ruinedking.com
