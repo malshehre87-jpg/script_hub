@@ -219,35 +219,59 @@ fn load_preserved_rules(path: &Path) -> HashMap<String, Vec<String>> {
     preserved
 }
 
+fn filter_invalid_lines(
+    sections: &[ModuleSectionPub],
+) -> (Vec<ModuleSectionPub>, usize, Vec<String>) {
+    let mut dropped = 0;
+    let mut diagnostics = Vec::new();
+    let sections: Vec<ModuleSectionPub> = sections
+        .iter()
+        .cloned()
+        .map(|mut section| {
+            let section_name = section.name.clone();
+            let mut line_number = 0;
+            section.lines.retain(|line| {
+                line_number += 1;
+                let line = line.trim();
+                let errors = if line.is_empty() || line.starts_with('#') {
+                    Vec::new()
+                } else {
+                    crate::promax::validation::validate_surge_section_line(&section_name, line)
+                };
+                if let Some(error) = errors.first() {
+                    dropped += 1;
+                    if diagnostics.len() < 3 {
+                        diagnostics
+                            .push(format!("{}:{} ({})", section_name, line_number, error.code));
+                    }
+                    false
+                } else {
+                    true
+                }
+            });
+            section
+        })
+        .collect();
+
+    (sections, dropped, diagnostics)
+}
+
 fn write_module(
     path: &Path,
     header_lines: &[String],
     sections: &[ModuleSectionPub],
     dedupe: bool,
 ) -> bool {
-    let mut dropped = 0;
-    let sections: Vec<ModuleSectionPub> = sections
-        .iter()
-        .cloned()
-        .map(|mut section| {
-            let section_name = section.name.clone();
-            section.lines.retain(|line| {
-                let line = line.trim();
-                let valid = line.is_empty()
-                    || line.starts_with('#')
-                    || crate::promax::validation::validate_surge_section_line(&section_name, line)
-                        .is_empty();
-                if !valid {
-                    dropped += 1;
-                }
-                valid
-            });
-            section
-        })
-        .collect();
+    let (sections, dropped, diagnostics) = filter_invalid_lines(sections);
     if dropped > 0 {
+        let omitted = dropped - diagnostics.len();
+        let locations = if omitted == 0 {
+            diagnostics.join(", ")
+        } else {
+            format!("{}, +{omitted} more", diagnostics.join(", "))
+        };
         eprintln!(
-            "\x1b[0;33m[WARN]\x1b[0m dropped {dropped} invalid upstream line(s) while merging {:?}",
+            "\x1b[0;33m[WARN]\x1b[0m dropped {dropped} invalid module line(s) while writing {:?}; section-relative location(s) and validator code: {locations}",
             path
         );
     }
@@ -720,7 +744,9 @@ pub fn run_merge_bundle_json(json: &str) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use super::{ModuleSectionPub, combine_metadata, hostname_tokens, write_module};
+    use super::{
+        ModuleSectionPub, combine_metadata, filter_invalid_lines, hostname_tokens, write_module,
+    };
     use std::collections::HashMap;
 
     #[test]
@@ -773,5 +799,36 @@ mod tests {
 
         assert!(!output.contains("DOMAIN,10.10.34.34,REJECT"));
         assert!(output.contains("DOMAIN,ads.example,REJECT"));
+    }
+
+    #[test]
+    fn invalid_upstream_diagnostics_include_section_line_and_error_code() {
+        let sections = [ModuleSectionPub {
+            name: "Rule".to_string(),
+            lines: vec![
+                "NOT_A_SURGE_RULE".to_string(),
+                "DOMAIN,ads.example,REJECT".to_string(),
+            ],
+        }];
+
+        let (filtered, dropped, diagnostics) = filter_invalid_lines(&sections);
+
+        assert_eq!(dropped, 1);
+        assert_eq!(diagnostics, ["Rule:1 (invalid-rule)"]);
+        assert_eq!(filtered[0].lines, ["DOMAIN,ads.example,REJECT"]);
+    }
+
+    #[test]
+    fn invalid_upstream_diagnostics_keep_only_three_samples() {
+        let sections = [ModuleSectionPub {
+            name: "Rule".to_string(),
+            lines: vec!["NOT_A_SURGE_RULE".to_string(); 4],
+        }];
+
+        let (_, dropped, diagnostics) = filter_invalid_lines(&sections);
+
+        assert_eq!(dropped, 4);
+        assert_eq!(diagnostics.len(), 3);
+        assert_eq!(diagnostics[2], "Rule:3 (invalid-rule)");
     }
 }
