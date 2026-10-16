@@ -2,7 +2,16 @@
 # Purpose: HaGeZi DNS-Blocklists ultimate
 # Category-Key: ThreatIntel_Ultimate
 # Shard: 2/2
-# Total Rules: 39197
+# Total Rules: 39210
+DOMAIN-SUFFIX,sgtm.de.agriturismo.it
+DOMAIN-SUFFIX,sgtm.de.berghaus.com
+DOMAIN-SUFFIX,sgtm.de.myprotein.com
+DOMAIN-SUFFIX,sgtm.de.reeceaustralia.com
+DOMAIN-SUFFIX,sgtm.de.speedo.com
+DOMAIN-SUFFIX,sgtm.deakin.edu.au
+DOMAIN-SUFFIX,sgtm.debameubelen.be
+DOMAIN-SUFFIX,sgtm.debijenkorf.be
+DOMAIN-SUFFIX,sgtm.debijenkorf.nl
 DOMAIN-SUFFIX,sgtm.decathlon.net
 DOMAIN-SUFFIX,sgtm.decked.com
 DOMAIN-SUFFIX,sgtm.decodecking.it
@@ -20326,6 +20335,7 @@ DOMAIN-SUFFIX,tamaegis.com
 DOMAIN-SUFFIX,tamanique.com
 DOMAIN-SUFFIX,tamara-gid.ru
 DOMAIN-SUFFIX,tamarisoutlet.com
+DOMAIN-SUFFIX,tambakbet.vip
 DOMAIN-SUFFIX,tambaro.de
 DOMAIN-SUFFIX,tamdmavu.com
 DOMAIN-SUFFIX,tame-discount.pro
@@ -20372,6 +20382,7 @@ DOMAIN-SUFFIX,tanner-shoes.com
 DOMAIN-SUFFIX,tannersleathercare.com
 DOMAIN-SUFFIX,tannoshealth.com
 DOMAIN-SUFFIX,tanop.uk
+DOMAIN-SUFFIX,tantegacor88.link
 DOMAIN-SUFFIX,tanvirhasan.dev
 DOMAIN-SUFFIX,tanwis.com
 DOMAIN-SUFFIX,tanzbienen.de
@@ -28198,6 +28209,7 @@ DOMAIN-SUFFIX,ufiler-pro.ru
 DOMAIN-SUFFIX,ufiler-pro2.ru
 DOMAIN-SUFFIX,ufiler.pro
 DOMAIN-SUFFIX,ufipyp.com
+DOMAIN-SUFFIX,ufo777link.com
 DOMAIN-SUFFIX,ufolepbourgogne.org
 DOMAIN-SUFFIX,ufqxtmrnd.com
 DOMAIN-SUFFIX,ufsnmvbmgwvkhirfnptm.supabase.co
@@ -33896,6 +33908,7 @@ DOMAIN-SUFFIX,wfuymjaziioj.com
 DOMAIN-SUFFIX,wfyosipxkp.com
 DOMAIN-SUFFIX,wfyulsaccsqkv.xyz
 DOMAIN-SUFFIX,wg.puggishzuffolo.com
+DOMAIN-SUFFIX,wg87vip.bet
 DOMAIN-SUFFIX,wgbtsixsjhkyln.com
 DOMAIN-SUFFIX,wgcusbjrga.com
 DOMAIN-SUFFIX,wgetip.com
