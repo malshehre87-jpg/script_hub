@@ -1,6 +1,50 @@
 use std::path::Path;
 use std::process::ExitCode;
 
+fn validate_file(
+    path: &Path,
+) -> Result<Vec<rust_processor::promax::validation::ValidationError>, String> {
+    let extension = path
+        .extension()
+        .and_then(|value| value.to_str())
+        .unwrap_or_default();
+    let content = std::fs::read_to_string(path).map_err(|error| error.to_string())?;
+    let mut validation = match extension {
+        "plugin" => rust_processor::promax::validation::validate_loon_plugin(&content),
+        "sgmodule" | "module" => {
+            rust_processor::promax::validation::validate_surge_module(&content)
+        }
+        "list" => rust_processor::promax::validation::validate_external_ruleset(&content),
+        _ => return Err(format!("unsupported validation file type: .{extension}")),
+    };
+    let adblock_ruleset = extension == "list"
+        && path
+            .ancestors()
+            .any(|ancestor| ancestor.ends_with(Path::new("rulesets/AdBlock")));
+    validation.extend(
+        rust_processor::promax::validation::validate_apple_compatibility(&content, adblock_ruleset),
+    );
+    Ok(validation)
+}
+
+fn report_validation(
+    path: &Path,
+    validation: &[rust_processor::promax::validation::ValidationError],
+    detail_limit: usize,
+) -> usize {
+    if !validation.is_empty() {
+        eprintln!(
+            "[ERROR] {}: {} validation error(s)",
+            path.display(),
+            validation.len()
+        );
+        for item in validation.iter().take(detail_limit) {
+            eprintln!("        line {} {}", item.line, item.code);
+        }
+    }
+    validation.len()
+}
+
 fn validate_tree(root: &Path) -> Result<(usize, usize), String> {
     let mut artifacts = 0;
     let mut errors = 0;
@@ -36,8 +80,8 @@ fn validate_tree(root: &Path) -> Result<(usize, usize), String> {
                 .and_then(|value| value.to_str())
                 .unwrap_or_default();
             if matches!(extension, "sgmodule" | "module" | "plugin") {
-                let content = match std::fs::read_to_string(path) {
-                    Ok(content) => content,
+                let validation = match validate_file(path) {
+                    Ok(validation) => validation,
                     Err(error) => {
                         eprintln!("[ERROR] {}: {error}", path.display());
                         errors += 1;
@@ -45,28 +89,7 @@ fn validate_tree(root: &Path) -> Result<(usize, usize), String> {
                     }
                 };
                 artifacts += 1;
-                let validation = if extension == "plugin" {
-                    rust_processor::promax::validation::validate_loon_plugin(&content)
-                } else {
-                    rust_processor::promax::validation::validate_surge_module(&content)
-                };
-                let mut validation = validation;
-                validation.extend(
-                    rust_processor::promax::validation::validate_apple_compatibility(
-                        &content, false,
-                    ),
-                );
-                if !validation.is_empty() {
-                    eprintln!(
-                        "[ERROR] {}: {} validation error(s)",
-                        path.display(),
-                        validation.len()
-                    );
-                    for item in validation.iter().take(3) {
-                        eprintln!("        line {} {}", item.line, item.code);
-                    }
-                    errors += validation.len();
-                }
+                errors += report_validation(path, &validation, 3);
             }
         }
     }
@@ -87,8 +110,8 @@ fn validate_tree(root: &Path) -> Result<(usize, usize), String> {
             {
                 continue;
             }
-            let content = match std::fs::read_to_string(path) {
-                Ok(content) => content,
+            let validation = match validate_file(path) {
+                Ok(validation) => validation,
                 Err(error) => {
                     eprintln!("[ERROR] {}: {error}", path.display());
                     errors += 1;
@@ -96,26 +119,7 @@ fn validate_tree(root: &Path) -> Result<(usize, usize), String> {
                 }
             };
             artifacts += 1;
-            let validation =
-                rust_processor::promax::validation::validate_external_ruleset(&content);
-            let mut validation = validation;
-            validation.extend(
-                rust_processor::promax::validation::validate_apple_compatibility(
-                    &content,
-                    directory.ends_with("AdBlock"),
-                ),
-            );
-            if !validation.is_empty() {
-                eprintln!(
-                    "[ERROR] {}: {} validation error(s)",
-                    path.display(),
-                    validation.len()
-                );
-                for item in validation.iter().take(3) {
-                    eprintln!("        line {} {}", item.line, item.code);
-                }
-                errors += validation.len();
-            }
+            errors += report_validation(path, &validation, 3);
         }
     }
 
@@ -149,27 +153,87 @@ fn validate_tree(root: &Path) -> Result<(usize, usize), String> {
 
 fn main() -> ExitCode {
     let mut args = std::env::args().skip(1);
-    let root = match (args.next().as_deref(), args.next()) {
-        (Some("--root"), Some(root)) => root,
+    match args.next().as_deref() {
+        Some("--file") => match args.next() {
+            Some(file) => {
+                let path = Path::new(&file);
+                match validate_file(path) {
+                    Ok(validation) if report_validation(path, &validation, 50) == 0 => {
+                        println!("[SUCCESS] validated {}", path.display());
+                        ExitCode::SUCCESS
+                    }
+                    Ok(_) => ExitCode::from(1),
+                    Err(error) => {
+                        eprintln!("[ERROR] {}: {error}", path.display());
+                        ExitCode::from(1)
+                    }
+                }
+            }
+            None => {
+                eprintln!("Usage: validate --root <repository> | --file <module-or-ruleset>");
+                ExitCode::from(2)
+            }
+        },
+        Some("--root") => match args.next() {
+            Some(root) => match validate_tree(Path::new(&root)) {
+                Ok((artifacts, 0)) => {
+                    println!("[SUCCESS] validated {artifacts} published artifacts");
+                    ExitCode::SUCCESS
+                }
+                Ok((artifacts, errors)) => {
+                    eprintln!(
+                        "[ERROR] {artifacts} published artifacts contain {errors} validation error(s)"
+                    );
+                    ExitCode::from(1)
+                }
+                Err(error) => {
+                    eprintln!("[ERROR] {error}");
+                    ExitCode::from(1)
+                }
+            },
+            None => {
+                eprintln!("Usage: validate --root <repository> | --file <module-or-ruleset>");
+                ExitCode::from(2)
+            }
+        },
         _ => {
-            eprintln!("Usage: validate --root <repository>");
-            return ExitCode::from(2);
+            eprintln!("Usage: validate --root <repository> | --file <module-or-ruleset>");
+            ExitCode::from(2)
         }
-    };
-    match validate_tree(Path::new(&root)) {
-        Ok((artifacts, 0)) => {
-            println!("[SUCCESS] validated {artifacts} published artifacts");
-            ExitCode::SUCCESS
-        }
-        Ok((artifacts, errors)) => {
-            eprintln!(
-                "[ERROR] {artifacts} published artifacts contain {errors} validation error(s)"
-            );
-            ExitCode::from(1)
-        }
-        Err(error) => {
-            eprintln!("[ERROR] {error}");
-            ExitCode::from(1)
-        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::validate_file;
+
+    #[test]
+    fn validates_one_module_file_without_scanning_the_tree() {
+        let path = std::env::temp_dir().join(format!(
+            "script-hub-validate-one-{}.sgmodule",
+            std::process::id()
+        ));
+        std::fs::write(&path, "#!name=fixture\n[Rule]\nNOT_A_SURGE_RULE\n").unwrap();
+
+        let validation = validate_file(&path);
+        std::fs::remove_file(path).unwrap();
+        let validation = validation.unwrap();
+        assert_eq!(validation.len(), 1);
+        assert_eq!(validation[0].line, 3);
+        assert_eq!(validation[0].code, "invalid-rule");
+    }
+
+    #[test]
+    fn validates_one_ruleset_file() {
+        let path = std::env::temp_dir().join(format!(
+            "script-hub-validate-one-{}.list",
+            std::process::id()
+        ));
+        std::fs::write(&path, "DOMAIN-SUFFIX,ads.example\n").unwrap();
+
+        let validation = validate_file(&path);
+        std::fs::remove_file(path).unwrap();
+        let validation = validation.unwrap();
+        assert!(validation.is_empty());
     }
 }
