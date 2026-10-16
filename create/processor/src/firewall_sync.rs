@@ -1,11 +1,11 @@
 use once_cell::sync::Lazy;
 use regex::Regex;
-use std::collections::{BTreeSet, HashMap};
+use std::collections::{BTreeSet, HashSet};
 use std::fs;
 use std::path::Path;
 
 static PORT_PATTERN: Lazy<Regex> =
-    Lazy::new(|| Regex::new(r"^(IN-PORT|DEST-PORT|SRC-PORT)").unwrap());
+    Lazy::new(|| Regex::new(r"^(IN-PORT|DEST-PORT|SRC-PORT)(?:,|$)").unwrap());
 
 static VERSION_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"#!version=.*").unwrap());
 
@@ -55,8 +55,7 @@ pub fn sync_ports(ports_source: &str, firewall_modules: &[&str], execute: bool, 
             continue;
         }
         if PORT_PATTERN.is_match(trimmed) {
-            let parts: Vec<&str> = trimmed.split(',').collect();
-            if parts.len() < 3 {
+            if trimmed.split(',').nth(2).is_none() {
                 invalid_rules.push(trimmed.to_string());
                 println!(
                     "\x1b[0;33m[WARN]\x1b[0m   Invalid rule (missing action): {}",
@@ -95,16 +94,16 @@ pub fn sync_ports(ports_source: &str, firewall_modules: &[&str], execute: bool, 
         port_rules.len()
     );
 
-    let mut managed_keys = HashMap::new();
+    let mut managed_keys = HashSet::new();
     for rule in &port_rules {
-        let parts: Vec<&str> = rule.split(',').collect();
-        if parts.len() >= 2 {
+        let mut fields = rule.split(',');
+        if let (Some(rule_type), Some(port)) = (fields.next(), fields.next()) {
             let key = format!(
                 "{},{}",
-                parts[0].trim().to_uppercase(),
-                parts[1].trim().to_uppercase()
+                rule_type.trim().to_uppercase(),
+                port.trim().to_uppercase()
             );
-            managed_keys.insert(key, true);
+            managed_keys.insert(key);
         }
     }
 
@@ -135,16 +134,14 @@ pub fn sync_ports(ports_source: &str, firewall_modules: &[&str], execute: bool, 
         for line in module_content.lines() {
             let stripped = line.trim();
             if stripped.starts_with('[') && stripped.ends_with(']') {
-                in_rule_section = stripped.to_lowercase() == "[rule]";
+                in_rule_section = stripped.eq_ignore_ascii_case("[rule]");
             }
 
             if in_rule_section && !has_markers && !inserted {
                 new_module_content.push(line.to_string());
                 new_module_content.push(start_marker.to_string());
                 new_module_content.push("# Automated update from ports source".to_string());
-                let mut sorted_rules = port_rules.clone();
-                sorted_rules.sort();
-                new_module_content.extend(sorted_rules);
+                new_module_content.extend(port_rules.iter().cloned());
                 new_module_content.push(end_marker.to_string());
                 inserted = true;
                 continue;
@@ -154,11 +151,7 @@ pub fn sync_ports(ports_source: &str, firewall_modules: &[&str], execute: bool, 
                 new_module_content.push(line.to_string());
                 new_module_content.push("# Automated update from ports source".to_string());
 
-                let mut sorted_rules = port_rules.clone();
-                sorted_rules.sort();
-                for rule in sorted_rules {
-                    new_module_content.push(rule);
-                }
+                new_module_content.extend(port_rules.iter().cloned());
                 skip = true;
                 continue;
             }
@@ -174,14 +167,14 @@ pub fn sync_ports(ports_source: &str, firewall_modules: &[&str], execute: bool, 
                     continue;
                 }
                 if in_rule_section && !stripped.is_empty() && !stripped.starts_with('#') {
-                    let parts: Vec<&str> = stripped.split(',').collect();
-                    if parts.len() >= 2 {
+                    let mut fields = stripped.split(',');
+                    if let (Some(rule_type), Some(port)) = (fields.next(), fields.next()) {
                         let key = format!(
                             "{},{}",
-                            parts[0].trim().to_uppercase(),
-                            parts[1].trim().to_uppercase()
+                            rule_type.trim().to_uppercase(),
+                            port.trim().to_uppercase()
                         );
-                        if managed_keys.contains_key(&key) {
+                        if managed_keys.contains(&key) {
                             continue;
                         }
                     }
@@ -195,9 +188,7 @@ pub fn sync_ports(ports_source: &str, firewall_modules: &[&str], execute: bool, 
             new_module_content.push("[Rule]".to_string());
             new_module_content.push(start_marker.to_string());
             new_module_content.push("# Automated update from ports source".to_string());
-            let mut sorted_rules = port_rules.clone();
-            sorted_rules.sort();
-            new_module_content.extend(sorted_rules);
+            new_module_content.extend(port_rules.iter().cloned());
             new_module_content.push(end_marker.to_string());
         }
 
@@ -429,12 +420,12 @@ mod tests {
         let module = directory.join("firewall.sgmodule");
         fs::write(
             &source,
-            "DEST-PORT,4444,REJECT-DROP\nDEST-PORT,4444,REJECT-DROP\nDEST-PORT,5223,REJECT-DROP\n",
+            "DEST-PORT,4444,REJECT-DROP\nDEST-PORT,3333,REJECT-DROP\nDEST-PORT,4444,REJECT-DROP\nDEST-PORT,5223,REJECT-DROP\nDEST-PORTABLE,7777,REJECT-DROP\n",
         )
         .unwrap();
         fs::write(
             &module,
-            "#!name=test\n#!version=old\n[Rule]\nDEST-PORT,3283,REJECT\n",
+            "#!name=test\n#!version=old\n[rUlE]\nDEST-PORT,3283,REJECT\n",
         )
         .unwrap();
 
@@ -448,8 +439,10 @@ mod tests {
         assert!(actual.contains("# --- SYNCED PORT RULES START ---"));
         assert!(actual.contains("DEST-PORT,4444,REJECT-DROP"));
         assert_eq!(actual.matches("DEST-PORT,4444,REJECT-DROP").count(), 1);
+        assert!(actual.find("DEST-PORT,3333").unwrap() < actual.find("DEST-PORT,4444").unwrap());
         assert!(!actual.contains("5223"));
         assert!(!actual.contains("3283"));
+        assert!(!actual.contains("DEST-PORTABLE"));
         fs::remove_dir_all(directory).unwrap();
     }
 
