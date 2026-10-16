@@ -31,9 +31,9 @@ https://cdn.jsdelivr.net/gh/privacy-protection-tools/anti-AD@refs/heads/master/d
 https://cdn.jsdelivr.net/gh/privacy-protection-tools/anti-AD@refs/heads/master/discretion/pcdn.txt|REJECT|auto|AntiAD
 
 # geekdada
-https://cdn.jsdelivr.net/gh/geekdada/surge-list/domain-set/tracking-protection-filter.txt|REJECT|domainset|Privacy
-https://cdn.jsdelivr.net/gh/geekdada/surge-list/domain-set/adaway.txt|REJECT|domainset|Advertising
-https://cdn.jsdelivr.net/gh/geekdada/surge-list/domain-set/neohosts.txt|REJECT|domainset|Advertising
+https://raw.githubusercontent.com/geekdada/surge-list/master/domain-set/tracking-protection-filter.txt|REJECT|domainset|Privacy
+https://raw.githubusercontent.com/geekdada/surge-list/master/domain-set/adaway.txt|REJECT|domainset|Advertising
+https://raw.githubusercontent.com/geekdada/surge-list/master/domain-set/neohosts.txt|REJECT|domainset|Advertising
 
 # Sukka Ruleset
 https://ruleset.skk.moe/List/domainset/reject.conf|REJECT|domainset|Advertising
