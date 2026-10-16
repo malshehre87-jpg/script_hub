@@ -1,6 +1,71 @@
+use std::io::{BufRead, BufReader, BufWriter, Write};
 use std::path::{Path, PathBuf};
-use std::process::Command;
-use std::process::ExitCode;
+use std::process::{Command, ExitCode, Stdio};
+
+fn read_batch_blob(
+    input: &mut impl Write,
+    output: &mut impl BufRead,
+    object: &str,
+) -> Result<Option<Vec<u8>>, String> {
+    writeln!(input, "{object}").map_err(|error| format!("cannot query git object: {error}"))?;
+    input
+        .flush()
+        .map_err(|error| format!("cannot query git object: {error}"))?;
+
+    let mut header = String::new();
+    if output
+        .read_line(&mut header)
+        .map_err(|error| format!("cannot read git object header: {error}"))?
+        == 0
+    {
+        return Err(format!("git returned no object header for {object}"));
+    }
+    let header = header.trim_end_matches(['\r', '\n']);
+    if header.ends_with(" missing") {
+        return Ok(None);
+    }
+    let (metadata, size) = header
+        .rsplit_once(' ')
+        .ok_or_else(|| format!("invalid git object header for {object}"))?;
+    let (_, kind) = metadata
+        .rsplit_once(' ')
+        .ok_or_else(|| format!("invalid git object header for {object}"))?;
+    if kind != "blob" {
+        return Err(format!("expected a git blob for {object}, found {kind}"));
+    }
+    let size = size
+        .parse::<usize>()
+        .map_err(|error| format!("invalid git object size for {object}: {error}"))?;
+    let mut content = vec![0; size];
+    output
+        .read_exact(&mut content)
+        .map_err(|error| format!("cannot read git object {object}: {error}"))?;
+    let mut separator = [0];
+    output
+        .read_exact(&mut separator)
+        .map_err(|error| format!("cannot read git object separator: {error}"))?;
+    if separator[0] != b'\n' {
+        return Err(format!("invalid git object separator for {object}"));
+    }
+    Ok(Some(content))
+}
+
+fn read_head_blob(
+    root: &Path,
+    name: &str,
+    input: &mut impl Write,
+    output: &mut impl BufRead,
+) -> Result<Option<Vec<u8>>, String> {
+    if name.contains('\n') || name.contains('\r') {
+        let old = Command::new("git")
+            .args(["show", &format!("HEAD:{name}")])
+            .current_dir(root)
+            .output()
+            .map_err(|error| format!("cannot read HEAD:{name}: {error}"))?;
+        return Ok(old.status.success().then_some(old.stdout));
+    }
+    read_batch_blob(input, output, &format!("HEAD:{name}"))
+}
 
 fn discard_semantic_noop_changes(root: &Path) -> Result<(), String> {
     let names = Command::new("git")
@@ -19,39 +84,71 @@ fn discard_semantic_noop_changes(root: &Path) -> Result<(), String> {
     if !names.status.success() {
         return Err("cannot inspect generated changes".to_string());
     }
-    for name in String::from_utf8_lossy(&names.stdout)
+    let changed_names = String::from_utf8_lossy(&names.stdout);
+    let files: Vec<(String, PathBuf)> = changed_names
         .split('\0')
         .filter(|line| !line.is_empty())
-    {
-        let path = root.join(name);
-        let source_input = rust_processor::url_rewriter::is_pipeline_source_path_pub(&path)
-            && !name.starts_with("modules/source/build/");
-        if !path.is_file() || source_input {
-            continue;
+        .filter_map(|name| {
+            let path = root.join(name);
+            let source_input = rust_processor::url_rewriter::is_pipeline_source_path_pub(&path)
+                && !name.starts_with("modules/source/build/");
+            (path.is_file() && !source_input).then(|| (name.to_string(), path))
+        })
+        .collect();
+    if files.is_empty() {
+        return Ok(());
+    }
+
+    let mut cat_file = Command::new("git")
+        .args(["cat-file", "--batch"])
+        .current_dir(root)
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .spawn()
+        .map_err(|error| format!("cannot inspect generated blobs: {error}"))?;
+    let mut input = BufWriter::new(
+        cat_file
+            .stdin
+            .take()
+            .ok_or_else(|| "cannot open git object input".to_string())?,
+    );
+    let mut output = BufReader::new(
+        cat_file
+            .stdout
+            .take()
+            .ok_or_else(|| "cannot open git object output".to_string())?,
+    );
+    let processing = (|| {
+        for (name, path) in files {
+            let Some(old_bytes) = read_head_blob(root, &name, &mut input, &mut output)? else {
+                continue;
+            };
+            let Ok(new_bytes) = std::fs::read(&path) else {
+                return Err(format!("cannot read generated file {name}"));
+            };
+            if old_bytes.contains(&0) || new_bytes.contains(&0) {
+                continue;
+            }
+            let old_text = String::from_utf8_lossy(&old_bytes);
+            let new_text = String::from_utf8_lossy(&new_bytes);
+            if rust_processor::url_rewriter::semantic_content_for_path_pub(&path, &old_text)
+                == rust_processor::url_rewriter::semantic_content_for_path_pub(&path, &new_text)
+            {
+                std::fs::write(&path, old_bytes)
+                    .map_err(|error| format!("cannot restore semantic no-op {name}: {error}"))?;
+                println!("[INFO] Restored semantic no-op: {name}");
+            }
         }
-        let old = Command::new("git")
-            .args(["show", &format!("HEAD:{name}")])
-            .current_dir(root)
-            .output()
-            .map_err(|error| format!("cannot read HEAD:{name}: {error}"))?;
-        if !old.status.success() {
-            continue;
-        }
-        let Ok(new_bytes) = std::fs::read(&path) else {
-            return Err(format!("cannot read generated file {name}"));
-        };
-        if old.stdout.contains(&0) || new_bytes.contains(&0) {
-            continue;
-        }
-        let old_text = String::from_utf8_lossy(&old.stdout);
-        let new_text = String::from_utf8_lossy(&new_bytes);
-        if rust_processor::url_rewriter::semantic_content_for_path_pub(&path, &old_text)
-            == rust_processor::url_rewriter::semantic_content_for_path_pub(&path, &new_text)
-        {
-            std::fs::write(&path, old.stdout)
-                .map_err(|error| format!("cannot restore semantic no-op {name}: {error}"))?;
-            println!("[INFO] Restored semantic no-op: {name}");
-        }
+        Ok(())
+    })();
+    drop(input);
+    drop(output);
+    let status = cat_file
+        .wait()
+        .map_err(|error| format!("cannot finish git object read: {error}"))?;
+    processing?;
+    if !status.success() {
+        return Err("cannot read generated blobs from git".to_string());
     }
     Ok(())
 }
@@ -256,5 +353,89 @@ fn main() -> ExitCode {
             eprintln!("[ERROR] {error}");
             ExitCode::from(1)
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{discard_semantic_noop_changes, read_batch_blob};
+    use std::io::Cursor;
+    use std::process::Command;
+    use std::time::{SystemTime, UNIX_EPOCH};
+
+    #[test]
+    fn reads_sequential_git_batch_responses_without_losing_blob_boundaries() {
+        let mut output = Cursor::new(
+            b"oid-1 blob 4\none\n\noid-2 blob 9\ntwo\0three\nHEAD:missing-path missing\n".to_vec(),
+        );
+        let mut input = Vec::new();
+
+        assert_eq!(
+            read_batch_blob(&mut input, &mut output, "oid-1")
+                .unwrap()
+                .unwrap(),
+            b"one\n"
+        );
+        assert_eq!(
+            read_batch_blob(&mut input, &mut output, "oid-2")
+                .unwrap()
+                .unwrap(),
+            b"two\0three"
+        );
+        assert!(
+            read_batch_blob(&mut input, &mut output, "missing")
+                .unwrap()
+                .is_none()
+        );
+        assert_eq!(input, b"oid-1\noid-2\nmissing\n");
+    }
+
+    #[test]
+    fn rejects_malformed_git_object_headers() {
+        let mut output = Cursor::new(b"malformed\n".to_vec());
+
+        assert_eq!(
+            read_batch_blob(&mut Vec::new(), &mut output, "oid").unwrap_err(),
+            "invalid git object header for oid"
+        );
+    }
+
+    #[test]
+    fn semantic_noop_filter_restores_a_tracked_file_with_spaces_in_its_path() {
+        let unique = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap()
+            .as_nanos();
+        let root =
+            std::env::temp_dir().join(format!("script-hub-noop-{}-{unique}", std::process::id()));
+        let relative = "rulesets/RULE-SET/Direct routing.list";
+        let path = root.join(relative);
+        std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+        let original = b"# baseline\nDOMAIN-SUFFIX,example.test\n";
+        std::fs::write(&path, original).unwrap();
+
+        let git = |arguments: &[&str]| {
+            let output = Command::new("git")
+                .args(arguments)
+                .current_dir(&root)
+                .output()
+                .unwrap();
+            assert!(
+                output.status.success(),
+                "git {arguments:?} failed: {}",
+                String::from_utf8_lossy(&output.stderr)
+            );
+        };
+        git(&["init", "--quiet"]);
+        git(&["config", "user.email", "test@example.invalid"]);
+        git(&["config", "user.name", "Script Hub Test"]);
+        git(&["add", "--", relative]);
+        git(&["commit", "--quiet", "-m", "baseline"]);
+        std::fs::write(&path, b"# updated date\nDOMAIN-SUFFIX,example.test\n").unwrap();
+
+        discard_semantic_noop_changes(&root).unwrap();
+
+        assert_eq!(std::fs::read(&path).unwrap(), original);
+        let _ = std::fs::remove_dir_all(root);
     }
 }
