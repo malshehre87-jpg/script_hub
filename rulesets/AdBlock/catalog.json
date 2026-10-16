@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-16 13:59:16",
+  "updated": "2026-10-16 17:04:39",
   "rules_per_shard_max": 100000,
   "modules": {
     "loon_promax_cdn": {
@@ -96,7 +96,7 @@
       "label_zh": "通用广告",
       "purpose": "blackmatrix7 / ACL4SSR / geekdada / 广告联盟等通用域名",
       "shard_index": 4,
-      "rule_count": 31765,
+      "rule_count": 31822,
       "cdn_url": "https://cdn.jsdelivr.net/gh/nowaytouse/script_hub@master/rulesets%2FAdBlock%2FAdBlock%5FAdvertising%5F04%2Elist",
       "github_url": "https://raw.githubusercontent.com/nowaytouse/script_hub/master/rulesets%2FAdBlock%2FAdBlock%5FAdvertising%5F04%2Elist"
     },
@@ -226,7 +226,7 @@
       "label_zh": "威胁情报·补充",
       "purpose": "HaGeZi / skk 其它威胁与钓鱼域名集",
       "shard_index": 1,
-      "rule_count": 63432,
+      "rule_count": 63394,
       "cdn_url": "https://cdn.jsdelivr.net/gh/nowaytouse/script_hub@master/rulesets%2FAdBlock%2FAdBlock%5FThreatIntel%2Elist",
       "github_url": "https://raw.githubusercontent.com/nowaytouse/script_hub/master/rulesets%2FAdBlock%2FAdBlock%5FThreatIntel%2Elist"
     }
