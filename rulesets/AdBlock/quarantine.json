@@ -34039,12 +34039,6 @@
   },
   {
     "source": "adg.list",
-    "candidate": "DOMAIN-SUFFIX,123p.netflixlife.com",
-    "reason": "protected-domain-intersection",
-    "risk": "protected-service"
-  },
-  {
-    "source": "adg.list",
     "candidate": "DOMAIN-SUFFIX,152media.cloud",
     "reason": "broad-media-domain",
     "risk": "broad-media"
@@ -37130,12 +37124,6 @@
   {
     "source": "adg.list",
     "candidate": "DOMAIN-SUFFIX,djpgwdcspfixy.online",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "adg.list",
-    "candidate": "DOMAIN-SUFFIX,djpgypbrdacco.space",
     "reason": "broad-media-domain",
     "risk": "broad-media"
   },
@@ -47512,6 +47500,12 @@
     "candidate": "DOMAIN-SUFFIX,terriblethumb.com",
     "reason": "broad-media-domain",
     "risk": "broad-media"
+  },
+  {
+    "source": "adg.list",
+    "candidate": "DOMAIN-SUFFIX,teslaamg.obs.cn-east-3.myhuaweicloud.com",
+    "reason": "protected-domain-intersection",
+    "risk": "protected-service"
   },
   {
     "source": "adg.list",
@@ -167917,12 +167911,6 @@
   },
   {
     "source": "sr_ad_only.conf",
-    "candidate": "DOMAIN-SUFFIX,djpgypbrdacco.space,Reject",
-    "reason": "broad-media-domain",
-    "risk": "broad-media"
-  },
-  {
-    "source": "sr_ad_only.conf",
     "candidate": "DOMAIN-SUFFIX,dormietwitch.cfd,Reject",
     "reason": "protected-domain-intersection",
     "risk": "protected-service"
@@ -169600,6 +169588,12 @@
     "candidate": "DOMAIN-SUFFIX,terriblethumb.com,Reject",
     "reason": "broad-media-domain",
     "risk": "broad-media"
+  },
+  {
+    "source": "sr_ad_only.conf",
+    "candidate": "DOMAIN-SUFFIX,teslaamg.obs.cn-east-3.myhuaweicloud.com,Reject",
+    "reason": "protected-domain-intersection",
+    "risk": "protected-service"
   },
   {
     "source": "sr_ad_only.conf",
@@ -203768,6 +203762,12 @@
   {
     "source": "tif.medium.txt",
     "candidate": "||zzzb-reddit.com^",
+    "reason": "protected-domain-intersection",
+    "risk": "protected-service"
+  },
+  {
+    "source": "tracking-protection-filter.txt",
+    "candidate": ".123p.netflixlife.com",
     "reason": "protected-domain-intersection",
     "risk": "protected-service"
   },
