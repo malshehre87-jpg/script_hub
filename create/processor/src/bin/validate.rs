@@ -45,6 +45,11 @@ fn report_validation(
     validation.len()
 }
 
+fn report_walkdir_error(error: walkdir::Error, errors: &mut usize) {
+    eprintln!("[ERROR] directory traversal failed: {error}");
+    *errors += 1;
+}
+
 fn validate_tree(root: &Path) -> Result<(usize, usize), String> {
     let mut artifacts = 0;
     let mut errors = 0;
@@ -67,10 +72,14 @@ fn validate_tree(root: &Path) -> Result<(usize, usize), String> {
         if !directory.is_dir() {
             continue;
         }
-        for entry in walkdir::WalkDir::new(directory)
-            .into_iter()
-            .filter_map(Result::ok)
-        {
+        for entry in walkdir::WalkDir::new(directory) {
+            let entry = match entry {
+                Ok(entry) => entry,
+                Err(error) => {
+                    report_walkdir_error(error, &mut errors);
+                    continue;
+                }
+            };
             if !entry.file_type().is_file() {
                 continue;
             }
@@ -101,10 +110,14 @@ fn validate_tree(root: &Path) -> Result<(usize, usize), String> {
         if !directory.is_dir() {
             continue;
         }
-        for entry in walkdir::WalkDir::new(&directory)
-            .into_iter()
-            .filter_map(Result::ok)
-        {
+        for entry in walkdir::WalkDir::new(&directory) {
+            let entry = match entry {
+                Ok(entry) => entry,
+                Err(error) => {
+                    report_walkdir_error(error, &mut errors);
+                    continue;
+                }
+            };
             let path = entry.path();
             if !path.is_file() || path.extension().and_then(|value| value.to_str()) != Some("list")
             {
@@ -205,7 +218,7 @@ fn main() -> ExitCode {
 
 #[cfg(test)]
 mod tests {
-    use super::validate_file;
+    use super::{report_walkdir_error, validate_file};
 
     #[test]
     fn validates_one_module_file_without_scanning_the_tree() {
@@ -235,5 +248,23 @@ mod tests {
         std::fs::remove_file(path).unwrap();
         let validation = validation.unwrap();
         assert!(validation.is_empty());
+    }
+
+    #[test]
+    fn counts_directory_traversal_errors() {
+        let missing = std::env::temp_dir().join(format!(
+            "script-hub-missing-directory-{}",
+            std::process::id()
+        ));
+        let error = walkdir::WalkDir::new(missing)
+            .into_iter()
+            .next()
+            .unwrap()
+            .unwrap_err();
+        let mut errors = 0;
+
+        report_walkdir_error(error, &mut errors);
+
+        assert_eq!(errors, 1);
     }
 }
