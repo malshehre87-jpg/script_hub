@@ -307,7 +307,7 @@ fn generate_header(name: &str, policy: &str, node: &str, desc: &str, count: usiz
     header.join("\n") + "\n"
 }
 
-fn semantic_rules_match(path: &Path, new_rules: &[String]) -> bool {
+fn semantic_rules_match(path: &Path, sorted_new_rules: &[String]) -> bool {
     if let Ok(content) = fs::read_to_string(path) {
         let mut old_rules = Vec::new();
         for line in content.lines() {
@@ -318,9 +318,7 @@ fn semantic_rules_match(path: &Path, new_rules: &[String]) -> bool {
             old_rules.push(stripped.to_string());
         }
         old_rules.sort();
-        let mut canonical_new = new_rules.to_vec();
-        canonical_new.sort();
-        return old_rules == canonical_new;
+        return old_rules.as_slice() == sorted_new_rules;
     }
     false
 }

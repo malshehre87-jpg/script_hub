@@ -222,24 +222,33 @@ fn update_helper_html(path: &Path, surge: &Value, shadowrocket: &Value) -> Resul
     let surge = inline_json(surge)?;
     let shadowrocket = inline_json(shadowrocket)?;
     let mut replaced = 0;
-    let mut output = Vec::new();
+    let mut content = String::with_capacity(html.len());
     for line in html.lines() {
         let trimmed = line.trim_start();
         let indent = &line[..line.len() - trimmed.len()];
         if trimmed.starts_with("const surgeData = ") {
-            output.push(format!("{indent}const surgeData = {surge};"));
+            content.push_str(indent);
+            content.push_str("const surgeData = ");
+            content.push_str(&surge);
+            content.push(';');
             replaced += 1;
         } else if trimmed.starts_with("const srData = ") {
-            output.push(format!("{indent}const srData = {shadowrocket};"));
+            content.push_str(indent);
+            content.push_str("const srData = ");
+            content.push_str(&shadowrocket);
+            content.push(';');
             replaced += 1;
         } else {
-            output.push(line.to_string());
+            content.push_str(line);
         }
+        content.push('\n');
     }
     if replaced != 2 {
         return Err("module helper template is missing embedded data slots".to_string());
     }
-    let content = output.join("\n") + "\n";
+    if content == html {
+        return Ok(());
+    }
     if crate::safe_write_file_internal(path, &content, true) {
         Ok(())
     } else {
@@ -276,13 +285,13 @@ pub fn refresh(root: &Path) -> Result<(), String> {
         }),
     )?;
 
-    let sr_keys: HashSet<(String, String)> = shadowrocket
+    let sr_keys: HashSet<(&str, &str)> = shadowrocket
         .iter()
-        .map(|module| (module.category.clone(), module.id.clone()))
+        .map(|module| (module.category.as_str(), module.id.as_str()))
         .collect();
     let (compatible, surge_only): (Vec<_>, Vec<_>) = surge
         .iter()
-        .partition(|module| sr_keys.contains(&(module.category.clone(), module.id.clone())));
+        .partition(|module| sr_keys.contains(&(module.category.as_str(), module.id.as_str())));
     write_json(
         &helper.join("modules_compatibility.json"),
         &json!({
@@ -302,7 +311,7 @@ pub fn refresh(root: &Path) -> Result<(), String> {
             "generated": generated,
             "stats": {"total": surge.len(), "converted": compatible.len(), "failed": surge_only.len()},
             "log": surge.iter().map(|module| {
-                let ok = sr_keys.contains(&(module.category.clone(), module.id.clone()));
+                let ok = sr_keys.contains(&(module.category.as_str(), module.id.as_str()));
                 json!({
                     "src": module.filename,
                     "dst": format!("{}.module", module.id),
@@ -368,6 +377,7 @@ mod tests {
         )
         .unwrap();
 
+        refresh(&root).unwrap();
         refresh(&root).unwrap();
 
         let html = fs::read_to_string(helper.join("surge_module_helper.html")).unwrap();

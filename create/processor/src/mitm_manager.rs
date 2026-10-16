@@ -72,23 +72,19 @@ fn process_file(path: &Path, dry_run: bool) -> bool {
         return false;
     }
 
-    let lines: Vec<&str> = content.lines().collect();
-    let mut new_lines = Vec::new();
+    let mut final_content = String::with_capacity(content.len());
     let mut modified = false;
 
-    // Use a line splitter that preserves the original line ending style if possible,
-    // but standard content.lines() is fine.
-    for line in lines {
+    for line in content.lines() {
         let stripped = line.trim();
         if stripped.starts_with("hostname") && !stripped.starts_with("hostname-disabled") {
-            if !line.contains('=') {
-                new_lines.push(line.to_string());
+            let Some((prefix, val_part)) = line.split_once('=') else {
+                final_content.push_str(line);
+                final_content.push('\n');
                 continue;
-            }
+            };
 
-            let parts: Vec<&str> = line.splitn(2, '=').collect();
-            let prefix = parts[0];
-            let val_part = parts[1].trim();
+            let val_part = val_part.trim();
 
             let mut tag_with_space = String::new();
             let mut remaining_val = val_part;
@@ -126,20 +122,17 @@ fn process_file(path: &Path, dry_run: bool) -> bool {
             } else {
                 format!("{}= {}", prefix, tag_with_space.trim_end())
             };
-            new_lines.push(formatted_line);
+            final_content.push_str(&formatted_line);
         } else {
-            new_lines.push(line.to_string());
+            final_content.push_str(line);
         }
+        final_content.push('\n');
     }
 
     if modified {
         if dry_run {
             println!("[DRY RUN] Would modify: {:?}", path);
         } else {
-            let mut final_content = new_lines.join("\n");
-            if !final_content.ends_with('\n') {
-                final_content.push('\n');
-            }
             if !crate::safe_write_file_internal(path, &final_content, true) {
                 return false;
             }

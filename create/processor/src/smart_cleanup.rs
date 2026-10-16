@@ -1061,50 +1061,34 @@ pub fn classify_promax_line_pub(line: &str, section: &str, source_path: &str) ->
         return LineVerdict::Neutral;
     }
 
-    let parts: Vec<&str> = stripped.split(',').collect();
-    let first_upper = parts[0].trim().to_uppercase();
-    if sec == "rule"
-        || [
-            "DOMAIN",
-            "DOMAIN-SUFFIX",
-            "DOMAIN-KEYWORD",
-            "DOMAIN-REGEX",
-            "DOMAIN-WILDCARD",
-            "URL-REGEX",
-            "IP-CIDR",
-            "IP-CIDR6",
-            "USER-AGENT",
-            "PROCESS-NAME",
-            "DEST-PORT",
-        ]
-        .contains(&first_upper.as_str())
-    {
-        let mut policy = String::new();
-        if !parts.is_empty() {
-            policy = parts[parts.len() - 1].trim().to_uppercase();
-        }
-        if REJECT_POLICIES.contains(policy.as_str()) {
+    let first = stripped.split(',').next().unwrap_or_default().trim();
+    let is_rule_type = [
+        "DOMAIN",
+        "DOMAIN-SUFFIX",
+        "DOMAIN-KEYWORD",
+        "DOMAIN-REGEX",
+        "DOMAIN-WILDCARD",
+        "URL-REGEX",
+        "IP-CIDR",
+        "IP-CIDR6",
+        "USER-AGENT",
+        "PROCESS-NAME",
+        "DEST-PORT",
+    ]
+    .iter()
+    .any(|rule_type| first.eq_ignore_ascii_case(rule_type));
+    if sec == "rule" || is_rule_type {
+        let policy = stripped.rsplit(',').next().unwrap_or_default().trim();
+        if REJECT_POLICIES
+            .iter()
+            .any(|reject_policy| policy.eq_ignore_ascii_case(reject_policy))
+        {
             if contains_any(&low, &["unlock", "解锁", "vip", "premium", "crack"]) {
                 return LineVerdict::Enhance;
             }
             return LineVerdict::Ad;
         }
-        if !parts.is_empty()
-            && [
-                "DOMAIN",
-                "DOMAIN-SUFFIX",
-                "DOMAIN-KEYWORD",
-                "DOMAIN-REGEX",
-                "DOMAIN-WILDCARD",
-                "URL-REGEX",
-                "IP-CIDR",
-                "IP-CIDR6",
-                "USER-AGENT",
-                "PROCESS-NAME",
-                "DEST-PORT",
-            ]
-            .contains(&first_upper.as_str())
-        {
+        if is_rule_type {
             if contains_any(&low, &["unlock", "解锁", "vip", "premium", "crack"]) {
                 return LineVerdict::Enhance;
             }
@@ -1926,8 +1910,9 @@ pub fn merge_mitm_hosts_pub(sections: &[ModuleSectionPub]) -> Vec<ModuleSectionP
 #[cfg(test)]
 mod ruleset_cleanup_tests {
     use super::{
-        ModuleSectionPub, dedupe_key_pub, dedupe_section_lines_pub, format_module_pub,
-        merge_mitm_hosts_pub, normalize_url_regex_rule, run_cleanup, script_matcher_key_pub,
+        LineVerdict, ModuleSectionPub, classify_promax_line_pub, dedupe_key_pub,
+        dedupe_section_lines_pub, format_module_pub, merge_mitm_hosts_pub,
+        normalize_url_regex_rule, run_cleanup, script_matcher_key_pub,
     };
     use std::fs;
     use std::time::{SystemTime, UNIX_EPOCH};
@@ -1937,6 +1922,26 @@ mod ruleset_cleanup_tests {
         assert_eq!(
             normalize_url_regex_rule(r#"URL-REGEX,""^https:\/\/ads\.example\/",REJECT-DROP"#,),
             Some(r#"URL-REGEX,^https:\/\/ads\.example\/"#.to_string())
+        );
+    }
+
+    #[test]
+    fn promax_rule_classification_is_case_insensitive_without_changing_verdicts() {
+        assert_eq!(
+            classify_promax_line_pub(
+                "domain-suffix,ads.example,reject-drop",
+                "Rule",
+                "fixture.sgmodule"
+            ),
+            LineVerdict::Ad
+        );
+        assert_eq!(
+            classify_promax_line_pub(
+                "DOMAIN-SUFFIX,ads.example,DIRECT",
+                "Rule",
+                "fixture.sgmodule"
+            ),
+            LineVerdict::Ad
         );
     }
 
