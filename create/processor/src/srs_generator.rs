@@ -17,6 +17,16 @@ fn wildcard_to_regex(value: &str) -> String {
     format!("^{}$", r)
 }
 
+fn srs_output_dir(list_file: &Path, root_dir: &Path) -> PathBuf {
+    if list_file.starts_with(root_dir.join("rulesets/Sources/dns/mapping")) {
+        root_dir.join("rulesets/Sources/dns/mapping")
+    } else if list_file.starts_with(root_dir.join("rulesets/AdBlock")) {
+        root_dir.join("rulesets/AdBlock")
+    } else {
+        root_dir.join("rulesets/SingBox")
+    }
+}
+
 fn compile_srs(list_file: &Path, root_dir: &Path, singbox_path: &str) -> bool {
     let file_name = match list_file.file_name().and_then(|f| f.to_str()) {
         Some(f) => f,
@@ -24,13 +34,7 @@ fn compile_srs(list_file: &Path, root_dir: &Path, singbox_path: &str) -> bool {
     };
     let name = file_name.trim_end_matches(".list");
 
-    let mut out_dir = root_dir.join("rulesets/SingBox");
-    let path_str = list_file.to_string_lossy();
-    if path_str.contains("dns/mapping") || path_str.contains("/dns/") {
-        out_dir = root_dir.join("rulesets/Sources/dns/mapping");
-    } else if path_str.contains("rulesets/AdBlock") {
-        out_dir = root_dir.join("rulesets/AdBlock");
-    }
+    let out_dir = srs_output_dir(list_file, root_dir);
 
     if !out_dir.exists() && fs::create_dir_all(&out_dir).is_err() {
         return false;
@@ -186,71 +190,69 @@ fn compile_srs(list_file: &Path, root_dir: &Path, singbox_path: &str) -> bool {
     }
 }
 
-fn prune_stale_srs(list_files: &[PathBuf], root_dir: &Path) {
-    let mut expected_srs: HashSet<String> = HashSet::new();
+fn collect_srs_outputs(directory: &Path, outputs: &mut Vec<PathBuf>) -> Result<(), String> {
+    let entries = match fs::read_dir(directory) {
+        Ok(entries) => entries,
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(()),
+        Err(error) => return Err(format!("cannot list {}: {error}", directory.display())),
+    };
+
+    for entry in entries {
+        let entry =
+            entry.map_err(|error| format!("cannot read {} entry: {error}", directory.display()))?;
+        let file_type = entry
+            .file_type()
+            .map_err(|error| format!("cannot inspect {}: {error}", entry.path().display()))?;
+        if file_type.is_file() && entry.path().extension().is_some_and(|ext| ext == "srs") {
+            outputs.push(entry.path());
+        }
+    }
+    Ok(())
+}
+
+fn prune_stale_srs(list_files: &[PathBuf], root_dir: &Path) -> bool {
+    let mut expected_srs: HashSet<PathBuf> = HashSet::new();
     for lf in list_files {
         if let Some(file_name) = lf.file_name().and_then(|f| f.to_str()) {
             let name = file_name.trim_end_matches(".list");
-            expected_srs.insert(format!("{}_Singbox.srs", name));
+            expected_srs.insert(srs_output_dir(lf, root_dir).join(format!("{}_Singbox.srs", name)));
         }
     }
 
     let singbox_dir = root_dir.join("rulesets/SingBox");
-    if let Ok(entries) = fs::read_dir(&singbox_dir) {
-        for entry in entries.flatten() {
-            if let Ok(name) = entry.file_name().into_string()
-                && name.starts_with("GeoIP_")
-                && name.ends_with(".srs")
-            {
-                expected_srs.insert(name);
-            }
-        }
-    }
-
-    // Prune SINGBOX_DIR
-    if let Ok(entries) = fs::read_dir(&singbox_dir) {
-        for entry in entries.flatten() {
-            let path = entry.path();
-            if path.is_file()
-                && let Ok(name) = entry.file_name().into_string()
-                && name.ends_with(".srs")
-                && !expected_srs.contains(&name)
-            {
-                if fs::remove_file(&path).is_ok() {
-                    println!("\x1b[0;33m[WARN]\x1b[0m Pruned stale SRS: {}", name);
-                } else {
-                    eprintln!(
-                        "\x1b[0;31m[ERROR]\x1b[0m Failed to prune stale SRS: {}",
-                        name
-                    );
-                }
-            }
-        }
-    }
-
-    // Prune SINGBOX_DNS_DIR
     let dns_dir = root_dir.join("rulesets/Sources/dns/mapping");
-    if dns_dir.exists()
-        && let Ok(entries) = fs::read_dir(&dns_dir)
-    {
-        for entry in entries.flatten() {
-            let path = entry.path();
-            if path.is_file()
-                && let Ok(name) = entry.file_name().into_string()
-                && name.ends_with(".srs")
-                && !expected_srs.contains(&name)
-            {
-                if fs::remove_file(&path).is_ok() {
-                    println!("\x1b[0;33m[WARN]\x1b[0m Pruned stale DNS SRS: {}", name);
-                } else {
+    let adblock_dir = root_dir.join("rulesets/AdBlock");
+    let mut outputs = Vec::new();
+    for directory in [&singbox_dir, &dns_dir, &adblock_dir] {
+        if let Err(error) = collect_srs_outputs(directory, &mut outputs) {
+            eprintln!("\x1b[0;31m[ERROR]\x1b[0m Skipping stale SRS pruning: {error}");
+            return false;
+        }
+    }
+
+    let mut success = true;
+    for path in outputs {
+        let name = path
+            .file_name()
+            .map(|name| name.to_string_lossy())
+            .unwrap_or_default();
+        let is_geoip = path.parent() == Some(singbox_dir.as_path())
+            && name.starts_with("GeoIP_")
+            && name.ends_with(".srs");
+        if !expected_srs.contains(&path) && !is_geoip {
+            match fs::remove_file(&path) {
+                Ok(()) => println!("\x1b[0;33m[WARN]\x1b[0m Pruned stale SRS: {name}"),
+                Err(error) => {
                     eprintln!(
-                        "\x1b[0;31m[ERROR]\x1b[0m Failed to prune stale DNS SRS: {}",
-                        name
+                        "\x1b[0;31m[ERROR]\x1b[0m Failed to prune stale SRS {}: {error}",
+                        path.display()
                     );
+                    success = false;
                 }
             }
         }
     }
+    success
 }
 
 pub fn run_srs_generator(root_path: &str, singbox_path: &str) -> bool {
@@ -262,27 +264,56 @@ pub fn run_srs_generator(root_path: &str, singbox_path: &str) -> bool {
         return false;
     }
 
-    let source_dirs = vec![
-        root_dir.join("rulesets/RULE-SET"),
-        root_dir.join("rulesets/Sources/dns/mapping"),
-        root_dir.join("rulesets/AdBlock"),
+    let source_dirs = [
+        (root_dir.join("rulesets/RULE-SET"), true),
+        (root_dir.join("rulesets/Sources/dns/mapping"), false),
+        (root_dir.join("rulesets/AdBlock"), true),
     ];
 
     let mut list_files: Vec<PathBuf> = Vec::new();
 
-    for dir in source_dirs {
-        if !dir.exists() {
-            continue;
-        }
-        if let Ok(entries) = fs::read_dir(dir) {
-            for entry in entries.flatten() {
-                let path = entry.path();
-                if path.is_file()
-                    && let Some(ext) = path.extension()
-                    && ext == "list"
-                {
-                    list_files.push(path);
+    for (dir, required) in source_dirs {
+        let entries = match fs::read_dir(&dir) {
+            Ok(entries) => entries,
+            Err(error) if !required && error.kind() == std::io::ErrorKind::NotFound => {
+                continue;
+            }
+            Err(error) => {
+                eprintln!(
+                    "\x1b[0;31m[ERROR]\x1b[0m Cannot enumerate SRS sources in {}: {error}",
+                    dir.display()
+                );
+                return false;
+            }
+        };
+        for entry in entries {
+            let entry = match entry {
+                Ok(entry) => entry,
+                Err(error) => {
+                    eprintln!(
+                        "\x1b[0;31m[ERROR]\x1b[0m Cannot read SRS source entry in {}: {error}",
+                        dir.display()
+                    );
+                    return false;
                 }
+            };
+            let file_type = match entry.file_type() {
+                Ok(file_type) => file_type,
+                Err(error) => {
+                    eprintln!(
+                        "\x1b[0;31m[ERROR]\x1b[0m Cannot inspect SRS source {}: {error}",
+                        entry.path().display()
+                    );
+                    return false;
+                }
+            };
+            if file_type.is_file()
+                && entry
+                    .path()
+                    .extension()
+                    .is_some_and(|extension| extension == "list")
+            {
+                list_files.push(entry.path());
             }
         }
     }
@@ -295,25 +326,171 @@ pub fn run_srs_generator(root_path: &str, singbox_path: &str) -> bool {
     ];
 
     for path in extra_source_files {
-        if path.exists() {
+        if path.is_file() {
             list_files.push(path);
         }
     }
 
-    // Deduplicate
-    let mut unique_files = HashSet::new();
-    let mut deduped_list = Vec::new();
-    for f in list_files {
-        if unique_files.insert(f.clone()) {
-            deduped_list.push(f);
-        }
+    list_files.sort();
+    list_files.dedup();
+    if list_files.is_empty() {
+        eprintln!(
+            "\x1b[0;31m[ERROR]\x1b[0m No SRS source lists found; skipping generation and pruning."
+        );
+        return false;
     }
 
     let mut success = true;
-    for lf in &deduped_list {
+    for lf in &list_files {
         success &= compile_srs(lf, root_dir, singbox_path);
     }
 
-    prune_stale_srs(&deduped_list, root_dir);
-    success
+    if !success {
+        eprintln!(
+            "\x1b[0;31m[ERROR]\x1b[0m Skipping stale SRS pruning after a compilation failure."
+        );
+        return false;
+    }
+    prune_stale_srs(&list_files, root_dir)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{prune_stale_srs, run_srs_generator};
+    use std::fs;
+    use std::time::{SystemTime, UNIX_EPOCH};
+
+    fn fixture_root(name: &str) -> std::path::PathBuf {
+        let unique = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap()
+            .as_nanos();
+        std::env::temp_dir().join(format!("script-hub-srs-{name}-{unique}"))
+    }
+
+    #[test]
+    fn empty_srs_inventory_preserves_existing_outputs() {
+        let root = fixture_root("empty-inventory");
+        let output = root.join("rulesets/SingBox/Old_Singbox.srs");
+        fs::create_dir_all(output.parent().unwrap()).unwrap();
+        fs::write(&output, b"last known good").unwrap();
+
+        assert!(!run_srs_generator(
+            root.to_str().unwrap(),
+            "unused-sing-box"
+        ));
+        assert!(output.exists());
+        fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn failed_source_inventory_preserves_existing_outputs() {
+        let root = fixture_root("source-error");
+        fs::create_dir_all(root.join("rulesets")).unwrap();
+        fs::write(root.join("rulesets/RULE-SET"), "not a directory").unwrap();
+        let output = root.join("rulesets/SingBox/Old_Singbox.srs");
+        fs::create_dir_all(output.parent().unwrap()).unwrap();
+        fs::write(&output, b"last known good").unwrap();
+
+        assert!(!run_srs_generator(
+            root.to_str().unwrap(),
+            "unused-sing-box"
+        ));
+        assert!(output.exists());
+        fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn failed_compilation_does_not_prune_existing_outputs() {
+        let root = fixture_root("compile-error");
+        let sources = root.join("rulesets/RULE-SET");
+        fs::create_dir_all(&sources).unwrap();
+        fs::create_dir_all(root.join("rulesets/AdBlock")).unwrap();
+        fs::write(sources.join("Current.list"), "DOMAIN,current.example\n").unwrap();
+        let output = root.join("rulesets/SingBox/Old_Singbox.srs");
+        fs::create_dir_all(output.parent().unwrap()).unwrap();
+        fs::write(&output, b"last known good").unwrap();
+
+        assert!(!run_srs_generator(
+            root.to_str().unwrap(),
+            root.join("missing-sing-box").to_str().unwrap()
+        ));
+        assert!(output.exists());
+        fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn stale_pruning_waits_for_both_directory_inventories() {
+        let root = fixture_root("prune-error");
+        let singbox_dir = root.join("rulesets/SingBox");
+        fs::create_dir_all(&singbox_dir).unwrap();
+        let stale_output = singbox_dir.join("Old_Singbox.srs");
+        fs::write(&stale_output, b"last known good").unwrap();
+        let dns_directory = root.join("rulesets/Sources/dns");
+        fs::create_dir_all(dns_directory.parent().unwrap()).unwrap();
+        fs::write(&dns_directory, "not a directory").unwrap();
+
+        assert!(!prune_stale_srs(&[], &root));
+        assert!(stale_output.exists());
+        fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn stale_pruning_keeps_current_and_geoip_outputs() {
+        let root = fixture_root("prune-success");
+        let singbox_dir = root.join("rulesets/SingBox");
+        let dns_dir = root.join("rulesets/Sources/dns/mapping");
+        fs::create_dir_all(&singbox_dir).unwrap();
+        fs::create_dir_all(&dns_dir).unwrap();
+        let current = singbox_dir.join("Current_Singbox.srs");
+        let stale = singbox_dir.join("Old_Singbox.srs");
+        let geoip = singbox_dir.join("GeoIP_CN.srs");
+        let stale_dns = dns_dir.join("Old_Singbox.srs");
+        for path in [&current, &stale, &geoip, &stale_dns] {
+            fs::write(path, b"fixture").unwrap();
+        }
+        let list_files = [root.join("rulesets/RULE-SET/Current.list")];
+
+        assert!(prune_stale_srs(&list_files, &root));
+        assert!(current.exists());
+        assert!(geoip.exists());
+        assert!(!stale.exists());
+        assert!(!stale_dns.exists());
+        fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn stale_pruning_matches_output_paths_and_cleans_adblock_outputs() {
+        let root = fixture_root("prune-output-paths");
+        let singbox_dir = root.join("rulesets/SingBox");
+        let dns_dir = root.join("rulesets/Sources/dns/mapping");
+        let adblock_dir = root.join("rulesets/AdBlock");
+        for directory in [&singbox_dir, &dns_dir, &adblock_dir] {
+            fs::create_dir_all(directory).unwrap();
+        }
+
+        let current = singbox_dir.join("Shared_Singbox.srs");
+        let stale_dns = dns_dir.join("Shared_Singbox.srs");
+        let stale_adblock = adblock_dir.join("Shared_Singbox.srs");
+        let stale_adblock_source = adblock_dir.join("Old_Singbox.srs");
+        let geoip = singbox_dir.join("GeoIP_CN.srs");
+        for path in [
+            &current,
+            &stale_dns,
+            &stale_adblock,
+            &stale_adblock_source,
+            &geoip,
+        ] {
+            fs::write(path, b"fixture").unwrap();
+        }
+        let list_files = [root.join("rulesets/RULE-SET/Shared.list")];
+
+        assert!(prune_stale_srs(&list_files, &root));
+        assert!(current.exists());
+        assert!(geoip.exists());
+        assert!(!stale_dns.exists());
+        assert!(!stale_adblock.exists());
+        assert!(!stale_adblock_source.exists());
+        fs::remove_dir_all(root).unwrap();
+    }
 }

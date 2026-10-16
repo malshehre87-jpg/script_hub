@@ -93,17 +93,32 @@ pub fn shadowrocket_variant(
 
 pub fn validate_coverage_floor(root: &Path, artifacts: &[GeneratedArtifact]) -> Result<(), String> {
     let catalog_path = root.join("rulesets/AdBlock/catalog.json");
-    let Ok(catalog_content) = fs::read_to_string(&catalog_path) else {
-        return Ok(());
+    let catalog_content = match fs::read_to_string(&catalog_path) {
+        Ok(content) => content,
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(()),
+        Err(error) => {
+            return Err(format!(
+                "cannot read previous PROMAX coverage at {}: {error}",
+                catalog_path.display()
+            ));
+        }
     };
     let catalog: serde_json::Value = serde_json::from_str(&catalog_content)
         .map_err(|error| format!("cannot read previous PROMAX coverage: {error}"))?;
-    let previous: u64 = catalog["shards"]
+    let shards = catalog["shards"]
         .as_array()
-        .into_iter()
-        .flatten()
-        .filter_map(|shard| shard["rule_count"].as_u64())
-        .sum();
+        .ok_or_else(|| "previous PROMAX coverage is missing a shards array".to_string())?;
+    let previous = shards.iter().enumerate().try_fold(
+        0_u64,
+        |total, (index, shard)| -> Result<u64, String> {
+            let count = shard["rule_count"].as_u64().ok_or_else(|| {
+                format!("previous PROMAX coverage shard {index} has an invalid rule_count")
+            })?;
+            total.checked_add(count).ok_or_else(|| {
+                "previous PROMAX coverage rule_count total overflows u64".to_string()
+            })
+        },
+    )?;
     if previous == 0 {
         return Ok(());
     }
@@ -113,16 +128,21 @@ pub fn validate_coverage_floor(root: &Path, artifacts: &[GeneratedArtifact]) -> 
         .iter()
         .filter(|artifact| artifact.kind == ArtifactKind::ExternalRuleset)
     {
-        current += artifact
+        let count = artifact
             .content
             .lines()
             .filter(|line| {
                 let line = line.trim();
                 !line.is_empty() && !line.starts_with('#') && !line.starts_with(';')
             })
-            .count() as u64;
+            .count();
+        let count = u64::try_from(count)
+            .map_err(|_| "PROMAX coverage rule count exceeds u64".to_string())?;
+        current = current
+            .checked_add(count)
+            .ok_or_else(|| "PROMAX coverage rule count total overflows u64".to_string())?;
     }
-    let floor = previous.saturating_mul(90) / 100;
+    let floor = (u128::from(previous) * 90 / 100) as u64;
     if current < floor {
         return Err(format!(
             "PROMAX coverage regressed from {previous} to {current} rules (minimum {floor})"
@@ -388,7 +408,7 @@ fn shadowrocket_policy(policy: &str) -> &str {
 mod tests {
     use super::{
         ArtifactKind, GeneratedArtifact, convert_surge_to_shadowrocket, publish_artifacts,
-        validate_artifact_size,
+        validate_artifact_size, validate_coverage_floor,
     };
     use std::fs;
     use std::path::Path;
@@ -465,6 +485,66 @@ fixture = type=http-response,pattern=^https://example.test/ad,script-path=https:
         }];
 
         assert!(super::validate_coverage_floor(&root, &artifacts).is_err());
+        fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn missing_coverage_catalog_allows_first_generation() {
+        let unique = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap()
+            .as_nanos();
+        let root = std::env::temp_dir().join(format!("promax-coverage-first-run-{unique}"));
+
+        assert!(validate_coverage_floor(&root, &[]).is_ok());
+    }
+
+    #[test]
+    fn unreadable_coverage_catalog_does_not_disable_the_floor() {
+        let unique = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap()
+            .as_nanos();
+        let root = std::env::temp_dir().join(format!("promax-coverage-read-error-{unique}"));
+        fs::create_dir_all(root.join("rulesets/AdBlock/catalog.json")).unwrap();
+
+        assert!(validate_coverage_floor(&root, &[]).is_err());
+        fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn malformed_coverage_shards_or_counts_are_rejected() {
+        let unique = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap()
+            .as_nanos();
+        let root = std::env::temp_dir().join(format!("promax-coverage-schema-{unique}"));
+        let catalog = root.join("rulesets/AdBlock/catalog.json");
+        fs::create_dir_all(catalog.parent().unwrap()).unwrap();
+
+        for contents in [r#"{}"#, r#"{"shards":[{"rule_count":"100"}]}"#] {
+            fs::write(&catalog, contents).unwrap();
+            assert!(validate_coverage_floor(&root, &[]).is_err());
+        }
+        fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn coverage_count_overflow_is_rejected() {
+        let unique = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap()
+            .as_nanos();
+        let root = std::env::temp_dir().join(format!("promax-coverage-overflow-{unique}"));
+        let catalog = root.join("rulesets/AdBlock/catalog.json");
+        fs::create_dir_all(catalog.parent().unwrap()).unwrap();
+        fs::write(
+            &catalog,
+            r#"{"shards":[{"rule_count":18446744073709551615},{"rule_count":1}]}"#,
+        )
+        .unwrap();
+
+        assert!(validate_coverage_floor(&root, &[]).is_err());
         fs::remove_dir_all(root).unwrap();
     }
 
