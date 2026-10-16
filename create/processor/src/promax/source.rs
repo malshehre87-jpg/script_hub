@@ -188,21 +188,24 @@ impl Downloader {
             .unwrap_or(self.config.concurrency);
         requested_concurrency = bounded_concurrency(requested_concurrency, urls.len());
 
+        let url_count = urls.len();
+        let results_per_worker = url_count.div_ceil(requested_concurrency);
         let queue = Mutex::new(VecDeque::from_iter(urls));
-        let results = Mutex::new(Vec::new());
+        let results = Mutex::new(Vec::with_capacity(url_count));
         let remaining_bytes = Mutex::new(self.config.max_total_bytes);
         let deadline = Instant::now() + self.config.batch_timeout;
         thread::scope(|scope| {
             for _ in 0..requested_concurrency {
                 scope.spawn(|| {
+                    let mut worker_results = Vec::with_capacity(results_per_worker);
                     loop {
+                        if Instant::now() >= deadline {
+                            break;
+                        }
                         let Some(url) = queue.lock().expect("download queue poisoned").pop_front()
                         else {
                             break;
                         };
-                        if Instant::now() >= deadline {
-                            break;
-                        }
                         let result = self.get_until(&url, Some(deadline)).and_then(|content| {
                             let mut remaining = remaining_bytes
                                 .lock()
@@ -218,11 +221,12 @@ impl Downloader {
                                 Ok(content)
                             }
                         });
-                        results
-                            .lock()
-                            .expect("download results poisoned")
-                            .push((url, result));
+                        worker_results.push((url, result));
                     }
+                    results
+                        .lock()
+                        .expect("download results poisoned")
+                        .extend(worker_results);
                 });
             }
         });
@@ -243,7 +247,11 @@ impl Downloader {
                 }),
         );
         results.sort_by(|left, right| left.0.cmp(&right.0));
-        let mut batch = DownloadBatch::default();
+        let success_count = results.iter().filter(|(_, result)| result.is_ok()).count();
+        let mut batch = DownloadBatch {
+            contents: HashMap::with_capacity(success_count),
+            failures: Vec::with_capacity(results.len() - success_count),
+        };
         for (url, result) in results {
             match result {
                 Ok(content) => {
@@ -564,6 +572,20 @@ mod tests {
 
         assert_eq!(batch.contents.len(), 1);
         assert_eq!(batch.failures.len(), 1);
+    }
+
+    #[test]
+    fn downloader_reports_every_url_when_deadline_expires_before_workers_start() {
+        let mut config = test_config(1024);
+        config.batch_timeout = Duration::ZERO;
+        let urls = [
+            "http://127.0.0.1:9/first.list",
+            "http://127.0.0.1:9/second.list",
+        ];
+
+        let batch = Downloader::new(config).download_many(urls);
+
+        assert_eq!(batch.failures.len(), 2);
     }
 
     #[test]

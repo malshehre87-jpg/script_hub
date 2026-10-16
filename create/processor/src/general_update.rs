@@ -138,6 +138,28 @@ fn downloader() -> Downloader {
     })
 }
 
+fn remote_content(remote_urls: &[String], downloads: &HashMap<String, String>) -> String {
+    let (source_count, content_bytes) = remote_urls
+        .iter()
+        .filter_map(|url| downloads.get(url))
+        .fold((0usize, 0usize), |(count, bytes), content| {
+            (count + 1, bytes.saturating_add(content.len()))
+        });
+    let capacity = content_bytes.saturating_add(source_count.saturating_sub(1));
+    let mut output = String::with_capacity(capacity);
+    let mut first_source = true;
+    for url in remote_urls {
+        if let Some(content) = downloads.get(url) {
+            if !first_source {
+                output.push('\n');
+            }
+            output.push_str(content);
+            first_source = false;
+        }
+    }
+    output
+}
+
 fn process_manifest(
     root: &Path,
     manifest: &Manifest,
@@ -170,13 +192,7 @@ fn process_manifest(
 
     let target = root.join("rulesets/RULE-SET");
     fs::create_dir_all(&target).map_err(|error| error.to_string())?;
-    let remote_content = manifest
-        .remote_urls
-        .iter()
-        .filter_map(|url| downloads.get(url))
-        .cloned()
-        .collect::<Vec<_>>()
-        .join("\n");
+    let remote_content = remote_content(&manifest.remote_urls, downloads);
     let policy = match manifest.name.as_str() {
         "Direct" => "DIRECT",
         "NSFW" => "REJECT",
@@ -643,10 +659,25 @@ pub fn enforce_category_boundaries(root: &Path) -> Result<(usize, usize, usize, 
 #[cfg(test)]
 mod tests {
     use super::{
-        discover_manifests, enforce_category_boundaries, reverse_domain_labels, split_gaming_rules,
-        validate_category_boundaries,
+        discover_manifests, enforce_category_boundaries, remote_content, reverse_domain_labels,
+        split_gaming_rules, validate_category_boundaries,
     };
+    use std::collections::HashMap;
     use std::fs;
+
+    #[test]
+    fn remote_content_joins_borrowed_sources_in_order_including_empty_bodies() {
+        let urls = ["first", "empty", "last", "missing"]
+            .map(str::to_string)
+            .to_vec();
+        let downloads = HashMap::from([
+            ("first".to_string(), "alpha".to_string()),
+            ("empty".to_string(), String::new()),
+            ("last".to_string(), "omega".to_string()),
+        ]);
+
+        assert_eq!(remote_content(&urls, &downloads), "alpha\n\nomega");
+    }
 
     #[test]
     fn reverse_domain_labels_avoids_intermediate_storage_without_changing_labels() {

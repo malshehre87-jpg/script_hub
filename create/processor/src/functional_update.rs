@@ -5,7 +5,7 @@ use std::path::Path;
 use std::time::Duration;
 
 use crate::merge_bundles::{MergeBundleRequest, SourceInput, process_merge_bundle};
-use crate::promax::source::{DownloadConfig, Downloader};
+use crate::promax::source::{DownloadBatch, DownloadConfig, Downloader};
 
 #[derive(Clone, Copy)]
 struct RemoteSource {
@@ -175,16 +175,27 @@ fn downloader() -> Downloader {
 }
 
 fn valid_module(content: &str) -> bool {
-    let lowered = content.trim_start().to_ascii_lowercase();
-    content.len() >= 80
-        && !lowered.starts_with("<!doctype html")
-        && !lowered.starts_with("<html")
-        && content
-            .lines()
-            .any(|line| line.trim().starts_with("#!name"))
-        && content
-            .lines()
-            .any(|line| line.trim().starts_with('[') && line.trim().ends_with(']'))
+    let content = content.trim_start();
+    if content.len() < 80
+        || ["<!doctype html", "<html"].iter().any(|prefix| {
+            content
+                .get(..prefix.len())
+                .is_some_and(|candidate| candidate.eq_ignore_ascii_case(prefix))
+        })
+    {
+        return false;
+    }
+
+    let (mut has_name, mut has_section) = (false, false);
+    for line in content.lines() {
+        let line = line.trim();
+        has_name |= line.starts_with("#!name");
+        has_section |= line.starts_with('[') && line.ends_with(']');
+        if has_name && has_section {
+            return true;
+        }
+    }
+    false
 }
 
 fn fetch_sources(
@@ -192,37 +203,65 @@ fn fetch_sources(
     specs: &[RemoteSource],
 ) -> Result<Vec<SourceInput>, String> {
     let batch = downloader.download_many(specs.iter().map(|spec| spec.url));
-    let mut sources = Vec::new();
+    sources_from_batch(specs, batch)
+}
+
+fn sources_from_batch(
+    specs: &[RemoteSource],
+    batch: DownloadBatch,
+) -> Result<Vec<SourceInput>, String> {
+    let DownloadBatch {
+        mut contents,
+        failures,
+    } = batch;
+    let failure_by_url: HashMap<&str, &str> = failures
+        .iter()
+        .map(|failure| (failure.url.as_str(), failure.error.as_str()))
+        .collect();
+    let mut remaining_uses = HashMap::with_capacity(specs.len());
+    for spec in specs {
+        *remaining_uses.entry(spec.url).or_insert(0usize) += 1;
+    }
+
+    let mut sources = Vec::with_capacity(specs.len());
     let mut missing = Vec::new();
     for spec in specs {
-        match batch.contents.get(spec.url) {
-            Some(content) if valid_module(content) => sources.push(SourceInput {
-                label: spec.label.to_string(),
-                url: spec.url.to_string(),
-                content: content.clone(),
-            }),
-            Some(_) => {
-                let message = format!("{} returned non-module content", spec.label);
-                if spec.required {
-                    missing.push(message);
-                } else {
-                    eprintln!("[WARN] optional functional source skipped: {message}");
-                }
+        let is_last_use = remaining_uses.get_mut(spec.url).is_none_or(|remaining| {
+            *remaining -= 1;
+            *remaining == 0
+        });
+        if contents
+            .get(spec.url)
+            .is_some_and(|content| valid_module(content))
+        {
+            let content = if is_last_use {
+                contents.remove(spec.url)
+            } else {
+                contents.get(spec.url).cloned()
+            };
+            if let Some(content) = content {
+                sources.push(SourceInput {
+                    label: spec.label.to_string(),
+                    url: spec.url.to_string(),
+                    content,
+                });
+                continue;
             }
-            None => {
-                let error = batch
-                    .failures
-                    .iter()
-                    .find(|failure| failure.url == spec.url)
-                    .map(|failure| failure.error.as_str())
-                    .unwrap_or("missing download result");
-                let message = format!("{} ({error})", spec.label);
-                if spec.required {
-                    missing.push(message);
-                } else {
-                    eprintln!("[WARN] optional functional source skipped: {message}");
-                }
-            }
+        }
+
+        let message = if contents.contains_key(spec.url) {
+            format!("{} returned non-module content", spec.label)
+        } else {
+            let error = failure_by_url
+                .get(spec.url)
+                .copied()
+                .unwrap_or("missing download result");
+            format!("{} ({error})", spec.label)
+        };
+        if spec.required {
+            missing.push(message);
+        } else {
+            eprintln!("[WARN] optional functional source skipped: {message}");
         }
     }
     if missing.is_empty() {
@@ -322,7 +361,8 @@ fn run_step(label: &str, result: Result<(), String>, failures: &mut Vec<String>)
 
 fn strip_rule_section(content: &str) -> String {
     let mut in_rule = false;
-    let mut output = Vec::new();
+    let mut output = String::with_capacity(content.len().saturating_add(1));
+    let mut first_line = true;
     for line in content.lines() {
         let trimmed = line.trim();
         if trimmed.starts_with('[') && trimmed.ends_with(']') {
@@ -332,10 +372,19 @@ fn strip_rule_section(content: &str) -> String {
             }
         }
         if !in_rule {
-            output.push(line);
+            push_output_line(&mut output, &mut first_line, line);
         }
     }
-    output.join("\n") + "\n"
+    output.push('\n');
+    output
+}
+
+fn push_output_line(output: &mut String, first_line: &mut bool, line: &str) {
+    if !*first_line {
+        output.push('\n');
+    }
+    output.push_str(line);
+    *first_line = false;
 }
 
 fn strip_routing_rules(root: &Path, relative: &str) -> Result<(), String> {
@@ -368,30 +417,68 @@ const APPLE_FUNCTIONAL_MITM_HOSTS: &[&str] = &[
 
 fn harden_apple_content(content: &str) -> Result<String, String> {
     let exclusions = crate::promax::safety::apple_mitm_exclusions();
-    let mut output = Vec::new();
+    let hostname_count = exclusions
+        .len()
+        .saturating_add(APPLE_FUNCTIONAL_MITM_HOSTS.len());
+    let hostname_bytes = exclusions
+        .iter()
+        .map(String::len)
+        .chain(APPLE_FUNCTIONAL_MITM_HOSTS.iter().map(|host| host.len()))
+        .fold("hostname = %INSERT% ".len(), usize::saturating_add)
+        .saturating_add(hostname_count.saturating_sub(1).saturating_mul(2));
+    let mut output = String::with_capacity(content.len().saturating_add(hostname_bytes));
+    let mut first_line = true;
+    let mut in_rule = false;
     let mut replaced_hostname = false;
-    for line in strip_rule_section(content).lines() {
-        let line = line.replace(
-            "isWorkaroundSSLPinning:true",
-            "isWorkaroundSSLPinning:false",
-        );
-        if line.trim().starts_with("hostname =") {
+    for line in content.lines() {
+        let trimmed = line.trim();
+        if trimmed.starts_with('[') && trimmed.ends_with(']') {
+            in_rule = trimmed.eq_ignore_ascii_case("[Rule]");
+            if in_rule {
+                continue;
+            }
+        }
+        if in_rule {
+            continue;
+        }
+        if trimmed.starts_with("hostname =") {
             if !replaced_hostname {
-                output.push(format!(
-                    "hostname = %INSERT% {}, {}",
-                    exclusions.join(", "),
-                    APPLE_FUNCTIONAL_MITM_HOSTS.join(", ")
-                ));
+                if !first_line {
+                    output.push('\n');
+                }
+                output.push_str("hostname = %INSERT% ");
+                let mut first_host = true;
+                for host in exclusions
+                    .iter()
+                    .map(String::as_str)
+                    .chain(APPLE_FUNCTIONAL_MITM_HOSTS.iter().copied())
+                {
+                    if !first_host {
+                        output.push_str(", ");
+                    }
+                    output.push_str(host);
+                    first_host = false;
+                }
+                first_line = false;
                 replaced_hostname = true;
             }
         } else {
-            output.push(line);
+            if line.contains("isWorkaroundSSLPinning:true") {
+                let line = line.replace(
+                    "isWorkaroundSSLPinning:true",
+                    "isWorkaroundSSLPinning:false",
+                );
+                push_output_line(&mut output, &mut first_line, &line);
+            } else {
+                push_output_line(&mut output, &mut first_line, line);
+            }
         }
     }
     if !replaced_hostname {
         return Err("Apple bundle has no MITM hostname entry".to_string());
     }
-    Ok(output.join("\n") + "\n")
+    output.push('\n');
+    Ok(output)
 }
 
 fn harden_apple_bundle(root: &Path) -> Result<(), String> {
@@ -407,7 +494,12 @@ fn harden_apple_bundle(root: &Path) -> Result<(), String> {
 fn harden_youtube_content(content: &str) -> Result<String, String> {
     let mut in_script = false;
     let mut in_mitm = false;
-    let mut output = Vec::new();
+    let mut output = String::with_capacity(
+        content
+            .len()
+            .saturating_add("hostname = %APPEND% youtubei.googleapis.com".len()),
+    );
+    let mut first_line = true;
     let mut replaced_hostname = false;
     for line in content.lines() {
         let trimmed = line.trim();
@@ -421,17 +513,22 @@ fn harden_youtube_content(content: &str) -> Result<String, String> {
         }
         if in_mitm && trimmed.starts_with("hostname =") {
             if !replaced_hostname {
-                output.push("hostname = %APPEND% youtubei.googleapis.com");
+                push_output_line(
+                    &mut output,
+                    &mut first_line,
+                    "hostname = %APPEND% youtubei.googleapis.com",
+                );
                 replaced_hostname = true;
             }
             continue;
         }
-        output.push(line);
+        push_output_line(&mut output, &mut first_line, line);
     }
     if !replaced_hostname {
         return Err("YouTube bundle has no MITM hostname entry".to_string());
     }
-    Ok(output.join("\n") + "\n")
+    output.push('\n');
+    Ok(output)
 }
 
 fn harden_youtube_bundle(root: &Path) -> Result<(), String> {
@@ -688,11 +785,17 @@ pub fn sync_shadowrocket_variants(root: &Path) -> Result<usize, String> {
 
 #[cfg(test)]
 mod tests {
-    use super::{harden_apple_content, harden_youtube_content, strip_rule_section, valid_module};
+    use super::{
+        RemoteSource, harden_apple_content, harden_youtube_content, sources_from_batch,
+        strip_rule_section, valid_module,
+    };
+    use std::collections::HashMap;
 
     #[test]
     fn rejects_html_and_accepts_real_module_shape() {
         assert!(!valid_module("<!doctype html><html>not a module</html>"));
+        assert!(!valid_module("  <!DOCTYPE HTML><html>not a module</html>"));
+        assert!(!valid_module("#!name=too short\n[Script]\n"));
         assert!(valid_module(
             "#!name=Fixture functional module with enough bytes for validation\n#!desc=fixture\n[Script]\nfixture = type=generic,script-path=https://example.test/a.js\n"
         ));
@@ -705,6 +808,84 @@ mod tests {
         assert!(!stripped.contains("[Rule]"));
         assert!(!stripped.contains("apple.example"));
         assert!(stripped.contains("[Script]"));
+    }
+
+    #[test]
+    fn rule_section_removal_preserves_remaining_lines_and_final_newline() {
+        assert_eq!(
+            strip_rule_section(
+                "#!name=Fixture\n[Rule]\nDOMAIN,ads.example,DIRECT\n[Script]\nscript = ok\n"
+            ),
+            "#!name=Fixture\n[Script]\nscript = ok\n"
+        );
+        assert_eq!(strip_rule_section(""), "\n");
+    }
+
+    #[test]
+    fn repeated_remote_urls_keep_each_label_without_cloning_the_last_body() {
+        let url = "https://example.test/shared.sgmodule";
+        let specs = [
+            RemoteSource {
+                label: "first",
+                url,
+                required: true,
+            },
+            RemoteSource {
+                label: "second",
+                url,
+                required: true,
+            },
+        ];
+        let content = "#!name=Fixture functional module with enough bytes for validation\n[Script]\nscript = ok\n";
+        let batch = crate::promax::source::DownloadBatch {
+            contents: HashMap::from([(url.to_string(), content.to_string())]),
+            failures: Vec::new(),
+        };
+
+        let sources = sources_from_batch(&specs, batch).unwrap();
+
+        assert_eq!(sources.len(), 2);
+        assert_eq!(sources[0].content, sources[1].content);
+    }
+
+    #[test]
+    #[ignore = "release-only diagnostic benchmark; run with --release --ignored --nocapture"]
+    fn benchmark_module_validation_hot_path() {
+        use std::hint::black_box;
+        use std::time::Instant;
+
+        fn legacy_validation(content: &str) -> bool {
+            let lowered = content.trim_start().to_ascii_lowercase();
+            content.len() >= 80
+                && !lowered.starts_with("<!doctype html")
+                && !lowered.starts_with("<html")
+                && content
+                    .lines()
+                    .any(|line| line.trim().starts_with("#!name"))
+                && content
+                    .lines()
+                    .any(|line| line.trim().starts_with('[') && line.trim().ends_with(']'))
+        }
+
+        let filler = "x".repeat(8 * 1024 * 1024);
+        let content = format!("#!name=Fixture\n{filler}\n[Script]\nscript = ok\n");
+        let iterations = 20;
+        assert_eq!(legacy_validation(&content), valid_module(&content));
+
+        let start = Instant::now();
+        for _ in 0..iterations {
+            black_box(legacy_validation(black_box(&content)));
+        }
+        let legacy = start.elapsed();
+
+        let start = Instant::now();
+        for _ in 0..iterations {
+            black_box(valid_module(black_box(&content)));
+        }
+        let optimized = start.elapsed();
+        eprintln!(
+            "validation of 8 MiB module x {iterations}: legacy={legacy:?}, optimized={optimized:?}"
+        );
     }
 
     #[test]
